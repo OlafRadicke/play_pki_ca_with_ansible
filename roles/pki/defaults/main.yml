@@ -1,0 +1,9 @@
+---
+workspace_pki: "./.workspace_pki"
+root_ca_priv_key: "root_ca_priv_key.pem"
+root_csr: "root.csr"
+root_crt: "root.crt"
+end_user_priv_key: "end_user_priv_key.pem"
+end_user_pub_key: "end_user_pub_key.pem"
+end_user_crt: "end_user.crt"
+end_user_csr: "end_user.csr"
