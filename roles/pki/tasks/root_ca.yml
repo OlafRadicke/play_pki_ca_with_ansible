@@ -28,5 +28,5 @@
     privatekey_path:          "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.priv_key }}"
     csr_path:                 "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.csr }}"
     entrust_not_after:        "{{ pki_ca.root_ca.entrust_not_after }}"
-    not_after:                "{{ pki_ca.root_ca.not_after }}"
+    selfsigned_not_after:     "+52w"
     provider:                 "selfsigned"

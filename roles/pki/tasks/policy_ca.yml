@@ -1,28 +1,43 @@
 # interpreted ca
 
-- name: Generate an root ca private key with the default values (4096 bits, RSA)
+- name: Create a directory for end entities
+  file:
+    path:                     "{{ pki_ca.policy_ca.workspace }}/"
+    state:                    directory
+    mode:                     '0700'
+
+- name: Create a directory for all end entity
+  file:
+    path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}"
+    state:                    directory
+    mode:                     '0700'
+  with_dict:                  "{{ pki_ca.policy_ca.staff }}"
+
+- name: Generate end entities private keys
   openssl_privatekey:
-    path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
+    path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
+  with_dict:                  "{{ pki_ca.policy_ca.staff }}"
 
-- name: Generate an root Certificate Signing Request
+- name: Generate an Certificate Signing Request for end entities
   openssl_csr:
-    path: "{{ workspace_pki }}/{{ root_csr }}"
-    privatekey_path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
-    common_name: "root-ca"
-    country_name: "DE"
-    state_or_province_name: "dummy springfild"
-    email_address: "dummy@dum.my"
-    organization_name: "dummy gmbh"
-    organizational_unit_name: "krash-and-burn"
-    key_usage:
-        - digitalSignature
-        - keyAgreement
+    path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.csr }}"
+    privatekey_path:          "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
+    common_name:              "{{ item.value.name }}"
+    country_name:             "{{ pki_ca.policy_ca.country_name }}"
+    state_or_province_name:   "{{ pki_ca.policy_ca.state_or_province_name }}"
+    organization_name:        "{{ pki_ca.policy_ca.organization_name }}"
+    email_address:            "{{ pki_ca.root_ca.email_address }}"
+    organizational_unit_name: "{{ pki_ca.root_ca.organizational_unit_name }}"
+    key_usage:                "{{ item.value.key_usage }}"
+    extended_key_usage:       "{{ item.value.extended_key_usage }}"
+  with_dict:                  "{{ pki_ca.policy_ca.staff }}"
 
-
-- name: Generate a Self Signed OpenSSL root certificate
+- name: Generate a ca signed end entities certificate
   openssl_certificate:
-    path: "{{ workspace_pki }}/{{ root_crt }}"
-    privatekey_path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
-    csr_path: "{{ workspace_pki }}/{{ root_csr }}"
-    entrust_not_after: "2040-07-27"
-    provider: "selfsigned"
+    path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.crt }}"
+    csr_path:                 "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.csr }}"
+    ownca_path:               "{{ pki_ca.policy_ca.ownca_path }}"
+    ownca_privatekey_path:    "{{ pki_ca.policy_ca.ownca_privatekey_path }}"
+    ownca_not_after:          "+30d"
+    provider:                 ownca
+  with_dict:                  "{{ pki_ca.policy_ca.staff }}"

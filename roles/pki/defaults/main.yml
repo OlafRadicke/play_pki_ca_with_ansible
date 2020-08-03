@@ -13,17 +13,48 @@ pki_ca:
         email_address:            "ca-admin@dum.my"
         organization_name:        "Dummy GmbH"
         organizational_unit_name: "Burning Dummies"
-        entrust_not_after:        "2040-07-27"
-        not_after:                "2040-07-27"
+        entrust_not_after:        "+1000w"
+        selfsigned_not_after:     "+1000w"
         key_usage:
             - digitalSignature
             - keyAgreement
+    policy_ca:
+        workspace:                "{{ pki_ca_workspace }}/policy_ca"
+        ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
+        ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
+        ca:
+            staff_ca:
+                name:                     "Staff CA"
+                priv_key:                 "staff_ca_priv_key.pem"
+                pub_key:                  "staff_ca_pub_key.pem"
+                crt:                      "staff_ca.crt"
+                csr:                      "staff_ca.csr"
+                email_address:            "staff-ca@dum.my"
+                organizational_unit_name: "Staff CA"
+                entrust_not_after:        "+52w"
+                selfsigned_not_after:     "+52w"
+                key_usage:
+                    - digitalSignature
+                    - keyAgreement
+            service_ca:
+                name:                     "Service CA"
+                priv_key:                 "service_ca_priv_key.pem"
+                pub_key:                  "service_ca_pub_key.pem"
+                crt:                      "service_ca.crt"
+                csr:                      "service_ca.csr"
+                email_address:            "service-ca@dum.my"
+                organizational_unit_name: "Service CA"
+                entrust_not_after:        "+52w"
+                selfsigned_not_after:     "+52w"
+                key_usage:
+                    - digitalSignature
+                    - keyAgreement
+
     end_entity:
         workspace:                "{{ pki_ca_workspace }}/end_entity"
         ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
         ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
-        not_after:                "+30d"
-        entrust_not_after:        "+30d"
+        entrust_not_after:        "2020-11-01"
         country_name:             "DE"
         state_or_province_name:   "Dummyfild"
         organization_name:        "Dummy GmbH"

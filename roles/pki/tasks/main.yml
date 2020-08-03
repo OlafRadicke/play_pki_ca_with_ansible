@@ -1,8 +1,5 @@
 ---
 
-- debug:
-    msg: "{{ pki_ca }}"
-
 - name: Create a main working directory
   file:
     path: "{{ pki_ca_workspace }}"
@@ -11,6 +8,9 @@
 
 - name: Include root ca
   include: "root_ca.yml"
+
+- name: Include end user cert
+  include: "end_entity.yml"
 
 - name: Include end user cert
   include: "end_entity.yml"
