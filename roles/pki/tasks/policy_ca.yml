@@ -1,0 +1,28 @@
+# interpreted ca
+
+- name: Generate an root ca private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
+
+- name: Generate an root Certificate Signing Request
+  openssl_csr:
+    path: "{{ workspace_pki }}/{{ root_csr }}"
+    privatekey_path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
+    common_name: "root-ca"
+    country_name: "DE"
+    state_or_province_name: "dummy springfild"
+    email_address: "dummy@dum.my"
+    organization_name: "dummy gmbh"
+    organizational_unit_name: "krash-and-burn"
+    key_usage:
+        - digitalSignature
+        - keyAgreement
+
+
+- name: Generate a Self Signed OpenSSL root certificate
+  openssl_certificate:
+    path: "{{ workspace_pki }}/{{ root_crt }}"
+    privatekey_path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
+    csr_path: "{{ workspace_pki }}/{{ root_csr }}"
+    entrust_not_after: "2040-07-27"
+    provider: "selfsigned"

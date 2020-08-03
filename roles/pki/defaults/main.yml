@@ -1,9 +1,56 @@
 ---
-workspace_pki: "./.workspace_pki"
-root_ca_priv_key: "root_ca_priv_key.pem"
-root_csr: "root.csr"
-root_crt: "root.crt"
-end_user_priv_key: "end_user_priv_key.pem"
-end_user_pub_key: "end_user_pub_key.pem"
-end_user_crt: "end_user.crt"
-end_user_csr: "end_user.csr"
+
+pki_ca_workspace: "./.workspace_pki"
+pki_ca:
+    root_ca:
+        workspace:                "{{ pki_ca_workspace }}/root_ca"
+        priv_key:                 "root_ca_priv_key.pem"
+        csr:                      "root.csr"
+        crt:                      "root.crt"
+        common_name:              "root-ca"
+        country_name:             "DE"
+        state_or_province_name:   "Dummyfild"
+        email_address:            "ca-admin@dum.my"
+        organization_name:        "Dummy GmbH"
+        organizational_unit_name: "Burning Dummies"
+        entrust_not_after:        "2040-07-27"
+        not_after:                "2040-07-27"
+        key_usage:
+            - digitalSignature
+            - keyAgreement
+    end_entity:
+        workspace:                "{{ pki_ca_workspace }}/end_entity"
+        ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
+        ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
+        not_after:                "+30d"
+        entrust_not_after:        "+30d"
+        country_name:             "DE"
+        state_or_province_name:   "Dummyfild"
+        organization_name:        "Dummy GmbH"
+        staff:
+            jane_doe:
+                name:                     "Jane Doe"
+                priv_key:                 "jane_doe_priv_key.pem"
+                pub_key:                  "jane_doe_pub_key.pem"
+                crt:                      "jane_doe.crt"
+                csr:                      "jane_doe.csr"
+                email_address:            "jane_doe@dum.my"
+                organizational_unit_name: "First dummy department"
+                key_usage:
+                    - digitalSignature
+                    - keyAgreement
+                extended_key_usage:
+                    - clientAuth
+            john_doe:
+                name:                     "John Doe"
+                priv_key:                 "john_doe_priv_key.pem"
+                pub_key:                  "john_doe_pub_key.pem"
+                crt:                      "john_doe.crt"
+                csr:                      "john_doe.csr"
+                email_address:            "john_doe@dum.my"
+                organizational_unit_name: "First dummy department"
+                key_usage:
+                    - digitalSignature
+                    - keyAgreement
+                extended_key_usage:
+                    - clientAuth

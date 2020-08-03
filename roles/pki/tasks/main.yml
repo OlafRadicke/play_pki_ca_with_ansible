@@ -1,8 +1,11 @@
 ---
 
-- name: Create a working directory
+- debug:
+    msg: "{{ pki_ca }}"
+
+- name: Create a main working directory
   file:
-    path: "{{ workspace_pki }}"
+    path: "{{ pki_ca_workspace }}"
     state: directory
     mode: '0700'
 
@@ -10,4 +13,4 @@
   include: "root_ca.yml"
 
 - name: Include end user cert
-  include: "end_user_crt.yml"
+  include: "end_entity.yml"

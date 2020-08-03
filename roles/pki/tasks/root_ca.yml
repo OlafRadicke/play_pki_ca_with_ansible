@@ -1,35 +1,32 @@
 ---
 
+- name: Create a directory for root ca
+  file:
+    path:                     "{{ pki_ca.root_ca.workspace }}/"
+    state:                    directory
+    mode:                     '0700'
+
 - name: Generate an root ca private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
+    path:                     "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.priv_key }}"
 
 - name: Generate an root Certificate Signing Request
   openssl_csr:
-    path: "{{ workspace_pki }}/{{ root_csr }}"
-    privatekey_path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
-    common_name: "root-ca"
-    country_name: "DE"
-    state_or_province_name: "dummy springfild"
-    email_address: "dummy@dum.my"
-    organization_name: "dummy gmbh"
-    organizational_unit_name: "krash-and-burn"
-    key_usage:
-        - digitalSignature
-        - keyAgreement
-
-- debug:
-    msg: "Path: {{ item}}"
-  loop:
-    - "{{ workspace_pki }}"
-    - "{{ root_crt }}"
-    - "{{ root_ca_priv_key }}"
-    - "{{ root_csr }}"
+    path:                     "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.csr }}"
+    privatekey_path:          "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.priv_key }}"
+    common_name:              "{{ pki_ca.root_ca.common_name }}"
+    country_name:             "{{ pki_ca.root_ca.country_name }}"
+    state_or_province_name:   "{{ pki_ca.root_ca.state_or_province_name }}"
+    email_address:            "{{ pki_ca.root_ca.email_address }}"
+    organization_name:        "{{ pki_ca.root_ca.organization_name }}"
+    organizational_unit_name: "{{ pki_ca.root_ca.organizational_unit_name }}"
+    key_usage:                "{{ pki_ca.root_ca.key_usage }}"
 
 - name: Generate a Self Signed OpenSSL root certificate
   openssl_certificate:
-    path: "{{ workspace_pki }}/{{ root_crt }}"
-    privatekey_path: "{{ workspace_pki }}/{{ root_ca_priv_key }}"
-    csr_path: "{{ workspace_pki }}/{{ root_csr }}"
-    entrust_not_after: "2040-07-27"
-    provider: "selfsigned"
+    path:                     "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.crt }}"
+    privatekey_path:          "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.priv_key }}"
+    csr_path:                 "{{ pki_ca.root_ca.workspace }}/{{ pki_ca.root_ca.csr }}"
+    entrust_not_after:        "{{ pki_ca.root_ca.entrust_not_after }}"
+    not_after:                "{{ pki_ca.root_ca.not_after }}"
+    provider:                 "selfsigned"
