@@ -10,7 +10,7 @@
   include: "root_ca.yml"
 
 - name: Include end user cert
-  include: "end_entity.yml"
+  include: "policy_ca.yml"
 
 - name: Include end user cert
   include: "end_entity.yml"

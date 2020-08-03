@@ -1,24 +1,24 @@
 # interpreted ca
 
-- name: Create a directory for end entities
+- name: Create a base directory for policy ca
   file:
-    path:                     "{{ pki_ca.policy_ca.workspace }}/"
+    path:                     "{{ pki_ca.policy_ca.workspace }}"
     state:                    directory
     mode:                     '0700'
 
-- name: Create a directory for all end entity
+- name: Create a directory for all policy cas
   file:
     path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}"
     state:                    directory
     mode:                     '0700'
-  with_dict:                  "{{ pki_ca.policy_ca.staff }}"
+  with_dict:                  "{{ pki_ca.policy_ca.ca }}"
 
-- name: Generate end entities private keys
+- name: Generate policy ca private keys
   openssl_privatekey:
     path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
-  with_dict:                  "{{ pki_ca.policy_ca.staff }}"
+  with_dict:                  "{{ pki_ca.policy_ca.ca }}"
 
-- name: Generate an Certificate Signing Request for end entities
+- name: Generate an Certificate Signing Request for policy ca
   openssl_csr:
     path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.csr }}"
     privatekey_path:          "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
@@ -29,10 +29,9 @@
     email_address:            "{{ pki_ca.root_ca.email_address }}"
     organizational_unit_name: "{{ pki_ca.root_ca.organizational_unit_name }}"
     key_usage:                "{{ item.value.key_usage }}"
-    extended_key_usage:       "{{ item.value.extended_key_usage }}"
-  with_dict:                  "{{ pki_ca.policy_ca.staff }}"
+  with_dict:                  "{{ pki_ca.policy_ca.ca }}"
 
-- name: Generate a ca signed end entities certificate
+- name: Generate a ca signed policy ca certificate
   openssl_certificate:
     path:                     "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.crt }}"
     csr_path:                 "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.csr }}"
@@ -40,4 +39,4 @@
     ownca_privatekey_path:    "{{ pki_ca.policy_ca.ownca_privatekey_path }}"
     ownca_not_after:          "+30d"
     provider:                 ownca
-  with_dict:                  "{{ pki_ca.policy_ca.staff }}"
+  with_dict:                  "{{ pki_ca.policy_ca.ca }}"

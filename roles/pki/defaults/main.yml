@@ -22,6 +22,9 @@ pki_ca:
         workspace:                "{{ pki_ca_workspace }}/policy_ca"
         ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
         ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
+        country_name:             "DE"
+        state_or_province_name:   "Dummyfild"
+        organization_name:        "Dummy GmbH"
         ca:
             staff_ca:
                 name:                     "Staff CA"
@@ -44,8 +47,8 @@ pki_ca:
                 csr:                      "service_ca.csr"
                 email_address:            "service-ca@dum.my"
                 organizational_unit_name: "Service CA"
-                entrust_not_after:        "+52w"
-                selfsigned_not_after:     "+52w"
+                entrust_not_after:        "+104w"
+                selfsigned_not_after:     "+104w"
                 key_usage:
                     - digitalSignature
                     - keyAgreement
