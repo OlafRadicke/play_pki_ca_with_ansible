@@ -7,14 +7,14 @@ pki_ca:
         priv_key:                 "root_ca_priv_key.pem"
         csr:                      "root.csr"
         crt:                      "root.crt"
-        common_name:              "root-ca"
+        common_name:              "Dummy Root CA"
         country_name:             "DE"
         state_or_province_name:   "Dummyfild"
         email_address:            "ca-admin@dum.my"
         organization_name:        "Dummy GmbH"
-        organizational_unit_name: "Burning Dummies"
-        entrust_not_after:        "+1000w"
-        selfsigned_not_after:     "+1000w"
+        organizational_unit_name: "IT operation department"
+        entrust_not_after:        "+1300w"
+        selfsigned_not_after:     "+1300w"
         key_usage:
             - digitalSignature
             - keyAgreement
@@ -33,9 +33,10 @@ pki_ca:
                 crt:                      "staff_ca.crt"
                 csr:                      "staff_ca.csr"
                 email_address:            "staff-ca@dum.my"
-                organizational_unit_name: "Staff CA"
+                organizational_unit_name: "Staff department"
                 entrust_not_after:        "+52w"
                 selfsigned_not_after:     "+52w"
+                ownca_not_after:          "+52w"
                 key_usage:
                     - digitalSignature
                     - keyAgreement
@@ -46,18 +47,19 @@ pki_ca:
                 crt:                      "service_ca.crt"
                 csr:                      "service_ca.csr"
                 email_address:            "service-ca@dum.my"
-                organizational_unit_name: "Service CA"
-                entrust_not_after:        "+104w"
-                selfsigned_not_after:     "+104w"
+                organizational_unit_name: "Service department"
+                entrust_not_after:        "+26w"
+                selfsigned_not_after:     "+26w"
+                ownca_not_after:          "+26w"
                 key_usage:
                     - digitalSignature
                     - keyAgreement
-
-    end_entity:
-        workspace:                "{{ pki_ca_workspace }}/end_entity"
+    staff_end_entity:
+        workspace:                "{{ pki_ca_workspace }}/staff_end_entity"
         ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
         ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
-        entrust_not_after:        "2020-11-01"
+        ownca_not_after:          "+12w"
+        entrust_not_after:        "+12w"
         country_name:             "DE"
         state_or_province_name:   "Dummyfild"
         organization_name:        "Dummy GmbH"
@@ -83,6 +85,42 @@ pki_ca:
                 csr:                      "john_doe.csr"
                 email_address:            "john_doe@dum.my"
                 organizational_unit_name: "First dummy department"
+                key_usage:
+                    - digitalSignature
+                    - keyAgreement
+                extended_key_usage:
+                    - clientAuth
+    service_end_entity:
+        workspace:                "{{ pki_ca_workspace }}/service_end_entity"
+        ownca_path:               "{{ pki_ca_workspace }}/policy_ca/service_ca/service_ca.crt"
+        ownca_privatekey_path:    "{{ pki_ca_workspace }}/policy_ca/service_ca/service_ca_priv_key.pem"
+        ownca_not_after:          "+12w"
+        entrust_not_after:        "+12w"
+        country_name:             "DE"
+        state_or_province_name:   "Dummyfild"
+        organization_name:        "Dummy GmbH"
+        service:
+            app_frontend:
+                name:                     "App frontend"
+                priv_key:                 "app_frontend_priv_key.pem"
+                pub_key:                  "app_frontend_pub_key.pem"
+                crt:                      "app_frontend.crt"
+                csr:                      "app_frontend.csr"
+                email_address:            "service-ca@dum.my"
+                organizational_unit_name: "Dummy develop department"
+                key_usage:
+                    - digitalSignature
+                    - keyAgreement
+                extended_key_usage:
+                    - clientAuth
+            app_backend:
+                name:                     "App backend"
+                priv_key:                 "app_backend_priv_key.pem"
+                pub_key:                  "app_backend_pub_key.pem"
+                crt:                      "app_backend.crt"
+                csr:                      "app_backend.csr"
+                email_address:            "service-ca@dum.my"
+                organizational_unit_name: "Dummy develop department"
                 key_usage:
                     - digitalSignature
                     - keyAgreement

@@ -9,8 +9,11 @@
 - name: Include root ca
   include: "root_ca.yml"
 
-- name: Include end user cert
+- name: Include end user certs
   include: "policy_ca.yml"
 
-- name: Include end user cert
-  include: "end_entity.yml"
+- name: Include staff end user certs
+  include: "staff_end_entity.yml"
+
+- name: Include service end entity certs
+  include: "service_end_entity.yml"
