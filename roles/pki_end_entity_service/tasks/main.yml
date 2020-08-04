@@ -1,0 +1,49 @@
+---
+
+- name: Create a main working directory
+  file:
+    path: "{{ pki_ca_workspace }}"
+    state: directory
+    mode: '0700'
+
+- name: Create a directory for end entities
+  file:
+    path:                     "{{ pki_end_entity_service.workspace }}/"
+    state:                    directory
+    mode:                     '0700'
+
+- name: Create a directory for all end entity
+  file:
+    path:                     "{{ pki_end_entity_service.workspace }}/{{ item.key }}"
+    state:                    directory
+    mode:                     '0700'
+  with_dict:                  "{{ pki_end_entity_service.service }}"
+
+- name: Generate end entities private keys
+  openssl_privatekey:
+    path:                     "{{ pki_end_entity_service.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
+  with_dict:                  "{{ pki_end_entity_service.service }}"
+
+- name: Generate an Certificate Signing Request for end entities
+  openssl_csr:
+    path:                     "{{ pki_end_entity_service.workspace }}/{{ item.key }}/{{ item.value.csr }}"
+    privatekey_path:          "{{ pki_end_entity_service.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
+    common_name:              "{{ item.value.name }}"
+    country_name:             "{{ pki_end_entity_service.country_name }}"
+    state_or_province_name:   "{{ pki_end_entity_service.state_or_province_name }}"
+    organization_name:        "{{ pki_end_entity_service.organization_name }}"
+    email_address:            "{{ item.value.email_address }}"
+    organizational_unit_name: "{{ item.value.organizational_unit_name }}"
+    key_usage:                "{{ item.value.key_usage }}"
+    extended_key_usage:       "{{ item.value.extended_key_usage }}"
+  with_dict:                  "{{ pki_end_entity_service.service }}"
+
+- name: Generate a ca signed end entities certificate
+  openssl_certificate:
+    path:                     "{{ pki_end_entity_service.workspace }}/{{ item.key }}/{{ item.value.crt }}"
+    csr_path:                 "{{ pki_end_entity_service.workspace }}/{{ item.key }}/{{ item.value.csr }}"
+    ownca_path:               "{{ pki_end_entity_service.ownca_path }}"
+    ownca_privatekey_path:    "{{ pki_end_entity_service.ownca_privatekey_path }}"
+    ownca_not_after:          "{{ pki_end_entity_service.not_after }}"
+    provider:                 ownca
+  with_dict:                  "{{ pki_end_entity_service.service }}"

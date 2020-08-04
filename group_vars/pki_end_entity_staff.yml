@@ -1,0 +1,38 @@
+---
+
+pki_ca_workspace: "./.workspace_pki"
+pki_end_entity_staff:
+    workspace:                "{{ pki_ca_workspace }}/staff_end_entity"
+    ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
+    ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
+    not_after:                "+12w"
+    country_name:             "DE"
+    state_or_province_name:   "Dummyfild"
+    organization_name:        "Dummy GmbH"
+    staff:
+        jane_doe:
+            name:                     "Jane Doe"
+            priv_key:                 "jane_doe_priv_key.pem"
+            pub_key:                  "jane_doe_pub_key.pem"
+            crt:                      "jane_doe.crt"
+            csr:                      "jane_doe.csr"
+            email_address:            "jane_doe@dum.my"
+            organizational_unit_name: "First dummy department"
+            key_usage:
+                - digitalSignature
+                - keyAgreement
+            extended_key_usage:
+                - clientAuth
+        john_doe:
+            name:                     "John Doe"
+            priv_key:                 "john_doe_priv_key.pem"
+            pub_key:                  "john_doe_pub_key.pem"
+            crt:                      "john_doe.crt"
+            csr:                      "john_doe.csr"
+            email_address:            "john_doe@dum.my"
+            organizational_unit_name: "First dummy department"
+            key_usage:
+                - digitalSignature
+                - keyAgreement
+            extended_key_usage:
+                - clientAuth

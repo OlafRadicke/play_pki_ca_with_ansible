@@ -1,0 +1,47 @@
+---
+- name: Create a main working directory
+  file:
+    path:                     "{{ pki_ca_workspace }}"
+    state:                    directory
+    mode:                     '0700'
+
+- name: Create a base directory for policy ca
+  file:
+    path:                     "{{ policy_ca.workspace }}"
+    state:                    directory
+    mode:                     '0700'
+
+- name: Create a directory for all policy cas
+  file:
+    path:                     "{{ policy_ca.workspace }}/{{ item.key }}"
+    state:                    directory
+    mode:                     '0700'
+  with_dict:                  "{{ policy_ca.ca }}"
+
+- name: Generate policy ca private keys
+  openssl_privatekey:
+    path:                     "{{ policy_ca.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
+  with_dict:                  "{{ policy_ca.ca }}"
+
+- name: Generate an Certificate Signing Request for policy ca
+  openssl_csr:
+    path:                     "{{ policy_ca.workspace }}/{{ item.key }}/{{ item.value.csr }}"
+    privatekey_path:          "{{ policy_ca.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"
+    common_name:              "{{ item.value.name }}"
+    country_name:             "{{ policy_ca.country_name }}"
+    state_or_province_name:   "{{ policy_ca.state_or_province_name }}"
+    organization_name:        "{{ policy_ca.organization_name }}"
+    email_address:            "{{ item.value.email_address }}"
+    organizational_unit_name: "{{ item.value.organizational_unit_name }}"
+    key_usage:                "{{ item.value.key_usage }}"
+  with_dict:                  "{{ policy_ca.ca }}"
+
+- name: Generate a ca signed policy ca certificate
+  openssl_certificate:
+    path:                     "{{ policy_ca.workspace }}/{{ item.key }}/{{ item.value.crt }}"
+    csr_path:                 "{{ policy_ca.workspace }}/{{ item.key }}/{{ item.value.csr }}"
+    ownca_path:               "{{ policy_ca.ownca_path }}"
+    ownca_privatekey_path:    "{{ policy_ca.ownca_privatekey_path }}"
+    ownca_not_after:          "{{ item.value.not_after }}"
+    provider:                 ownca
+  with_dict:                  "{{ policy_ca.ca }}"

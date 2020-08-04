@@ -1,0 +1,18 @@
+---
+
+pki_ca_workspace: "./.workspace_pki"
+root_ca:
+    workspace:                "{{ pki_ca_workspace }}/root_ca"
+    priv_key:                 "root_ca_priv_key.pem"
+    csr:                      "root.csr"
+    crt:                      "root.crt"
+    common_name:              "Dummy Root CA"
+    country_name:             "DE"
+    state_or_province_name:   "Dummyfild"
+    email_address:            "ca-admin@dum.my"
+    organization_name:        "Dummy GmbH"
+    organizational_unit_name: "IT operation department"
+    not_after:                "+1300w"
+    key_usage:
+        - digitalSignature
+        - keyAgreement

@@ -1,0 +1,37 @@
+---
+
+- name: Create a main working directory
+  file:
+    path:                     "{{ pki_ca_workspace }}"
+    state:                    directory
+    mode:                     '0700'
+
+- name: Create a directory for root ca
+  file:
+    path:                     "{{ root_ca.workspace }}/"
+    state:                    directory
+    mode:                     '0700'
+
+- name: Generate an root ca private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path:                     "{{ root_ca.workspace }}/{{ root_ca.priv_key }}"
+
+- name: Generate an root Certificate Signing Request
+  openssl_csr:
+    path:                     "{{ root_ca.workspace }}/{{ root_ca.csr }}"
+    privatekey_path:          "{{ root_ca.workspace }}/{{ root_ca.priv_key }}"
+    common_name:              "{{ root_ca.common_name }}"
+    country_name:             "{{ root_ca.country_name }}"
+    state_or_province_name:   "{{ root_ca.state_or_province_name }}"
+    email_address:            "{{ root_ca.email_address }}"
+    organization_name:        "{{ root_ca.organization_name }}"
+    organizational_unit_name: "{{ root_ca.organizational_unit_name }}"
+    key_usage:                "{{ root_ca.key_usage }}"
+
+- name: Generate a Self Signed OpenSSL root certificate
+  openssl_certificate:
+    path:                     "{{ root_ca.workspace }}/{{ root_ca.crt }}"
+    privatekey_path:          "{{ root_ca.workspace }}/{{ root_ca.priv_key }}"
+    csr_path:                 "{{ root_ca.workspace }}/{{ root_ca.csr }}"
+    selfsigned_not_after:     "{{ root_ca.not_after }}"
+    provider:                 "selfsigned"

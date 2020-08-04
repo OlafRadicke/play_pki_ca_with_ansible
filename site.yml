@@ -1,5 +1,12 @@
 ---
 
-- hosts: pki
+# - hosts: pki_offline_ca
+#   roles:
+#     - pki_root_ca
+#     - pki_policy_ca
+
+- hosts: pki_online_ca
   roles:
-    - pki
+    - pki_issue_ca
+    - pki_end_entity_staff
+    - pki_end_entity_service
