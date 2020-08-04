@@ -37,6 +37,6 @@
     csr_path:                 "{{ pki_ca.policy_ca.workspace }}/{{ item.key }}/{{ item.value.csr }}"
     ownca_path:               "{{ pki_ca.policy_ca.ownca_path }}"
     ownca_privatekey_path:    "{{ pki_ca.policy_ca.ownca_privatekey_path }}"
-    ownca_not_after:          "{{ item.value.ownca_not_after }}"
+    ownca_not_after:          "{{ item.value.not_after }}"
     provider:                 ownca
   with_dict:                  "{{ pki_ca.policy_ca.ca }}"

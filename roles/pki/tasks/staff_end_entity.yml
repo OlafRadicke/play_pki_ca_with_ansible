@@ -37,6 +37,6 @@
     csr_path:                 "{{ pki_ca.staff_end_entity.workspace }}/{{ item.key }}/{{ item.value.csr }}"
     ownca_path:               "{{ pki_ca.staff_end_entity.ownca_path }}"
     ownca_privatekey_path:    "{{ pki_ca.staff_end_entity.ownca_privatekey_path }}"
-    ownca_not_after:          "{{ pki_ca.staff_end_entity.ownca_not_after }}"
+    ownca_not_after:          "{{ pki_ca.staff_end_entity.not_after }}"
     provider:                 ownca
   with_dict:                  "{{ pki_ca.staff_end_entity.staff }}"
