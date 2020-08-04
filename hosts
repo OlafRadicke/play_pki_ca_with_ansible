@@ -2,12 +2,10 @@
 [pki_offline_ca:children]
 pki_root_ca
 pki_policy_ca
+pki_issue_ca
+pki_fetch_issue_ca_files
 
 [pki_online_ca:children]
-pki_issue_ca
-pki_end_entity
-
-[pki_end_entity:children]
 pki_end_entity_staff
 pki_end_entity_service
 
@@ -18,10 +16,13 @@ vm01   ansible_connection=local
 vm01   ansible_connection=local
 
 [pki_issue_ca]
-vm02   ansible_connection=local
+vm01   ansible_connection=local
 
 [pki_end_entity_staff]
 vm02   ansible_connection=local
 
 [pki_end_entity_service]
-vm02   ansible_connection=local
+vm03   ansible_connection=local
+
+[pki_fetch_issue_ca_files]
+vm01   ansible_connection=local

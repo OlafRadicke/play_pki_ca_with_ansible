@@ -1,6 +1,6 @@
 ---
 
-pki_ca_workspace: "./.workspace_pki"
+pki_ca_workspace: "./.workspace_pki/{{ inventory_hostname }}"
 root_ca:
     workspace:                "{{ pki_ca_workspace }}/root_ca"
     priv_key:                 "root_ca_priv_key.pem"

@@ -1,10 +1,10 @@
 ---
 
-pki_ca_workspace: "./.workspace_pki"
+pki_ca_workspace: "./.workspace_pki/{{ inventory_hostname }}"
 pki_end_entity_staff:
     workspace:                "{{ pki_ca_workspace }}/staff_end_entity"
-    ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
-    ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
+    ownca_path:               "./.workspace_pki/download/staff_ca/staff_ca.crt"
+    ownca_privatekey_path:    "./.workspace_pki/download//staff_ca/staff_ca_priv_key.pem"
     not_after:                "+12w"
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"

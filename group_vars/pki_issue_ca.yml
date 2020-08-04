@@ -1,8 +1,8 @@
 ---
 
-pki_ca_workspace: "./.workspace_pki"
+pki_ca_workspace: "./.workspace_pki/{{ inventory_hostname }}"
 pki_issue_ca:
-    workspace:                "{{ pki_ca_workspace }}/policy_ca"
+    workspace:                "{{ pki_ca_workspace }}/issue_ca"
     ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
     ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
     country_name:             "DE"

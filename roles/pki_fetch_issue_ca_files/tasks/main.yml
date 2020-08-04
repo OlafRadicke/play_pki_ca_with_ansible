@@ -1,0 +1,27 @@
+---
+
+- debug:
+    msg: "{{ pki_fetch }}"
+
+- name:  Download issue ca files
+  copy:
+    src: "{{ pki_fetch.src }}"
+    dest: "{{ pki_fetch.tmp_dir }}"
+    remote_src: yes
+
+# - name:  Upload issue ca files for staff ca
+#   copy:
+#     src: "{{ pki_fetch.tmp_dir }}/staff_ca"
+#     dest: "{{ pki_fetch.tmp_dir }}/staff_ca"
+#   delegate_to: "vm02"
+
+# - name:  Upload issue ca files for staff ca
+#   copy:
+#     src: "{{ pki_fetch.tmp_dir }}/service_ca"
+#     dest: "{{ pki_fetch.tmp_dir }}/service_ca"
+#   delegate_to: "vm03"
+
+# - name: Download issue ca files
+#   fetch:
+#     src:  "{{ pki_fetch.src }}"
+#     dest: "{{ pki_fetch.tmp_dir }}"

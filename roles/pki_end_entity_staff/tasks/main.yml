@@ -6,6 +6,9 @@
     state: directory
     mode: '0700'
 
+- debug:
+    msg: "{{ pki_end_entity_staff }}"
+
 - name: Create a directory for end entities
   file:
     path:                     "{{ pki_end_entity_staff.workspace }}/"
