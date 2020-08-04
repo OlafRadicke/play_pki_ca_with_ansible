@@ -5,7 +5,7 @@
     - pki_root_ca
     - pki_policy_ca
     - pki_issue_ca
-    # - pki_fetch_issue_ca_files
+    - pki_fetch_issue_ca_files
 
 # - hosts: pki_online_ca
 #   roles:

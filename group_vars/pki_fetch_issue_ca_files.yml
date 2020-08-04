@@ -1,8 +1,8 @@
 ---
 
 pki_fetch:
-    tmp_dir: "./.workspace_pki/download"
     src: "./.workspace_pki/vm01/issue_ca/"
+    tmp_dir: "./.workspace_pki/download"
     ca:
         vm02:
             srv: "staff_ca"
