@@ -1,4 +1,34 @@
 ---
+- name: Create download directory
+  file:
+    path:        "{{ pki_fetch.tmp_dir }}"
+    state:       directory
+    mode:        '0700'
+
+- name: Download issue ca files
+  fetch:
+    src:        "{{ pki_fetch.offline_ca }}/{{ ca_name }}/"
+    dest:       "{{ pki_fetch.tmp_dir }}"
+
+  delegate_to:  vm01
+
+- name:  Upload issue ca files for {{ ca_name }}
+  copy:
+    src:        "{{ pki_fetch.offline_ca }}/{{ ca_name }}/"
+    dest:       "{{ pki_fetch.online_ca }}"
+
+- name: Delet download directory
+  file:
+    path:        "{{ pki_fetch.tmp_dir }}"
+    state:       absent
+
+
+
+# - name: Copy issue cert from offline to online ca
+#   synchronize:
+#     src:  "{{ pki_fetch.offline_ca }}/{{ ca_name }}/"
+#     dest: "{{ pki_fetch.online_ca }}"
+#   delegate_to: vm01
 
 # - debug:
 #     msg: "{{ pki_fetch }}"
@@ -9,11 +39,11 @@
 #     state: directory
 #     mode: '0700'
 
-- name:  Download issue ca files
-  copy:
-    src: "{{ pki_fetch.src }}"
-    dest: "{{ pki_fetch.tmp_dir }}"
-    remote_src: yes
+# - name:  Download issue ca files
+#   copy:
+#     src: "{{ pki_fetch.src }}"
+#     dest: "{{ pki_fetch.tmp_dir }}"
+#     remote_src: yes
 
 # - name:  Upload issue ca files for staff ca
 #   copy:

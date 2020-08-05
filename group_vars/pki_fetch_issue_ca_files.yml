@@ -1,10 +1,6 @@
 ---
 
 pki_fetch:
-    src: "./.workspace_pki/vm01/issue_ca/"
-    tmp_dir: "./.workspace_pki/download"
-    ca:
-        vm02:
-            srv: "staff_ca"
-        vm03:
-            srv: "service_ca"
+    offline_ca: "/srv/pki/issue_ca/"
+    online_ca:  "/srv/pki/issue_ca"
+    tmp_dir:    "/tmp/pki_ca_download"

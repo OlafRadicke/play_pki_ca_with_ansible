@@ -1,0 +1,6 @@
+---
+
+- name: Install needed packages
+  package:
+    name:
+    - python3-pyOpenSSL

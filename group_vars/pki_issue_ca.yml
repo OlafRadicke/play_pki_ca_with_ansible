@@ -1,6 +1,6 @@
 ---
 
-pki_ca_workspace: "./.workspace_pki/{{ inventory_hostname }}"
+pki_ca_workspace: "/srv/pki"
 pki_issue_ca:
     workspace:                "{{ pki_ca_workspace }}/issue_ca"
     ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"

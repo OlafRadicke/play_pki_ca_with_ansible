@@ -1,10 +1,10 @@
 ---
 
-pki_ca_workspace: "./.workspace_pki/{{ inventory_hostname }}"
+pki_ca_workspace: "/srv/pki"
 pki_end_entity_service:
     workspace:                "{{ pki_ca_workspace }}/service_end_entity"
-    ownca_path:               "./.workspace_pki/download/service_ca/service_ca.crt"
-    ownca_privatekey_path:    "./.workspace_pki/download/service_ca/service_ca_priv_key.pem"
+    ownca_path:               "/srv/pki/download/service_ca/service_ca.crt"
+    ownca_privatekey_path:    "/srv/pki/download/service_ca/service_ca_priv_key.pem"
     not_after:                "+12w"
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"

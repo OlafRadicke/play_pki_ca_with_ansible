@@ -1,17 +1,18 @@
 ---
 
+- hosts: pki
+  roles:
+    - pki_pre_install
+
 - hosts: pki_offline_ca
   roles:
     - pki_root_ca
     - pki_policy_ca
     - pki_issue_ca
-    - pki_fetch_issue_ca_files
 
-# - hosts: pki_online_ca
-#   roles:
-#     - pki_end_entity_staff
-#     - pki_end_entity_service
-
+- hosts: pki_fetch_issue_ca_files
+  roles:
+  - pki_fetch_issue_ca_files
 
 - hosts: pki_end_entity_staff
   roles:

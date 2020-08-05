@@ -1,0 +1,2 @@
+- name: Include fedora support
+  include: fedora.yml
