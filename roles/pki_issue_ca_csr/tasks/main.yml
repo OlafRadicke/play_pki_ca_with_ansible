@@ -1,27 +1,15 @@
 ---
 
-- name: Create a base directory for issue ca
-  file:
-    path:                     "{{ pki_workspace }}"
-    state:                    directory
-    mode:                     '0700'
-
-- name: Create a directory for all issue cas
-  file:
-    path:                     "{{ pki_workspace }}/ca"
-    state:                    directory
-    mode:                     '0700'
-
 - name: Generate keys for issue cas
   openssl_privatekey:
-    path:                     "{{ pki_workspace }}/ca/{{ item.value.priv_key }}"
+    path:                     "{{ pki_ca_dir }}/{{ item.key }}.pem"
   with_dict:                  "{{ pki_issue_ca }}"
 
 - name: Generate an Certificate Signing Request for issue cas
   openssl_csr:
-    path:                     "{{ httpd_dir }}/{{ item.value.csr }}"
-    privatekey_path:          "{{ pki_workspace }}/{{ item.key }}/ca/{{ item.value.priv_key }}"
-    common_name:              "{{ item.value.name }}"
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.csr"
+    privatekey_path:          "{{ pki_ca_dir }}/{{ item.key }}.pem"
+    common_name:              "{{ item.key }}"
     country_name:             "{{ pki_issue_ca_common.country_name }}"
     state_or_province_name:   "{{ pki_issue_ca_common.state_or_province_name }}"
     organization_name:        "{{ pki_issue_ca_common.organization_name }}"

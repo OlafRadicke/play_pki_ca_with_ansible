@@ -1,24 +1,5 @@
 ---
 
-- name: Create a main working directory
-  file:
-    path: "{{ pki_ca_workspace }}"
-    state: directory
-    mode: '0700'
-
-- name: Create a directory for end entities
-  file:
-    path:                     "{{ pki_end_entity_service.workspace }}/"
-    state:                    directory
-    mode:                     '0700'
-
-- name: Create a directory for all end entity
-  file:
-    path:                     "{{ pki_end_entity_service.workspace }}/{{ item.key }}"
-    state:                    directory
-    mode:                     '0700'
-  with_dict:                  "{{ pki_end_entity_service.service }}"
-
 - name: Generate end entities private keys
   openssl_privatekey:
     path:                     "{{ pki_end_entity_service.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"

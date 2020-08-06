@@ -1,0 +1,72 @@
+# Policy CA & Root CA
+---
+
+issue_ca_common:
+    csr_base_url:             "http://192.168.178.78"
+    not_after:                "+26w"
+    country_name:             "DE"
+    state_or_province_name:   "Dummyfild"
+    organization_name:        "Dummy GmbH"
+
+issue_ca_csr:
+    "staff-issue-ca-01.dum.my":
+        base_url: "http://192.168.178.77"
+        ca: "policy-ca-01.dum.my"
+    "service-issue-ca-01.dum.my":
+        base_url: "{{ issue_ca_common.csr_base_url }}"
+        ca: "policy_ca-02.dum.my"
+    "service-issue-ca-02.dum.my":
+        base_url: "{{ issue_ca_common.csr_base_url }}"
+        ca: "policy_ca-02.dum.my"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# pki_ca_workspace: "/srv/pki"
+# policy_ca:
+#     workspace:                "{{ pki_ca_workspace }}/policy_ca"
+#     ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
+#     ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
+#     country_name:             "DE"
+#     state_or_province_name:   "Dummyfild"
+#     organization_name:        "Dummy GmbH"
+#     ca:
+#         staff_ca:
+#             name:                     "Staff CA"
+#             priv_key:                 "staff_ca_priv_key.pem"
+#             pub_key:                  "staff_ca_pub_key.pem"
+#             crt:                      "staff_ca.crt"
+#             csr:                      "staff_ca.csr"
+#             email_address:            "staff-ca@dum.my"
+#             organizational_unit_name: "Staff department"
+#             not_after:                "+52w"
+#             key_usage:
+#                 - digitalSignature
+#                 - keyAgreement
+#         service_ca:
+#             name:                     "Service CA"
+#             priv_key:                 "service_ca_priv_key.pem"
+#             pub_key:                  "service_ca_pub_key.pem"
+#             crt:                      "service_ca.crt"
+#             csr:                      "service_ca.csr"
+#             email_address:            "service-ca@dum.my"
+#             organizational_unit_name: "Service department"
+#             not_after:                "+26w"
+#             key_usage:
+#                 - digitalSignature
+#                 - keyAgreement

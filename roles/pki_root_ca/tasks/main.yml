@@ -1,17 +1,5 @@
 ---
 
-- name: Create a main working directory
-  file:
-    path:                     "{{ pki_ca_workspace }}"
-    state:                    directory
-    mode:                     '0700'
-
-- name: Create a directory for root ca
-  file:
-    path:                     "{{ root_ca.workspace }}/"
-    state:                    directory
-    mode:                     '0700'
-
 - name: Generate an root ca private key with the default values (4096 bits, RSA)
   openssl_privatekey:
     path:                     "{{ root_ca.workspace }}/{{ root_ca.priv_key }}"

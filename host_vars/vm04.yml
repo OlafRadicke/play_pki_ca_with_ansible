@@ -1,11 +1,6 @@
 ---
 # pki_end_entity_service
 
-
-pki_workspace: "/srv/pki"
-httpd_dir: "/usr/share/nginx/html"
-
-
 end_entity_common:
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"

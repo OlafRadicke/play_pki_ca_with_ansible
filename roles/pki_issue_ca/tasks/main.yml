@@ -1,24 +1,5 @@
 ---
 
-- name: Create a main working directory
-  file:
-    path: "{{ pki_ca_workspace }}"
-    state: directory
-    mode: '0700'
-
-- name: Create a base directory for policy ca
-  file:
-    path:                     "{{ pki_issue_ca.workspace }}"
-    state:                    directory
-    mode:                     '0700'
-
-- name: Create a directory for all policy cas
-  file:
-    path:                     "{{ pki_issue_ca.workspace }}/{{ item.key }}"
-    state:                    directory
-    mode:                     '0700'
-  with_dict:                  "{{ pki_issue_ca.ca }}"
-
 - name: Generate policy ca private keys
   openssl_privatekey:
     path:                     "{{ pki_issue_ca.workspace }}/{{ item.key }}/{{ item.value.priv_key }}"

@@ -1,5 +1,6 @@
 ---
-# Sevice issue CA
+# Staff issue CA
+
 
 pki_issue_ca_common:
     country_name:             "DE"
@@ -7,21 +8,20 @@ pki_issue_ca_common:
     organization_name:        "Dummy GmbH"
 
 pki_issue_ca:
-    "service-issue-ca-01.dum.my":
-        email_address:            "service-ca@dum.my"
-        organizational_unit_name: "Service department"
+    "staff-issue-ca-01.dum.my":
+        email_address:            "staff-ca@dum.my"
+        organizational_unit_name: "staff department"
         not_after:                "+26w"
         key_usage:
             - digitalSignature
             - keyAgreement
-    "service-issue-ca-02.dum.my":
-        email_address:            "service-ca@dum.my"
-        organizational_unit_name: "Service department"
+    "staff-issue-ca-02.dum.my":
+        email_address:            "staff-ca@dum.my"
+        organizational_unit_name: "staff department"
         not_after:                "+26w"
         key_usage:
             - digitalSignature
             - keyAgreement
-
 
 end_entity_common:
     csr_base_url:             "http://192.168.178.26"
@@ -33,13 +33,13 @@ end_entity_common:
 end_entity_csr:
     "foo.dum.my":
         url:            "{{ end_entity_common.csr_base_url }}/foo.dum.my.csr"
-        email_address:  "service-issue-ca@dum.my"
-        ca:             "service-issue-ca-01.dum.my"
+        email_address:  "staff-issue-ca@dum.my"
+        ca:             "staff-issue-ca-01.dum.my"
     "bar.dum.my":
         url:            "{{ end_entity_common.csr_base_url }}/bar.dum.my.csr"
-        email_address:  "service-issue-ca@dum.my"
-        ca:             "service-issue-ca-01.dum.my"
+        email_address:  "staff-issue-ca@dum.my"
+        ca:             "staff-issue-ca-01.dum.my"
     "baz.dum.my":
         url:            "{{ end_entity_common.csr_base_url }}/baz.dum.my.csr"
-        email_address:  "service-issue-ca@dum.my"
-        ca:             "service-issue-ca-02.dum.my"
+        email_address:  "staff-issue-ca@dum.my"
+        ca:             "staff-issue-ca-02.dum.my"

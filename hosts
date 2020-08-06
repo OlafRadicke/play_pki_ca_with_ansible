@@ -1,19 +1,12 @@
 
 [pki:children]
-pki_offline_ca
-pki_online_ca
+pki_root_ca
+pki_issue_ca
 pki_end_entity
 
 [pki:vars]
 ansible_user=dummy
 ansible_become=yes
-
-[pki_offline_ca]
-vm01 ansible_host=192.168.178.7
-
-[pki_online_ca]
-vm02 ansible_host=192.168.178.77
-vm03 ansible_host=192.168.178.78
 
 [pki_root_ca]
 vm01 ansible_host=192.168.178.76
@@ -21,24 +14,9 @@ vm01 ansible_host=192.168.178.76
 [pki_policy_ca]
 vm01 ansible_host=192.168.178.76
 
-#[pki_issue_ca]
-#vm01 ansible_host=192.168.178.76
-
 [pki_issue_ca]
 vm03 ansible_host=192.168.178.78
-
-[pki_end_entity_staff]
 vm02 ansible_host=192.168.178.77
-
-[pki_end_entity_service]
-vm03 ansible_host=192.168.178.78
-
-[pki_fetch_issue_ca_files]
-vm02 ansible_host=192.168.178.77 ca_name=staff_ca
-vm03 ansible_host=192.168.178.78 ca_name=service_ca
 
 [pki_end_entity]
 vm04 ansible_host=192.168.178.26
-
-#[pki_end_entity_csr]
-#vm04 ansible_host=192.168.178.26

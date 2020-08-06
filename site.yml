@@ -1,24 +1,30 @@
 ---
 
-# - name: Preparation of all nodes for their job
-#   hosts: pki
+- name: Preparation of all nodes for their job
+  hosts: pki
+  roles:
+    - pki_pre_install
+
+# - name: Creating CSRs for the policy ca
+#   hosts: pki_policy_ca
 #   roles:
-#     - pki_pre_install
+#     - pki_policy_ca_csr
 
 - name: Creating CSRs for the issue ca
+  hosts: pki_issue_ca
+  roles:
+    - pki_issue_ca_csr
+
+- name: Creating CSRs for the end entities
   hosts: pki_end_entity
   roles:
     - pki_end_entity_csr
 
-- name: Creating CSRs for the end entities
-  hosts: pki_end_entity_csr
-  roles:
-    - pki_end_entity_csr
 
 - name: Signed issue ca cert
   hosts: pki_policy_ca
   roles:
-    - pki_signed_issue_cert
+    - pki_signed_issue_ca_cert
 
 - name: Signed end entities cert
   hosts: pki_issue_ca
