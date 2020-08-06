@@ -1,0 +1,25 @@
+---
+
+- name: Create a base directory for policy ca
+  file:
+    path:                     "{{ pki_workspace }}/end_entities"
+    state:                    directory
+    mode:                     '0700'
+
+- name: Generate keys for end entities
+  openssl_privatekey:
+    path:                     "{{ pki_workspace }}/end_entities/{{ item.key }}.pem"
+  with_dict:                  "{{ end_entity_csr }}"
+
+- name: Generate an Certificate Signing Request for end entities
+  openssl_csr:
+    path:                     "{{ httpd_dir }}/{{ item.key }}.csr"
+    privatekey_path:          "{{ pki_workspace }}/end_entities/{{ item.key }}.pem"
+    common_name:              "{{ item.key }}"
+    country_name:             "{{ end_entity_common.country_name }}"
+    state_or_province_name:   "{{ end_entity_common.state_or_province_name }}"
+    organization_name:        "{{ end_entity_common.organization_name }}"
+    email_address:            "{{ item.value.email_address }}"
+    organizational_unit_name: "{{ item.value.organizational_unit_name }}"
+    key_usage:                "{{ item.value.key_usage }}"
+  with_dict:                  "{{ end_entity_csr }}"

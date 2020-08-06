@@ -1,0 +1,24 @@
+---
+
+  - name: Create a base directory for policy ca
+    file:
+      path:           "{{ pki_csr_local_dir }}"
+      state:          directory
+      mode:           '0700'
+
+  - name: Download Certificate Signing Request files of end entities
+    get_url:
+      url:            "{{ item.value.url }}"
+      dest:           "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
+      mode:           '0440'
+    with_dict:        "{{ end_entity_csr }}"
+
+  - name: Generate a ca signed end entities certificate
+    openssl_certificate:
+      path:                     "{{ pki_httpd_dir }}/{{ item.key }}.crt"
+      csr_path:                 "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
+      ownca_path:               "{{pki_ca_dir}}/{{ item.key }}.crt"
+      ownca_privatekey_path:    "{{pki_ca_dir}}/{{ item.key }}.pem"
+      ownca_not_after:          "{{ end_entity_common.not_after }}"
+      provider:                 ownca
+    with_dict:                  "{{ end_entity_csr }}"

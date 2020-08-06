@@ -7,6 +7,16 @@ That is the CA tree, that is created by the Ansible-Playbook:
 
 ![docs/pki-tree.png](docs/pki-tree.png)
 
+Run
+---
+
+*Preparation:* Edit the inventory file and change the IPs of the VMs.
+
+For run this example enter:
+
+```bash
+ansible-playbook -i ./hosts  ./site.yml
+```
 
 
 Helpful tools

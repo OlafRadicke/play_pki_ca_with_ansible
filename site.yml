@@ -1,23 +1,50 @@
 ---
 
-- hosts: pki
-  roles:
-    - pki_pre_install
+# - name: Preparation of all nodes for their job
+#   hosts: pki
+#   roles:
+#     - pki_pre_install
 
-- hosts: pki_offline_ca
+- name: Creating CSRs for the issue ca
+  hosts: pki_end_entity
   roles:
-    - pki_root_ca
-    - pki_policy_ca
-    - pki_issue_ca
+    - pki_end_entity_csr
 
-- hosts: pki_fetch_issue_ca_files
+- name: Creating CSRs for the end entities
+  hosts: pki_end_entity_csr
   roles:
-  - pki_fetch_issue_ca_files
+    - pki_end_entity_csr
 
-- hosts: pki_end_entity_staff
+- name: Signed issue ca cert
+  hosts: pki_policy_ca
   roles:
-    - pki_end_entity_staff
+    - pki_signed_issue_cert
 
-- hosts: pki_end_entity_service
+- name: Signed end entities cert
+  hosts: pki_issue_ca
   roles:
-    - pki_end_entity_service
+    - pki_signed_end_entities_cert
+
+
+
+##############################################################
+##############################################################
+
+
+# - hosts: pki_offline_ca
+#   roles:
+#     - pki_root_ca
+#     - pki_policy_ca
+#     - pki_issue_ca
+
+# - hosts: pki_fetch_issue_ca_files
+#   roles:
+#   - pki_fetch_issue_ca_files
+
+# - hosts: pki_end_entity_staff
+#   roles:
+#     - pki_end_entity_staff
+
+# - hosts: pki_end_entity_service
+#   roles:
+#     - pki_end_entity_service

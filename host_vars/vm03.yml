@@ -1,0 +1,68 @@
+---
+# Sevice issue CA
+
+pki_workspace:       "/srv/pki"
+pki_ca_dir:          "{{ pki_workspace }}/ca"
+pki_csr_local_dir:   "{{ pki_workspace }}/csr"
+pki_httpd_dir:       "/usr/share/nginx/html"
+
+# pki_issue_ca:
+#     ownca_path:               "{{ pki_workspace }}/service.issue.ca.crt"
+#     ownca_privatekey_path:    "{{ pki_workspace }}/service.issue.ca.pem"
+#     csr_local_dir:            "{{ pki_workspace }}/csr"
+#     httpd_dir:                 "/usr/share/nginx/html"
+
+# pki_issue_ca:
+#     workspace:                "{{ pki_ca_workspace }}/issue_ca"
+#     ownca_path:               "{{ pki_ca_workspace }}/root_ca/root.crt"
+#     ownca_privatekey_path:    "{{ pki_ca_workspace }}/root_ca/root_ca_priv_key.pem"
+
+
+
+pki_issue_ca_common:
+    country_name:             "DE"
+    state_or_province_name:   "Dummyfild"
+    organization_name:        "Dummy GmbH"
+
+pki_issue_ca:
+    "service-issue-ca-01.dum.my":
+        priv_key:                 "service-issue-ca.dum.my.pem"
+        pub_key:                  "service-issue-ca.dum.my.pem.pub"
+        crt:                      "service-issue-ca.dum.my.crt"
+        csr:                      "service-issue-ca.dum.my.csr"
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Service department"
+        not_after:                "+26w"
+        key_usage:
+            - digitalSignature
+            - keyAgreement
+    "service-issue-ca-02.dum.my":
+        priv_key:                 "service-issue-ca.dum.my.pem"
+        pub_key:                  "service-issue-ca.dum.my.pem.pub"
+        crt:                      "service-issue-ca.dum.my.crt"
+        csr:                      "service-issue-ca.dum.my.csr"
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Service department"
+        not_after:                "+26w"
+        key_usage:
+            - digitalSignature
+            - keyAgreement
+
+
+end_entity_common:
+    csr_base_url:             "http://192.168.178.26"
+    not_after:                "+26w"
+    # country_name:             "DE"
+    # state_or_province_name:   "Dummyfild"
+    # organization_name:        "Dummy GmbH"
+
+end_entity_csr:
+    "foo.dum.my":
+        url: "{{ end_entity_common.csr_base_url }}/foo.dum.my.csr"
+        ca: "service-issue-ca-01.dum.my"
+    "bar.dum.my":
+        url: "{{ end_entity_common.csr_base_url }}/bar.dum.my.csr"
+        ca: "service-issue-ca-01.dum.my"
+    "baz.dum.my":
+        url: "{{ end_entity_common.csr_base_url }}/baz.dum.my.csr"
+        ca: "service-issue-ca-02.dum.my"

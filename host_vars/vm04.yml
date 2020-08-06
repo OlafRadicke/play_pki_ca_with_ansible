@@ -1,0 +1,34 @@
+---
+# pki_end_entity_service
+
+
+pki_workspace: "/srv/pki"
+httpd_dir: "/usr/share/nginx/html"
+
+
+end_entity_common:
+    country_name:             "DE"
+    state_or_province_name:   "Dummyfild"
+    organization_name:        "Dummy GmbH"
+end_entity_csr:
+    "foo.dum.my":
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Foobar service department"
+        not_after:                "+26w"
+        key_usage:
+            - digitalSignature
+            - keyAgreement
+    "bar.dum.my":
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Foobar service department"
+        not_after:                "+26w"
+        key_usage:
+            - digitalSignature
+            - keyAgreement
+    "baz.dum.my":
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Foobar service department"
+        not_after:                "+26w"
+        key_usage:
+            - digitalSignature
+            - keyAgreement
