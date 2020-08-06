@@ -34,10 +34,10 @@ pki_issue_ca_csr:
         ca:             "staff-policy-ca-01.dum.my"
         not_after:      "+52w"
     "service-issue-ca-01.dum.my":
-        base_url:       "http://92.168.178.78"
+        base_url:       "http://192.168.178.78"
         ca:             "service-policy-ca-01.dum.my"
         not_after:      "+26w"
     "service-issue-ca-02.dum.my":
-        base_url:       "http://92.168.178.78"
+        base_url:       "http://192.168.178.78"
         ca:             "service-policy-ca-01.dum.my"
         not_after:      "+26w"

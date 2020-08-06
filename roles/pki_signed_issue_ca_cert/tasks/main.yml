@@ -11,8 +11,8 @@
   openssl_certificate:
     path:                     "{{ pki_httpd_dir }}/{{ item.key }}.crt"
     csr_path:                 "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
-    ownca_path:               "{{pki_ca_dir}}/{{ item.key }}.crt"
-    ownca_privatekey_path:    "{{pki_ca_dir}}/{{ item.key }}.pem"
+    ownca_path:               "{{ pki_ca_dir }}/{{ item.value.ca }}.crt"
+    ownca_privatekey_path:    "{{ pki_ca_dir }}/{{ item.value.ca }}.pem"
     ownca_not_after:          "{{ item.value.not_after }}"
     provider:                 ownca
   with_dict:                  "{{ pki_issue_ca_csr }}"
