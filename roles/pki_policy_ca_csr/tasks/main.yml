@@ -1,0 +1,19 @@
+---
+
+- name: Generate keys for issue cas
+  openssl_privatekey:
+    path:                     "{{ pki_ca_dir }}/{{ item.key }}.pem"
+  with_dict:                  "{{ pki_policy_ca }}"
+
+- name: Generate an Certificate Signing Request for issue cas
+  openssl_csr:
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.csr"
+    privatekey_path:          "{{ pki_ca_dir }}/{{ item.key }}.pem"
+    common_name:              "{{ item.key }}"
+    country_name:             "{{ pki_policy_ca_common.country_name }}"
+    state_or_province_name:   "{{ pki_policy_ca_common.state_or_province_name }}"
+    organization_name:        "{{ pki_policy_ca_common.organization_name }}"
+    email_address:            "{{ item.value.email_address }}"
+    organizational_unit_name: "{{ item.value.organizational_unit_name }}"
+    key_usage:                "{{ item.value.key_usage }}"
+  with_dict:                  "{{ pki_policy_ca }}"

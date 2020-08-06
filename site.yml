@@ -1,14 +1,16 @@
 ---
 
+
 - name: Preparation of all nodes for their job
   hosts: pki
   roles:
+    - pki_reset
     - pki_pre_install
 
-# - name: Creating CSRs for the policy ca
-#   hosts: pki_policy_ca
-#   roles:
-#     - pki_policy_ca_csr
+- name: Creating CSRs for the policy ca
+  hosts: pki_policy_ca
+  roles:
+    - pki_policy_ca_csr
 
 - name: Creating CSRs for the issue ca
   hosts: pki_issue_ca

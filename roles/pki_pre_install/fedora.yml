@@ -32,5 +32,3 @@
     - "{{ pki_ca_dir }}"
     - "{{ pki_csr_local_dir }}"
     - "{{ pki_end_entities_dir }}"
-    - "{{ pki_workspace }}"
-    - "{{ pki_csr_local_dir }}"

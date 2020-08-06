@@ -1,6 +1,0 @@
----
-
-pki_fetch:
-    offline_ca: "/srv/pki/issue_ca/"
-    online_ca:  "/srv/pki/issue_ca"
-    tmp_dir:    "/tmp/pki_ca_download"

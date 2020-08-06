@@ -2,7 +2,7 @@
 
 - name: Download Certificate Signing Request files of end_entities_cert
   get_url:
-    url:            "{{ item.value.url }}"
+    url:            "{{ item.value.base_url }}/{{ item.key }}.csr"
     dest:           "{{ pki_issue_ca.csr_local_dir }}/{{ item.key }}.csr"
     mode:           '0440'
   with_dict:        "{{ end_entity_csr }}"

@@ -32,14 +32,14 @@ end_entity_common:
 
 end_entity_csr:
     "foo.dum.my":
-        url:            "{{ end_entity_common.csr_base_url }}/foo.dum.my.csr"
-        email_address:  "staff-issue-ca@dum.my"
+        base_url:       "{{ end_entity_common.csr_base_url }}"
+        # email_address:  "staff-issue-ca@dum.my"
         ca:             "staff-issue-ca-01.dum.my"
     "bar.dum.my":
-        url:            "{{ end_entity_common.csr_base_url }}/bar.dum.my.csr"
-        email_address:  "staff-issue-ca@dum.my"
+        base_url:       "{{ end_entity_common.csr_base_url }}"
+        # email_address:  "staff-issue-ca@dum.my"
         ca:             "staff-issue-ca-01.dum.my"
     "baz.dum.my":
-        url:            "{{ end_entity_common.csr_base_url }}/baz.dum.my.csr"
-        email_address:  "staff-issue-ca@dum.my"
+        base_url:       "{{ end_entity_common.csr_base_url }}"
+        # email_address:  "staff-issue-ca@dum.my"
         ca:             "staff-issue-ca-02.dum.my"
