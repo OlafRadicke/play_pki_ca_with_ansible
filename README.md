@@ -14,7 +14,8 @@ That is the work flow of the certification:
 Run
 ---
 
-*Preparation:* Edit the inventory file and change the IPs of the VMs.
+*Preparation:* Edit the host_vars file and change the IPs of the VMs. And
+maybe the ansible userin the file pki.yml in the group_vars.
 
 For run this example enter:
 
