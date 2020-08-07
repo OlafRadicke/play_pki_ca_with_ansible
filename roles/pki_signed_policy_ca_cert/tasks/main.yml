@@ -1,8 +1,15 @@
 ---
 
+- name: Download signing certificate files of root ca
+  get_url:
+    url:            "{{ item.value.referrenc_ca_url }}/{{ item.value.ca }}.crt"
+    dest:           "{{ pki_ca_dir }}/{{ item.value.ca }}.crt"
+    mode:           '0440'
+  with_dict:        "{{ pki_policy_ca_csr }}"
+
 - name: Download Certificate Signing Request files of policy ca
   get_url:
-    url:            "{{ item.value.base_url }}/{{ item.key }}.csr"
+    url:            "{{ item.value.owner_url }}/{{ item.key }}.csr"
     dest:           "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
     mode:           '0440'
   with_dict:        "{{ pki_policy_ca_csr }}"

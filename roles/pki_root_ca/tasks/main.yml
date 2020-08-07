@@ -2,12 +2,12 @@
 
 - name: Generate an root ca private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path:                     "{{ root_ca.workspace }}/{{ root_ca.priv_key }}"
+    path:                     "{{ pki_ca_dir }}/{{ root_ca.common_name }}.pem"
 
 - name: Generate an root Certificate Signing Request
   openssl_csr:
-    path:                     "{{ root_ca.workspace }}/{{ root_ca.csr }}"
-    privatekey_path:          "{{ root_ca.workspace }}/{{ root_ca.priv_key }}"
+    path:                     "{{ pki_csr_local_dir }}/{{ root_ca.common_name }}.csr"
+    privatekey_path:          "{{ pki_ca_dir }}/{{ root_ca.common_name }}.pem"
     common_name:              "{{ root_ca.common_name }}"
     country_name:             "{{ root_ca.country_name }}"
     state_or_province_name:   "{{ root_ca.state_or_province_name }}"
@@ -18,8 +18,8 @@
 
 - name: Generate a Self Signed OpenSSL root certificate
   openssl_certificate:
-    path:                     "{{ root_ca.workspace }}/{{ root_ca.crt }}"
-    privatekey_path:          "{{ root_ca.workspace }}/{{ root_ca.priv_key }}"
-    csr_path:                 "{{ root_ca.workspace }}/{{ root_ca.csr }}"
+    path:                     "{{ pki_httpd_dir }}/{{ root_ca.common_name }}.crt"
+    csr_path:                 "{{ pki_csr_local_dir }}/{{ root_ca.common_name }}.csr"
+    privatekey_path:          "{{ pki_ca_dir }}/{{ root_ca.common_name }}.pem"
     selfsigned_not_after:     "{{ root_ca.not_after }}"
     provider:                 "selfsigned"

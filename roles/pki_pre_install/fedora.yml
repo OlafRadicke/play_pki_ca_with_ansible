@@ -28,7 +28,7 @@
     state:   directory
     mode:    '0700'
   loop:
-    - "{{ pki_workspace }}"
     - "{{ pki_ca_dir }}"
     - "{{ pki_csr_local_dir }}"
     - "{{ pki_end_entities_dir }}"
+    - "{{ pki_workspace }}"

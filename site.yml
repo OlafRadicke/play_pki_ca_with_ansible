@@ -1,6 +1,5 @@
 ---
 
-
 - name: Preparation of all nodes for their job
   hosts: pki
   roles:
@@ -22,10 +21,15 @@
   roles:
     - pki_end_entity_csr
 
+- name: Creating CSR and self signed root certificate
+  hosts: pki_root_ca
+  roles:
+    - pki_root_ca
+
 - name: Signed policy ca cert
   hosts: pki_root_ca
   roles:
-    - ppki_signed_policy_ca_cert
+    - pki_signed_policy_ca_cert
 
 - name: Signed issue ca cert
   hosts: pki_policy_ca
@@ -36,27 +40,3 @@
   hosts: pki_issue_ca
   roles:
     - pki_signed_end_entities_cert
-
-
-
-##############################################################
-##############################################################
-
-
-# - hosts: pki_offline_ca
-#   roles:
-#     - pki_root_ca
-#     - pki_policy_ca
-#     - pki_issue_ca
-
-# - hosts: pki_fetch_issue_ca_files
-#   roles:
-#   - pki_fetch_issue_ca_files
-
-# - hosts: pki_end_entity_staff
-#   roles:
-#     - pki_end_entity_staff
-
-# - hosts: pki_end_entity_service
-#   roles:
-#     - pki_end_entity_service

@@ -24,22 +24,21 @@ pki_issue_ca:
             - keyAgreement
 
 end_entity_common:
-    csr_base_url:             "http://192.168.178.26"
+    owner_url:                "http://192.168.178.26"
+    referrenc_ca_url:         "http://192.168.178.78"
     not_after:                "+26w"
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"
     organization_name:        "Dummy GmbH"
 
-end_entity_csr:
-    "foo.dum.my":
-        base_url:       "{{ end_entity_common.csr_base_url }}"
-        # email_address:  "staff-issue-ca@dum.my"
-        ca:             "staff-issue-ca-01.dum.my"
-    "bar.dum.my":
-        base_url:       "{{ end_entity_common.csr_base_url }}"
-        # email_address:  "staff-issue-ca@dum.my"
-        ca:             "staff-issue-ca-01.dum.my"
-    "baz.dum.my":
-        base_url:       "{{ end_entity_common.csr_base_url }}"
-        # email_address:  "staff-issue-ca@dum.my"
-        ca:             "staff-issue-ca-02.dum.my"
+end_entity_csr: []
+    # "jane.doe@dum.my":
+    #     owner_url:        "{{ end_entity_common.owner_url }}"
+    #     referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
+    #     ca:               "staff-issue-ca-01.dum.my"
+    #     email_address:    "jane.doe@dum.my"
+    # "john.doe":
+    #     owner_url:        "{{ end_entity_common.owner_url }}"
+    #     referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
+    #     ca:               "staff-issue-ca-01.dum.my"
+    #     email_address:    "john.doe@dum.my"

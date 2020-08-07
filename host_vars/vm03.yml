@@ -24,7 +24,8 @@ pki_issue_ca:
 
 
 end_entity_common:
-    csr_base_url:             "http://192.168.178.26"
+    owner_url:                "http://192.168.178.26"
+    referrenc_ca_url:         "http://192.168.178.76"
     not_after:                "+26w"
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"
@@ -32,14 +33,17 @@ end_entity_common:
 
 end_entity_csr:
     "foo.dum.my":
-        url:            "{{ end_entity_common.csr_base_url }}/foo.dum.my.csr"
-        email_address:  "service-issue-ca@dum.my"
-        ca:             "service-issue-ca-01.dum.my"
+        owner_url:        "{{ end_entity_common.owner_url }}"
+        referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
+        email_address:    "service-issue-ca@dum.my"
+        ca:               "service-issue-ca-01.dum.my"
     "bar.dum.my":
-        url:            "{{ end_entity_common.csr_base_url }}/bar.dum.my.csr"
-        email_address:  "service-issue-ca@dum.my"
-        ca:             "service-issue-ca-01.dum.my"
+        owner_url:        "{{ end_entity_common.owner_url }}"
+        referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
+        email_address:    "service-issue-ca@dum.my"
+        ca:               "service-issue-ca-01.dum.my"
     "baz.dum.my":
-        url:            "{{ end_entity_common.csr_base_url }}/baz.dum.my.csr"
-        email_address:  "service-issue-ca@dum.my"
-        ca:             "service-issue-ca-02.dum.my"
+        owner_url:        "{{ end_entity_common.owner_url }}"
+        referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
+        email_address:    "service-issue-ca@dum.my"
+        ca:               "service-issue-ca-02.dum.my"
