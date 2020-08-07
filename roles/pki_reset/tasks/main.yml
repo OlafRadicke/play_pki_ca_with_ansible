@@ -1,2 +1,11 @@
-- name: Include fedora support
-  include: fedora.yml
+---
+
+- name: Create a base directory for policy ca
+  file:
+    path:    "{{ item }}"
+    state:   absent
+  loop:
+    - "{{ pki_workspace }}"
+    - "{{ pki_ca_dir }}"
+    - "{{ pki_csr_local_dir }}"
+    - "{{ pki_end_entities_dir }}"
