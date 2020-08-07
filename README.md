@@ -19,7 +19,7 @@ Run
 For run this example enter:
 
 ```bash
-ansible-playbook -i ./hosts  ./site.yml
+ansible-playbook -i ./hosts.yml  ./site.yml
 ```
 
 TODOs
