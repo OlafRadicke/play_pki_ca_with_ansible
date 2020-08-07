@@ -7,6 +7,10 @@ That is the CA tree, that is created by the Ansible-Playbook:
 
 ![docs/pki-tree.png](docs/pki-tree.png)
 
+That is the work flow of the certification:
+
+![docs/pki-tree.png](docs/pki-flow.png)
+
 Run
 ---
 
@@ -18,6 +22,12 @@ For run this example enter:
 ansible-playbook -i ./hosts  ./site.yml
 ```
 
+TODOs
+-----
+
+- Clean up group_vars
+- Clean up comments
+- Clean up role readme files
 
 Helpful tools
 ----------------

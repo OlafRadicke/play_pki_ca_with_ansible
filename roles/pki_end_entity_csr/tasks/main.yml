@@ -1,11 +1,5 @@
 ---
 
-# - name: Create a base directory for policy ca
-#   file:
-#     path:                     "{{ pki_workspace }}/end_entities"
-#     state:                    directory
-#     mode:                     '0700'
-
 - name: Generate keys for end entities
   openssl_privatekey:
     path:                     "{{ pki_end_entities_dir }}/{{ item.key }}.pem"

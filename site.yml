@@ -22,6 +22,10 @@
   roles:
     - pki_end_entity_csr
 
+- name: Signed policy ca cert
+  hosts: pki_root_ca
+  roles:
+    - ppki_signed_policy_ca_cert
 
 - name: Signed issue ca cert
   hosts: pki_policy_ca
