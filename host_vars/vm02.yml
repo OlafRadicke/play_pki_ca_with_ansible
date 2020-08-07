@@ -1,6 +1,7 @@
 ---
 # Staff issue CA
 
+ansible_host: "192.168.178.77"
 
 pki_issue_ca_common:
     country_name:             "DE"
@@ -32,6 +33,7 @@ end_entity_common:
     organization_name:        "Dummy GmbH"
 
 end_entity_csr: []
+    ## EXAPLE:
     # "jane.doe@dum.my":
     #     owner_url:        "{{ end_entity_common.owner_url }}"
     #     referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"

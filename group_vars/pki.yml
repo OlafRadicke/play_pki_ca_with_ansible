@@ -1,5 +1,7 @@
 ---
 
+ansible_user:         dummy
+ansible_become:       yes
 pki_workspace:        "/srv/pki"
 pki_ca_dir:           "{{ pki_workspace }}/ca"
 pki_csr_local_dir:    "{{ pki_workspace }}/csr"

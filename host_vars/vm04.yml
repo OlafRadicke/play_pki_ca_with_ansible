@@ -1,6 +1,8 @@
 ---
 # pki_end_entity_service
 
+ansible_host: "192.168.178.26"
+
 end_entity_common:
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"

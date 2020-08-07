@@ -1,6 +1,8 @@
 ---
 # Sevice issue CA
 
+ansible_host: "192.168.178.78"
+
 pki_issue_ca_common:
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"

@@ -3,10 +3,11 @@
 pki_root_ca
 pki_issue_ca
 pki_end_entity
+pki_policy_ca
 
-[pki:vars]
-ansible_user=dummy
-ansible_become=yes
+#[pki:vars]
+#ansible_user=dummy
+#ansible_become=yes
 
 [pki_root_ca]
 vm01 ansible_host=192.168.178.76
