@@ -22,13 +22,6 @@ For run this example enter:
 ansible-playbook -i ./hosts.yml  ./site.yml
 ```
 
-TODOs
------
-
-- Clean up group_vars
-- Clean up comments
-- Clean up role readme files
-
 Helpful tools
 ----------------
 
