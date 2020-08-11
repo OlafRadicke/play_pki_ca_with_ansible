@@ -39,3 +39,8 @@
 #   hosts: pki_issue_ca
 #   roles:
 #     - pki_signed_end_entities_cert
+
+- name: Preparation of fake services for tests
+  hosts: pki_fake_service
+  roles:
+    - pki_fake_service
