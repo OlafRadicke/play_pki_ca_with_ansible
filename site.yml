@@ -1,10 +1,9 @@
 ---
 
 - name: Preparation of all nodes for their job
-  hosts: pki
+  hosts: pki_ansible
   roles:
-    - pki_reset
-    - pki_pre_install
+    - pki_check_git_sign
 
 - name: Creating CSRs for the policy ca
   hosts: pki_policy_ca

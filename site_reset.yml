@@ -1,0 +1,6 @@
+---
+
+- name: Preparation of all nodes for their job
+  hosts: pki
+  roles:
+    - pki_reset

@@ -1,0 +1,8 @@
+---
+
+- name: Check the fingerprint of the commit sign
+  git:
+    repo: "{{ pki_repo }}"
+    dest: /tmp/git_check
+    version: "{{ pki_git_tag }}"
+    gpg_whitelist: "{{ pki_gpg_whitelist }}"
