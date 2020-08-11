@@ -5,37 +5,37 @@
   roles:
     - pki_check_git_sign
 
-- name: Creating CSRs for the policy ca
-  hosts: pki_policy_ca
-  roles:
-    - pki_policy_ca_csr
+# - name: Creating CSRs for the policy ca
+#   hosts: pki_policy_ca
+#   roles:
+#     - pki_policy_ca_csr
 
-- name: Creating CSRs for the issue ca
-  hosts: pki_issue_ca
-  roles:
-    - pki_issue_ca_csr
+# - name: Creating CSRs for the issue ca
+#   hosts: pki_issue_ca
+#   roles:
+#     - pki_issue_ca_csr
 
-- name: Creating CSRs for the end entities
-  hosts: pki_end_entity
-  roles:
-    - pki_end_entity_csr
+# - name: Creating CSRs for the end entities
+#   hosts: pki_end_entity
+#   roles:
+#     - pki_end_entity_csr
 
-- name: Creating CSR and self signed root certificate
-  hosts: pki_root_ca
-  roles:
-    - pki_root_ca
+# - name: Creating CSR and self signed root certificate
+#   hosts: pki_root_ca
+#   roles:
+#     - pki_root_ca
 
-- name: Signed policy ca cert
-  hosts: pki_root_ca
-  roles:
-    - pki_signed_policy_ca_cert
+# - name: Signed policy ca cert
+#   hosts: pki_root_ca
+#   roles:
+#     - pki_signed_policy_ca_cert
 
-- name: Signed issue ca cert
-  hosts: pki_policy_ca
-  roles:
-    - pki_signed_issue_ca_cert
+# - name: Signed issue ca cert
+#   hosts: pki_policy_ca
+#   roles:
+#     - pki_signed_issue_ca_cert
 
-- name: Signed end entities cert
-  hosts: pki_issue_ca
-  roles:
-    - pki_signed_end_entities_cert
+# - name: Signed end entities cert
+#   hosts: pki_issue_ca
+#   roles:
+#     - pki_signed_end_entities_cert

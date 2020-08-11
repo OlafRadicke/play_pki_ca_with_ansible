@@ -1,8 +1,15 @@
 ---
 
+- name: Create a base directory for policy ca
+  file:
+    path:          "{{ pki_repo_dest }}"
+    state:         absent
+
 - name: Check the fingerprint of the commit sign
   git:
-    repo: "{{ pki_repo }}"
-    dest: /tmp/git_check
-    version: "{{ pki_git_tag }}"
+    repo:          "{{ pki_repo }}"
+    dest:          "{{ pki_repo_dest }}"
+    version:       "{{ pki_git_tag }}"
+    force:         yes
     gpg_whitelist: "{{ pki_gpg_whitelist }}"
+    verify_commit: true
