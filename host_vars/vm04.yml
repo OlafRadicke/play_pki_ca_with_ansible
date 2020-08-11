@@ -1,12 +1,17 @@
 ---
 # pki_end_entity_service
 
-ansible_host: "192.168.178.26"
+ansible_host:                 "192.168.178.26"
+
+pki_referrenc_ca_url:             "http://192.168.178.78"
+pki_service_http_root_dir:        "/srv/http"
 
 end_entity_common:
+    referrenc_ca_url:         "http://192.168.178.78"
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"
     organization_name:        "Dummy GmbH"
+
 
 end_entity_csr:
     "foo.dum.my":

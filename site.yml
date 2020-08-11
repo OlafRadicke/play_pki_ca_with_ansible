@@ -1,9 +1,14 @@
 ---
 
+# - name: Checkout ansible code an the git tag finger print
+#   hosts: pki_ansible
+#   roles:
+#     - pki_check_git_sign
+
 - name: Preparation of all nodes for their job
-  hosts: pki_ansible
+  hosts: pki
   roles:
-    - pki_check_git_sign
+    - pki_pre_install
 
 # - name: Creating CSRs for the policy ca
 #   hosts: pki_policy_ca
@@ -40,7 +45,7 @@
 #   roles:
 #     - pki_signed_end_entities_cert
 
-- name: Preparation of fake services for tests
+- name: Create fake services for tests
   hosts: pki_fake_service
   roles:
     - pki_fake_service

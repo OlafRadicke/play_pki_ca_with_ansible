@@ -1,17 +1,21 @@
 ---
 
+- name: Download signing certificate files of root ca
+  get_url:
+    url:            "{{ item.value.referrenc_ca_url }}/root-ca-01.dum.my.crt"
+    dest:           "{{ pki_httpd_dir }}/root-ca-01.dum.my.crt"
+  with_dict:        "{{ end_entity_csr }}"
+
 - name: Download signing certificate files of issue ca
   get_url:
     url:            "{{ item.value.referrenc_ca_url }}/{{ item.value.ca }}.crt"
     dest:           "{{ pki_ca_dir }}/{{ item.value.ca }}.crt"
-    mode:           '0440'
   with_dict:        "{{ end_entity_csr }}"
 
 - name: Download Certificate Signing Request files of end_entities_cert
   get_url:
     url:            "{{ item.value.owner_url }}/{{ item.key }}.csr"
     dest:           "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
-    mode:           '0440'
   with_dict:        "{{ end_entity_csr }}"
 
 - name: Generate a ca signed end entities certificate
