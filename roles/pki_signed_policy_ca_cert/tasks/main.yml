@@ -2,15 +2,21 @@
 
 - name: Download signing certificate files of root ca
   get_url:
-    url:            "{{ item.value.referrenc_ca_url }}/{{ item.value.ca }}.crt"
-    dest:           "{{ pki_ca_dir }}/{{ item.value.ca }}.crt"
-  with_dict:        "{{ pki_policy_ca_csr }}"
+    url:                      "{{ item.value.referrenc_ca_url }}/{{ item.value.ca }}.crt"
+    dest:                     "{{ pki_ca_dir }}/{{ item.value.ca }}.crt"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rwx,g=rx,o=rx'
+  with_dict:                  "{{ pki_policy_ca_csr }}"
 
 - name: Download Certificate Signing Request files of policy ca
   get_url:
-    url:            "{{ item.value.owner_url }}/{{ item.key }}.csr"
-    dest:           "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
-  with_dict:        "{{ pki_policy_ca_csr }}"
+    url:                      "{{ item.value.owner_url }}/{{ item.key }}.csr"
+    dest:                     "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rwx,g=rx,o=rx'
+  with_dict:                  "{{ pki_policy_ca_csr }}"
 
 - name: Generate a ca signed policy ca certificate
   openssl_certificate:
@@ -20,4 +26,12 @@
     ownca_privatekey_path:    "{{ pki_ca_dir }}/{{ item.value.ca }}.pem"
     ownca_not_after:          "{{ item.value.not_after }}"
     provider:                 ownca
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+
+- name: Set owner of crt file
+  file:
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.crt"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rw,g=r,o=r'
   with_dict:                  "{{ pki_policy_ca_csr }}"

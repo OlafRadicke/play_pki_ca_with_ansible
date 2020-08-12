@@ -23,6 +23,13 @@ For run this example enter:
 ansible-playbook -i ./hosts.yml  ./site.yml
 ```
 
+
+Known issue
+-----------
+
+The playbook is switched off selinux. But for an effect,  ths need a restart
+of the virtual machine.
+
 Helpful tools
 ----------------
 

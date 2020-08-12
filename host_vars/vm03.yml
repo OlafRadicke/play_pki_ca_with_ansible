@@ -26,8 +26,8 @@ pki_issue_ca:
 
 
 end_entity_common:
-    owner_url:                "http://192.168.178.26"
-    referrenc_ca_url:         "http://192.168.178.76"
+    owner_url:                "http://192.168.178.26:{{ pki_csr_exchange_port }}"
+    referrenc_ca_url:         "http://192.168.178.76:{{ pki_csr_exchange_port }}"
     not_after:                "+26w"
     country_name:             "DE"
     state_or_province_name:   "Dummyfild"

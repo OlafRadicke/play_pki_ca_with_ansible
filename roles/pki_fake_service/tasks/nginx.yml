@@ -1,0 +1,53 @@
+---
+
+- name: Create httpd root directory for services
+  file:
+    path:           "{{ pki_service_http_root_dir }}/{{ item.key }}"
+    state:          directory
+    owner:          nginx
+    group:          nginx
+    mode:           'u=rwx,g=rx,o=rx'
+  with_dict:        "{{ end_entity_csr }}"
+
+
+- name: Download signing certificate files of root ca
+  get_url:
+    url:            "{{ end_entity_common.referrenc_ca_url }}/root-ca-01.dum.my.crt"
+    dest:           "{{ pki_ca_dir }}/root-ca-01.dum.my.crt"
+    owner:          nginx
+    group:          nginx
+    mode:           'u=rx,g=r,o=r'
+
+- name: Download signing certificate files of end entity / services
+  get_url:
+    url:            "{{ pki_referrenc_ca_url }}/{{ item.key }}.crt"
+    dest:           "{{ pki_ca_dir }}/{{ item.key }}.crt"
+    owner:          nginx
+    group:          nginx
+    mode:           'u=rx,g=r,o=r'
+  with_dict:        "{{ end_entity_csr }}"
+
+
+- name: Copy index files
+  copy:
+    src:            index.html
+    dest:           "{{ pki_service_http_root_dir }}/{{ item.key }}/index.html"
+    owner:          nginx
+    group:          nginx
+    mode:           'u=xwr,g=xr,o=xr'
+  with_dict:        "{{ end_entity_csr }}"
+
+- name: Create nginx config for service
+  template:
+    src:            "{{ item }}.conf"
+    dest:           "/etc/nginx/conf.d/{{ item }}.conf"
+    owner:          nginx
+    group:          nginx
+    mode:           'u=rx,g=r,o=r'
+  loop:
+    - "foo.dum.my"
+
+- name: Start service nginx, if not started
+  service:
+    name:          nginx
+    state:         restarted

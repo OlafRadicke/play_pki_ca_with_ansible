@@ -30,9 +30,21 @@
   file:
     path:    "{{ item }}"
     state:   directory
-    mode:    '0700'
+    mode:    'u=rwx,g=rx,o=rx'
+  loop:
+    - "{{ pki_csr_local_dir }}"
+    - "{{ pki_workspace }}"
+
+
+- name: Create a base directory for policy ca
+  file:
+    path:    "{{ item }}"
+    state:   directory
+    mode:    'u=rwx,g=rx,o-rwx'
   loop:
     - "{{ pki_ca_dir }}"
-    - "{{ pki_csr_local_dir }}"
     - "{{ pki_end_entities_dir }}"
-    - "{{ pki_workspace }}"
+
+
+- name: Include nginx setup for fedora
+  include: "fedora_nginx.yml"

@@ -38,34 +38,34 @@ pki_policy_ca:
 
 pki_policy_ca_csr:
     "staff-policy-ca-01.dum.my":
-        owner_url:        "http://192.168.178.76"
-        referrenc_ca_url: "http://192.168.178.76"
+        owner_url:        "http://192.168.178.76:{{ pki_csr_exchange_port }}"
+        referrenc_ca_url: "http://192.168.178.76:{{ pki_csr_exchange_port }}"
         ca:               "root-ca-01.dum.my"
         not_after:        "+52w"
     "service-policy-ca-01.dum.my":
-        owner_url:        "http://192.168.178.76"
-        referrenc_ca_url: "http://192.168.178.76"
+        owner_url:        "http://192.168.178.76:{{ pki_csr_exchange_port }}"
+        referrenc_ca_url: "http://192.168.178.76:{{ pki_csr_exchange_port }}"
         ca:               "root-ca-01.dum.my"
         not_after:        "+26w"
 
 pki_issue_ca_csr:
     "staff-issue-ca-01.dum.my":
-        owner_url:        "http://192.168.178.77"
-        referrenc_ca_url: "http://192.168.178.76"
+        owner_url:        "http://192.168.178.77:{{ pki_csr_exchange_port }}"
+        referrenc_ca_url: "http://192.168.178.76:{{ pki_csr_exchange_port }}"
         ca:               "staff-policy-ca-01.dum.my"
         not_after:        "+52w"
     "staff-issue-ca-02.dum.my":
-        owner_url:        "http://192.168.178.77"
-        referrenc_ca_url: "http://192.168.178.76"
+        owner_url:        "http://192.168.178.77:{{ pki_csr_exchange_port }}"
+        referrenc_ca_url: "http://192.168.178.76:{{ pki_csr_exchange_port }}"
         ca:               "staff-policy-ca-01.dum.my"
         not_after:        "+52w"
     "service-issue-ca-01.dum.my":
-        owner_url:        "http://192.168.178.78"
-        referrenc_ca_url: "http://192.168.178.76"
+        owner_url:        "http://192.168.178.78:{{ pki_csr_exchange_port }}"
+        referrenc_ca_url: "http://192.168.178.76:{{ pki_csr_exchange_port }}"
         ca:               "service-policy-ca-01.dum.my"
         not_after:        "+26w"
     "service-issue-ca-02.dum.my":
-        owner_url:        "http://192.168.178.78"
-        referrenc_ca_url: "http://192.168.178.76"
+        owner_url:        "http://192.168.178.78:{{ pki_csr_exchange_port }}"
+        referrenc_ca_url: "http://192.168.178.76:{{ pki_csr_exchange_port }}"
         ca:               "service-policy-ca-01.dum.my"
         not_after:        "+26w"

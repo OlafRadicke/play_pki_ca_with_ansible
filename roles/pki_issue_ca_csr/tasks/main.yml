@@ -17,3 +17,11 @@
     organizational_unit_name: "{{ item.value.organizational_unit_name }}"
     key_usage:                "{{ item.value.key_usage }}"
   with_dict:                  "{{ pki_issue_ca }}"
+
+- name: Set owner of csr
+  file:
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.csr"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rw,g=r,o=r'
+  with_dict:                  "{{ pki_issue_ca }}"
