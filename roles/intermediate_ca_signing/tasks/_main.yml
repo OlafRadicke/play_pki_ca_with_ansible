@@ -1,0 +1,82 @@
+---
+
+- name: Download signing certificate files of root ca
+  get_url:
+    url:                      "{{ item.value.referrenc_ca_url }}/{{ item.value.ca }}.crt.pem"
+    dest:                     "{{ pki_ca_dir }}/{{ item.value.ca }}.crt.pem"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rwx,g=rx,o=rx'
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+
+- name: Download Certificate Signing Request files of policy ca
+  get_url:
+    url:                      "{{ item.value.owner_url }}/{{ item.key }}.csr"
+    dest:                     "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rwx,g=rx,o=rx'
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+
+- name: Generate a ca signed policy ca certificate
+  openssl_certificate:
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.crt"
+    csr_path:                 "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
+    ownca_path:               "{{ pki_ca_dir }}/{{ item.value.ca }}.crt"
+    ownca_privatekey_path:    "{{ pki_ca_dir }}/{{ item.value.ca }}.pem"
+    ownca_not_after:          "{{ item.value.not_after }}"
+    provider:                 ownca
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+
+- name: Convert the format of the certificate to pem format
+  shell: |
+    openssl x509 \
+    -in {{ pki_httpd_dir }}/{{ item.key }}.crt \
+    -out {{ pki_httpd_dir }}/{{ item.key }}.pem \
+    -outform PEM
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+
+- name: Verify the intermediate certificate
+  shell: |
+    openssl verify \
+    -CAfile {{ pki_ca_dir }}/{{ item.value.ca }}.crt.pem \
+    {{ pki_httpd_dir }}/{{ item.key }}.pem
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+  ignore_errors: yes
+
+- name: Set owner of crt file
+  file:
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.crt"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rw,g=r,o=r'
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+
+- name: Create ca-chain-bundle.cert.pem
+  shell: |
+    cat {{ pki_httpd_dir }}/*.pem \
+    > {{ pki_httpd_dir }}/dummy-ca-chain-bundle.cert.pem
+
+- name: Set owner of crt file
+  file:
+    path:                     "{{ pki_httpd_dir }}/dummy-ca-chain-bundle.cert.pem"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rw,g=r,o=r'
+
+- name: Check dummy-ca-chain-bundle.cert.pem
+  shell: |
+    openssl verify -CAfile {{ pki_ca_dir }}/{{ item.value.ca }}.crt \
+    {{ pki_httpd_dir }}/dummy-ca-chain-bundle.cert.pem
+  register: check_result
+  with_dict:                  "{{ pki_policy_ca_csr }}"
+  ignore_errors: yes
+
+- debug:
+    msg: "{{ update_ca_trust_result }}"
+
+- debug:
+    msg: "{{ update_ca_trust_result.stdout.split('\n')[:-1] }}"
+
+- debug:
+    msg: "{{ update_ca_trust_result.stderr.split('\n')[:-1] }}"

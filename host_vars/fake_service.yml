@@ -1,0 +1,3 @@
+---
+
+ansible_host:                 "{{ fake_service_ip }}"

@@ -1,0 +1,38 @@
+---
+
+- name: Generate intermediate ca private keys
+  openssl_privatekey:
+    path:                     "{{ pki_ca_dir }}/{{ item.key }}.key.pem"
+  with_dict:                  "{{ pki_intermediate_ca }}"
+
+- name: Check file type
+  shell:                      "file {{ pki_ca_dir }}/{{ item.key }}.key.pem"
+  register:                   shell_result
+  with_dict:                  "{{ pki_intermediate_ca }}"
+  when:                       debug_output
+
+- name: Output return value
+  debug:
+    msg:                      "{{ shell_result }}"
+  when:                       debug_output
+
+- name: Generate an certificate signing request for an intermediate ca
+  openssl_csr:
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.csr"
+    privatekey_path:          "{{ pki_ca_dir }}/{{ item.key }}.key.pem"
+    common_name:              "{{ item.key }}"
+    country_name:             "{{ item.value.country_name }}"
+    state_or_province_name:   "{{ item.value.state_or_province_name }}"
+    organization_name:        "{{ item.value.organization_name }}"
+    email_address:            "{{ item.value.email_address }}"
+    organizational_unit_name: "{{ item.value.organizational_unit_name }}"
+    key_usage:                "{{ item.value.key_usage }}"
+  with_dict:                  "{{ pki_intermediate_ca }}"
+
+- name: Set owner of csr
+  file:
+    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.csr"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rw,g=r,o=r'
+  with_dict:                  "{{ pki_intermediate_ca }}"

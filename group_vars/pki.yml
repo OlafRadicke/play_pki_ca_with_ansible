@@ -1,11 +1,27 @@
 ---
 
-ansible_user:         dummy
-ansible_become:       yes
+debug_output:            false
 
-pki_workspace:        "/srv/pki"
-pki_ca_dir:           "{{ pki_workspace }}/ca"
-pki_csr_local_dir:    "{{ pki_workspace }}/csr"
-pki_end_entities_dir: "{{ pki_workspace }}/end_entities"
-pki_httpd_dir:        "/srv/pki/html"
-pki_csr_exchange_port:    "8011"
+root_ca_ip:                 "192.168.178.76"
+policy_ca_service_ip:       "192.168.178.76"
+policy_ca_staff_ip:         "192.168.178.76"
+issue_ca_service_ip:        "192.168.178.78"
+issue_ca_staff_ip:          "192.168.178.77"
+end_entity_service_ip:      "192.168.178.26"
+end_entity_staff_ip:        "192.168.178.77"
+fake_service_ip:            "192.168.178.26"
+ansible_git_checkout_ip:    "local"
+
+ansible_user:               dummy
+ansible_become:             yes
+
+pki_workspace:              "/srv/pki"
+pki_ca_dir:                 "{{ pki_workspace }}/ca"
+pki_csr_local_dir:          "{{ pki_workspace }}/csr"
+pki_end_entities_dir:       "{{ pki_workspace }}/end_entities"
+pki_httpd_dir:              "/srv/pki/html"
+pki_csr_exchange_port:      "8011"
+
+pki_country_name:           "DE"
+pki_state_or_province_name: "Dummyfild"
+pki_organization_name:      "Dummy GmbH"

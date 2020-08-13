@@ -1,7 +1,6 @@
 ---
-# pki_end_entity_service
 
-ansible_host:                 "192.168.178.26"
+ansible_host:                 "{{ end_entity_service_ip }}"
 
 pki_referrenc_ca_url:             "http://192.168.178.78:{{ pki_csr_exchange_port }}"
 pki_service_http_root_dir:        "/srv/http"

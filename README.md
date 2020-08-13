@@ -31,12 +31,26 @@ The playbook is switched off selinux. But for an effect,  ths need a restart
 of the virtual machine.
 
 Helpful tools
-----------------
+-------------
 
 * [kleopatra](https://docs.kde.org/stable5/en/pim/kleopatra//)
 * [Xca](https://hohnstaedt.de/xca/)
+
+Helpful docs
+------------
+
+* [](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)
 
 TODOs
 -----
 
 ### Check sign commits
+
+```yml
+- name: Convert the format of the certificate to pem format
+  shell: |
+    openssl x509 \
+    -in {{ pki_httpd_dir }}/{{ root_ca.common_name }}.crt \
+    -out {{ pki_httpd_dir }}/{{ root_ca.common_name }}.crt.pem \
+    -outform PEM
+```

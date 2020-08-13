@@ -1,0 +1,26 @@
+---
+
+ansible_host: "{{ root_ca_ip }}"
+
+root_ca:
+  common_name:              "root-ca-01.dum.my"
+  country_name:             "DE"
+  state_or_province_name:   "Dummyfild"
+  email_address:            "ca-admin@dum.my"
+  organization_name:        "Dummy GmbH"
+  organizational_unit_name: "Security department"
+  not_after:                "+1300w"
+  key_usage:
+      - digitalSignature
+      - keyAgreement
+
+referrenc_ca_url:  "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_name: "root-ca-01.dum.my"
+
+pki_owner_ca_csr:
+  "staff-policy-ca-01.dum.my":
+      owner_url:        "http://{{ policy_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
+      not_after:        "+52w"
+  "service-policy-ca-01.dum.my":
+      owner_url:        "http://{{ policy_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
+      not_after:        "+26w"
