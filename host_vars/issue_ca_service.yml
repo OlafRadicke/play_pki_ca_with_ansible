@@ -6,48 +6,24 @@ referrenc_ca_url:  "http://{{ policy_ca_service_ip }}:{{ pki_csr_exchange_port }
 referrenc_ca_name: "service-policy-ca-01.dum.my"
 
 pki_intermediate_ca:
-  "service-issue-ca-01.dum.my":
-      email_address:            "service-ca@dum.my"
-      country_name:             "{{ pki_country_name }}"
-      state_or_province_name:   "{{ pki_state_or_province_name }}"
-      organization_name:        "{{ pki_organization_name }}"
-      organizational_unit_name: "Service department"
-      not_after:                "+26w"
-      key_usage:
-          - digitalSignature
-          - keyAgreement
-  "service-issue-ca-02.dum.my":
-      email_address:            "service-ca@dum.my"
-      country_name:             "{{ pki_country_name }}"
-      state_or_province_name:   "{{ pki_state_or_province_name }}"
-      organization_name:        "{{ pki_organization_name }}"
-      organizational_unit_name: "Service department"
-      not_after:                "+26w"
-      key_usage:
-          - digitalSignature
-          - keyAgreement
+    common_name:              "service-issue-ca-01.dum.my"
+    email_address:            "service-ca@dum.my"
+    country_name:             "{{ pki_country_name }}"
+    state_or_province_name:   "{{ pki_state_or_province_name }}"
+    organization_name:        "{{ pki_organization_name }}"
+    organizational_unit_name: "Service department"
+    not_after:                "+26w"
+    key_usage:
+        - digitalSignature
+        - keyAgreement
 
-end_entity_common:
-  owner_url:                "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
-  referrenc_ca_url:         "http://{{ policy_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
-  not_after:                "+26w"
-  country_name:             "DE"
-  state_or_province_name:   "Dummyfild"
-  organization_name:        "Dummy GmbH"
-
-end_entity_csr:
+pki_owner_csr:
   "foo.dum.my":
-      owner_url:        "{{ end_entity_common.owner_url }}"
-      referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
-      email_address:    "service-intermediate-ca@dum.my"
-      ca:               "service-intermediate-ca-01.dum.my"
+      owner_url:        "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
+      not_after:        "+26w"
   "bar.dum.my":
-      owner_url:        "{{ end_entity_common.owner_url }}"
-      referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
-      email_address:    "service-intermediate-ca@dum.my"
-      ca:               "service-intermediate-ca-01.dum.my"
+      owner_url:        "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
+      not_after:        "+26w"
   "baz.dum.my":
-      owner_url:        "{{ end_entity_common.owner_url }}"
-      referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
-      email_address:    "service-intermediate-ca@dum.my"
-      ca:               "service-intermediate-ca-02.dum.my"
+      owner_url:        "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
+      not_after:        "+26w"

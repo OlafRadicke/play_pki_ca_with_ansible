@@ -6,32 +6,22 @@ referrenc_ca_url:  "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
 referrenc_ca_name: "root-ca-01.dum.my"
 
 pki_intermediate_ca:
-  "service-policy-ca-01.dum.my":
-      email_address:            "service-ca@dum.my"
-      country_name:             "{{ pki_country_name }}"
-      state_or_province_name:   "{{ pki_state_or_province_name }}"
-      organization_name:        "{{ pki_organization_name }}"
-      organizational_unit_name: "Security department"
-      not_after:                "+26w"
-      key_usage:
-          - digitalSignature
-          - keyAgreement
-  #### Example
-  # "service-policy-ca-01.dum.my":
-  #     email_address:            "staff-ca@dum.my"
-  #     country_name:             "{{ pki_country_name }}"
-  #     state_or_province_name:   "{{ pki_state_or_province_name }}"
-  #     organization_name:        "{{ pki_organization_name }}"
-  #     organizational_unit_name: "Security department"
-  #     not_after:                "+52w"
-  #     key_usage:
-  #         - digitalSignature
-  #         - keyAgreement
+  common_name:              "service-policy-ca-01.dum.my"
+  email_address:            "service-ca@dum.my"
+  country_name:             "{{ pki_country_name }}"
+  state_or_province_name:   "{{ pki_state_or_province_name }}"
+  organization_name:        "{{ pki_organization_name }}"
+  organizational_unit_name: "Security department"
+  not_after:                "+26w"
+  key_usage:
+      - digitalSignature
+      - keyAgreement
 
-pki_owner_ca_csr:
+pki_owner_csr:
   "service-issue-ca-01.dum.my":
       owner_url:        "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
       not_after:        "+26w"
-  "service-issue-ca-02.dum.my":
-      owner_url:        "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
-      not_after:        "+26w"
+### EXAMPLE
+# "service-issue-ca-02.dum.my":
+#     owner_url:        "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
+#     not_after:        "+26w"

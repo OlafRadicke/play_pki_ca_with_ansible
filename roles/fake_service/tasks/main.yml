@@ -1,0 +1,10 @@
+---
+
+- name: Include setup of trust
+  include:  "download_trust.yml"
+
+- name: Include setup of nginx for the services
+  include:  "nginx.yml"
+
+- name: Include http test request
+  include:  "http_request_test.yml"
