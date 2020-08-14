@@ -1,0 +1,18 @@
+---
+
+- name: Download signing certificate files from the referrenc ca
+  get_url:
+    url:                      "{{ referrenc_ca_url }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+    dest:                     "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+
+- name: Download certificate bundle files from the referrenc ca
+  get_url:
+    url:                      "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
+    dest:                     "{{ pki_httpd_dir }}/{{ referrenc_ca_name }}.bundle.pem"
+  when: root_ca is not defined
+
+- name: Download certificate signing request files from owner
+  get_url:
+    url:                      "{{ item.value.owner_url }}/{{ item.key }}.csr"
+    dest:                     "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
+  with_dict:                  "{{ pki_owner_csr }}"

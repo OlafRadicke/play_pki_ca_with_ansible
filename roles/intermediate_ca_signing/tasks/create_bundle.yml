@@ -1,0 +1,35 @@
+---
+
+- name: Create XXXXX.bundle.cert.pem as intermediate ca
+  shell: |
+    cat {{ pki_httpd_dir }}/{{ referrenc_ca_name }}.bundle.pem \
+        {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem \
+    > {{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem
+  when: root_ca is not defined
+
+- name: Create XXXXX.bundle.cert.pem as root ca
+  shell: |
+    cat {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem \
+    > {{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem
+  when: root_ca is defined
+
+- name: Set owner of bundle file
+  file:
+    path:                     "{{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rw,g=r,o=r'
+
+- name: Check XXXXX.bundle.cert.pem with openssl
+  shell: |
+    openssl verify -CAfile {{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem \
+    {{ pki_ca_dir }}/{{ referrenc_ca_name }}.crt.pem
+  register:                   check_result
+  with_dict:                  "{{ pki_owner_csr }}"
+  when:                       debug_output
+  ignore_errors: yes
+
+- name: Output return value
+  debug:
+    msg:                      "{{ shell_result }}"
+  when:                       debug_output

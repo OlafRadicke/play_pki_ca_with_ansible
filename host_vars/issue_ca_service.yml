@@ -1,9 +1,9 @@
 ---
 
-ansible_host: "{{ issue_ca_service_ip }}"
+ansible_host:                 "{{ issue_ca_service_ip }}"
 
-referrenc_ca_url:  "http://{{ policy_ca_service_ip }}:{{ pki_csr_exchange_port }}"
-referrenc_ca_name: "service-policy-ca-01.dum.my"
+referrenc_ca_url:             "http://{{ policy_ca_service_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_name:            "service-policy-ca-01.dum.my"
 
 pki_intermediate_ca:
     common_name:              "service-issue-ca-01.dum.my"

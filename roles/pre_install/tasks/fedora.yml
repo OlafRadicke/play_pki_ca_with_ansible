@@ -20,13 +20,13 @@
     name:    firewalld
     state:   stopped
 
-- name: Create a base directory for policy ca
-  file:
-    path:    "{{ pki_workspace }}"
-    state:   directory
-    mode:    '0700'
+# - name: Create a base directory for policy ca
+#   file:
+#     path:    "{{ pki_workspace }}"
+#     state:   directory
+#     mode:    '0700'
 
-- name: Create a base directory for policy ca
+- name: Create public directories for ca
   file:
     path:    "{{ item }}"
     state:   directory
@@ -35,8 +35,7 @@
     - "{{ pki_csr_local_dir }}"
     - "{{ pki_workspace }}"
 
-
-- name: Create a base directory for policy ca
+- name: Create private directories for ca
   file:
     path:    "{{ item }}"
     state:   directory
@@ -44,7 +43,6 @@
   loop:
     - "{{ pki_ca_dir }}"
     - "{{ pki_end_entities_dir }}"
-
 
 - name: Include nginx setup for fedora
   include: "fedora_nginx.yml"

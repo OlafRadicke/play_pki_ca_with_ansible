@@ -1,9 +1,9 @@
 ---
 
-ansible_host: "{{ issue_ca_staff_ip }}"
+ansible_host:                 "{{ issue_ca_staff_ip }}"
 
-referrenc_ca_url:  "http://{{ policy_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
-referrenc_ca_name: "staff-policy-ca-01.dum.my"
+referrenc_ca_url:             "http://{{ policy_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_name:            "staff-policy-ca-01.dum.my"
 
 pki_intermediate_ca:
     common_name:              "staff-issue-ca-01.dum.my"
@@ -16,7 +16,6 @@ pki_intermediate_ca:
     key_usage:
         - digitalSignature
         - keyAgreement
-
 
 end_entity_csr: []
 # EXAMPLE
@@ -31,7 +30,6 @@ end_entity_csr: []
 #       referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
 #       email_address:    "john.doe@dum.my"
 #       ca:               "john.doe@dum.my"
-
 
 pki_owner_csr: []
 # EXAMPLE

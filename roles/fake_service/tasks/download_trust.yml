@@ -29,12 +29,3 @@
   debug:
     msg:       "{{ shell_result }}"
   when:        debug_output
-
-
-# - name: Set owner of crt file
-#   file:
-#     path:                     "{{ pki_httpd_dir }}/{{ item.key }}.crt"
-#     owner:                    nginx
-#     group:                    nginx
-#     mode:                     'u=rw,g=r,o=r'
-#   with_dict:                  "{{ pki_policy_ca_csr }}"
