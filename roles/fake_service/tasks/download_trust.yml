@@ -1,0 +1,40 @@
+---
+
+- name: Download certificate bundle files from the referrenc ca
+  get_url:
+    url:       "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
+    dest:      "{{ ca_trust_source_dir}}/{{ referrenc_ca_name }}.bundle.pem"
+
+- name: Download signing certificate files of end entity / services
+  get_url:
+    url:        "{{ referrenc_ca_url }}/{{ fake_service_url }}.crt.pem"
+    dest:       "{{ pki_ca_dir }}/{{ fake_service_url }}.crt.pem"
+
+- name: Update ca trust
+  shell:       "update-ca-trust"
+  register:    shell_result
+  when:        debug_output
+
+- name: Output return value
+  debug:
+    msg:       "{{ shell_result }}"
+  when:        debug_output
+
+- name: Get trust list
+  shell:       "trust list"
+  register:    shell_result
+  when:        debug_output
+
+- name: Output return value
+  debug:
+    msg:       "{{ shell_result }}"
+  when:        debug_output
+
+
+# - name: Set owner of crt file
+#   file:
+#     path:                     "{{ pki_httpd_dir }}/{{ item.key }}.crt"
+#     owner:                    nginx
+#     group:                    nginx
+#     mode:                     'u=rw,g=r,o=r'
+#   with_dict:                  "{{ pki_policy_ca_csr }}"

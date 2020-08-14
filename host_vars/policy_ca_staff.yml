@@ -1,0 +1,31 @@
+---
+
+ansible_host: "{{ policy_ca_staff_ip }}"
+
+referrenc_ca_url:  "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_name: "root-ca-01.dum.my"
+
+pki_intermediate_ca:
+  common_name:              "staff-policy-ca-01.dum.my"
+  email_address:            "staff-ca@dum.my"
+  country_name:             "{{ pki_country_name }}"
+  state_or_province_name:   "{{ pki_state_or_province_name }}"
+  organization_name:        "{{ pki_organization_name }}"
+  organizational_unit_name: "Security department"
+  not_after:                "+52w"
+  key_usage:
+    - digitalSignature
+    - keyAgreement
+
+pki_owner_csr:
+  "staff-issue-ca-01.dum.my":
+      owner_url:        "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"
+      referrenc_ca_url: "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+      ca:               "staff-policy-ca-01.dum.my"
+      not_after:        "+52w"
+### EXAMPLE
+# "staff-issue-ca-02.dum.my":
+#     owner_url:        "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"
+#     referrenc_ca_url: "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+#     ca:               "staff-policy-ca-01.dum.my"
+#     not_after:        "+52w"
