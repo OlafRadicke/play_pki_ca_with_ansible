@@ -15,11 +15,14 @@ ansible_git_checkout_ip:    "local"
 ansible_user:               dummy
 ansible_become:             yes
 
+
 pki_workspace:              "/srv/pki"
+pki_publication_dir:        "/srv/pki/html"
 pki_ca_dir:                 "{{ pki_workspace }}/ca"
 pki_csr_local_dir:          "{{ pki_workspace }}/csr"
 pki_end_entities_dir:       "{{ pki_workspace }}/end_entities"
-pki_httpd_dir:              "/srv/pki/html"
+
+pki_key_password:           "fake"
 pki_csr_exchange_port:      "8011"
 
 pki_country_name:           "DE"

@@ -1,16 +1,33 @@
 ---
 
 - name: Generate a Self Signed OpenSSL root certificate
-  openssl_certificate:
-    path:                     "{{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
-    csr_path:                 "{{ pki_csr_local_dir }}/{{ pki_intermediate_ca.common_name }}.csr"
-    privatekey_path:          "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
-    selfsigned_not_after:     "{{ pki_intermediate_ca.not_after }}"
-    provider:                 "selfsigned"
-
-- name: Check file type
   shell: |
-    file {{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.crt
+    openssl req \
+    -new \
+    -x509 \
+    -days 3650 \
+    -nodes \
+    -config {{ pki_opensslconfig }} \
+    -extensions v3_ca \
+    -key {{ pki_priv_key }} \
+    -out {{ pki_cert_file }}
+  args:
+    chdir:   "{{ pki_private_dir }}"
+    creates: "{{ pki_cert_file }}"
+  async: 5
+  poll: 3
+  register:                   shell_result
+  when:                       debug_output
+  ignore_errors: yes
+
+- name: Output return value
+  debug:
+    msg:                      "{{ shell_result }}"
+  when:                       debug_output
+
+- name: Check file type of pki_cert_file
+  shell: |
+    file {{ pki_cert_file }}
   register:                   shell_result
   when:                       debug_output
 
@@ -21,7 +38,7 @@
 
 - name: Verify root Certificate
   shell: |
-    openssl x509 -noout -text -in {{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.crt
+    openssl x509 -noout -text -in "{{ pki_cert_file }}"
   ignore_errors: yes
   register:                   shell_result
   when:                       debug_output
@@ -33,7 +50,35 @@
 
 - name: Set owner of crt file
   file:
-    path:                     "{{ pki_httpd_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+    path:                     "{{ pki_cert_file }}"
+    owner:                    nginx
+    group:                    nginx
+    mode:                     'u=rw,g=r,o=r'
+
+# - name: Change the certificate to PEM format
+#   shell: |
+#     openssl x509 \
+#     -in {{ pki_cert_file }} \
+#     -inform DER \
+#     -out {{ pki_cert_file }}.2 \
+#     -outform PEM
+#   args:
+#     chdir:   "{{ pki_private_dir }}"
+#     creates: "{{ pki_cert_file }}.2"
+#   async: 5
+#   poll: 3
+#   register:                   shell_result
+#   when:                       debug_output
+#   ignore_errors: yes
+
+# - name: Output return value
+#   debug:
+#     msg:                      "{{ shell_result }}"
+#   when:                       debug_output
+
+- name: Set owner of crt file
+  file:
+    path:                     "{{ pki_cert_file }}"
     owner:                    nginx
     group:                    nginx
     mode:                     'u=rw,g=r,o=r'

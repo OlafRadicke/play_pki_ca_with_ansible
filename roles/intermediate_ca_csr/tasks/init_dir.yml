@@ -1,0 +1,39 @@
+---
+
+- name: Create private directory for ca
+  file:
+    path:    "{{ item }}"
+    state:   directory
+    mode:    'u=rwx,g=rx,o-rwx'
+  loop:
+    - "{{ pki_private_dir }}"
+    - "{{ pki_private_dir }}/private"
+    # - "/crl"
+
+- name: Create index file
+  shell:     "touch index.txt"
+  args:
+    creates: "index.txt"
+
+- name: Create serial file if it not exist
+  shell: "echo 1 > {{ pki_serial_file }}"
+  args:
+    creates: "{{ pki_serial_file }}"
+
+- name: Count up serial
+  shell: |
+    SERIAL=$( cat {{ pki_serial_file }} )
+    let NEWSERIAL=$SERIAL+1
+    echo $NEWSERIAL > {{ pki_serial_file }}
+
+- name: Create openssl.cnf
+  template:
+    src:     openssl.cnf
+    dest:    "{{ pki_opensslconfig }}"
+
+- name: Create password file
+  shell: |
+    echo "{{ pki_key_password }}" \
+    > {{ pki_password_file }}
+  args:
+    creates: "{{ pki_password_file }}"

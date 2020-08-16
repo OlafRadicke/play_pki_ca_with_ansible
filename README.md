@@ -50,7 +50,7 @@ TODOs
 - name: Convert the format of the certificate to pem format
   shell: |
     openssl x509 \
-    -in {{ pki_httpd_dir }}/{{ root_ca.common_name }}.crt \
-    -out {{ pki_httpd_dir }}/{{ root_ca.common_name }}.crt.pem \
+    -in {{ pki_publication_dir }}/{{ root_ca.common_name }}.crt \
+    -out {{ pki_publication_dir }}/{{ root_ca.common_name }}.crt.pem \
     -outform PEM
 ```

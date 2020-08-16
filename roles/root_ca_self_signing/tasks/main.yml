@@ -1,7 +1,13 @@
 ---
 
-- name: Include fedora support
+- name: Include task for init directory
+  include: "init_dir.yml"
+
+- name: Include creating private key
   include: "create_private_key.yml"
+
+# - name: Include creating csr
+#   include: "create_certificate_signing_request.yml"
 
 - name: Include fedora support
   include: "create_self_signed_cert.yml"

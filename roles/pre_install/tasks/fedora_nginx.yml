@@ -2,7 +2,7 @@
 
 - name: Create httpd root directory for CSRs
   file:
-    path:           "{{ pki_httpd_dir }}"
+    path:           "{{ pki_publication_dir }}"
     state:          directory
     owner:          nginx
     group:          nginx

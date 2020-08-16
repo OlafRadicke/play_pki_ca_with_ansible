@@ -7,7 +7,7 @@
 
 - name: Generate an Certificate Signing Request for end entities
   openssl_csr:
-    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.csr"
+    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr"
     privatekey_path:          "{{ pki_end_entities_dir }}/{{ item.key }}.pem"
     common_name:              "{{ item.key }}"
     country_name:             "{{ end_entity_common.country_name }}"
@@ -20,7 +20,7 @@
 
 - name: Set owner of csr
   file:
-    path:                     "{{ pki_httpd_dir }}/{{ item.key }}.csr"
+    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr"
     owner:                    nginx
     group:                    nginx
     mode:                     'u=rw,g=r,o=r'

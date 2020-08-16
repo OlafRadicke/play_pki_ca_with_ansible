@@ -34,6 +34,7 @@
   loop:
     - "{{ pki_csr_local_dir }}"
     - "{{ pki_workspace }}"
+    - "{{ pki_publication_dir }}"
 
 - name: Create private directories for ca
   file:
@@ -46,3 +47,8 @@
 
 - name: Include nginx setup for fedora
   include: "fedora_nginx.yml"
+
+- name: Copy openssl base config
+  copy:
+    src: opensslcnf.config
+    dest: "{{ pki_workspace }}/opensslcnf.config"

@@ -1,12 +1,28 @@
 ---
 
-- name: Generate an root ca private key with the default values (4096 bits, RSA)
-  openssl_privatekey:
-    path:                     "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
-
-- name: Check file type
+- name: Generate an root ca private key with the default values
   shell: |
-    file {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem
+      openssl genrsa \
+      -passout file:{{ pki_password_file }} \
+      -out {{ pki_priv_key }}.crypt
+  args:
+    chdir:   "{{ pki_private_dir }}"
+    creates: "{{ pki_priv_key }}.crypt"
+
+- name: Remove passwor of private key
+  shell: |
+    openssl rsa \
+    -passout file:{{ pki_password_file }} \
+    -in {{ pki_priv_key }}.crypt \
+    -out {{ pki_priv_key }}
+  args:
+    chdir:   "{{ pki_private_dir }}"
+    creates: "{{ pki_priv_key }}"
+
+
+- name: Check file type of private key
+  shell: |
+    file {{ pki_priv_key }}
   register:                   shell_result
   when:                       debug_output
 
@@ -17,30 +33,10 @@
 
 - name: View the content of private key
   shell: |
-    openssl rsa -noout -text -in {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem
-  register:                   shell_result
-  when:                       debug_output
-
-- name: Output return value
-  debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
-
-- name: Generate an root Certificate Signing Request
-  openssl_csr:
-    path:                     "{{ pki_csr_local_dir }}/{{ pki_intermediate_ca.common_name }}.csr"
-    privatekey_path:          "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
-    common_name:              "{{ pki_intermediate_ca.common_name }}"
-    country_name:             "{{ pki_intermediate_ca.country_name }}"
-    state_or_province_name:   "{{ pki_intermediate_ca.state_or_province_name }}"
-    email_address:            "{{ pki_intermediate_ca.email_address }}"
-    organization_name:        "{{ pki_intermediate_ca.organization_name }}"
-    organizational_unit_name: "{{ pki_intermediate_ca.organizational_unit_name }}"
-    key_usage:                "{{ pki_intermediate_ca.key_usage }}"
-
-- name: Check file type
-  shell: |
-    file {{ pki_csr_local_dir }}/{{ pki_intermediate_ca.common_name }}.csr
+    openssl rsa \
+    -noout \
+    -text \
+    -in {{ pki_priv_key }}
   register:                   shell_result
   when:                       debug_output
 
