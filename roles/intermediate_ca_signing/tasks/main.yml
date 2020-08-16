@@ -3,6 +3,9 @@
 - name: Include setup of trust
   include:  "download_trust.yml"
 
+- name: Include setup of csr
+  include:  "download_csr.yml"
+
 - name: Include setup of trust
   include:  "signed_certificate.yml"
 

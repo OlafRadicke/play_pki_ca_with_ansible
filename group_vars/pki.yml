@@ -27,4 +27,5 @@ pki_csr_exchange_port:      "8011"
 
 pki_country_name:           "DE"
 pki_state_or_province_name: "Dummyfild"
+pki_city_name:              "Dummy Town"
 pki_organization_name:      "Dummy GmbH"

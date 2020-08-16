@@ -10,12 +10,23 @@ pki_intermediate_ca:
   email_address:            "service-ca@dum.my"
   country_name:             "{{ pki_country_name }}"
   state_or_province_name:   "{{ pki_state_or_province_name }}"
+  city_name:                "{{ pki_city_name }}"
   organization_name:        "{{ pki_organization_name }}"
   organizational_unit_name: "Security department"
   not_after:                "+26w"
   key_usage:
       - digitalSignature
       - keyAgreement
+
+pki_private_dir:       "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
+pki_opensslconfig:     "{{ pki_private_dir }}/openssl.cnf"
+pki_priv_key:          "{{ pki_private_dir }}/private/{{ pki_intermediate_ca.common_name }}.key.pem"
+pki_password_file:     "{{ pki_private_dir }}/keypassword.txt"
+pki_serial_file:       "{{ pki_private_dir }}/serial"
+pki_index_file:        "{{ pki_private_dir }}/index.txt"
+pki_cert_file:         "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+pki_csr_file:          "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr.pem"
+
 
 pki_owner_csr:
   "service-issue-ca-01.dum.my":

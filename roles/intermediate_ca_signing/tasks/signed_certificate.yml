@@ -1,16 +1,25 @@
 ---
 
-- name: Generate a ca signed certificate
-  openssl_certificate:
-    path:                     "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
-    csr_path:                 "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
-    ownca_path:               "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
-    ownca_privatekey_path:    "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
-    ownca_not_after:          "{{ item.value.not_after }}"
-    provider:                 ownca
+
+  # -passin file:mypass.enc \
+
+  # -extensions v3_intermediate_ca \
+- name: Sign and generate immediate CA certificate
+  shell: |
+    openssl ca \
+    -config {{ pki_opensslconfig }} \
+    -days 2650 \
+    -notext \
+    -batch \
+    -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
+    -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  args:
+    chdir:                    "{{ pki_private_dir }}"
+    creates:                  "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
   with_dict:                  "{{ pki_owner_csr }}"
 
-- name: Check file type
+
+- name: Check file type of cert
   shell: |
     file {{ pki_publication_dir }}/{{ item.key }}.crt.pem
   register:                   shell_result
@@ -22,13 +31,14 @@
     msg:                      "{{ shell_result }}"
   when:                       debug_output
 
+
 - name: Verify with the intermediate certificate
   shell: |
     openssl verify \
     -CAfile  {{ pki_ca_dir }}/{{ referrenc_ca_name }}.crt.pem \
      {{ pki_publication_dir }}/{{ item.key }}.crt.pem
   with_dict:                  "{{ pki_owner_csr }}"
-  ignore_errors: yes
+  ignore_errors:              debug_output
   register:                   shell_result
   when:                       debug_output
 
@@ -44,3 +54,14 @@
     group:                    nginx
     mode:                     'u=rw,g=r,o=r'
   with_dict:                  "{{ pki_owner_csr }}"
+
+- name: Check index file
+  shell: |
+    cat  {{ pki_private_dir }}/index.txt
+  register:                   shell_result
+  when:                       debug_output
+
+- name: Output return value
+  debug:
+    msg:                      "{{ shell_result }}"
+  when:                       debug_output

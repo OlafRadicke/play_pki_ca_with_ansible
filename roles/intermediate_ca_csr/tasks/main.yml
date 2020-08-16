@@ -3,35 +3,41 @@
 - name: Include task for init directory
   include: "init_dir.yml"
 
-- name: Generate intermediate ca private keys
-  openssl_privatekey:
-    path:                     "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
+- name: Include creating private key
+  include: "create_private_key.yml"
 
-- name: Check file type
-  shell:                      "file {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
-  register:                   shell_result
-  when:                       debug_output
+- name: Include creating csr
+  include: "create_certificate_signing_request.yml"
 
-- name: Output return value
-  debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+# - name: Generate intermediate ca private keys
+#   openssl_privatekey:
+#     path:                     "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
 
-- name: Generate an certificate signing request for an intermediate ca
-  openssl_csr:
-    path:                     "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr"
-    privatekey_path:          "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
-    common_name:              "{{ pki_intermediate_ca.common_name }}"
-    country_name:             "{{ pki_intermediate_ca.country_name }}"
-    state_or_province_name:   "{{ pki_intermediate_ca.state_or_province_name }}"
-    organization_name:        "{{ pki_intermediate_ca.organization_name }}"
-    email_address:            "{{ pki_intermediate_ca.email_address }}"
-    organizational_unit_name: "{{ pki_intermediate_ca.organizational_unit_name }}"
-    key_usage:                "{{ pki_intermediate_ca.key_usage }}"
+# - name: Check file type
+#   shell:                      "file {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
+#   register:                   shell_result
+#   when:                       debug_output
 
-- name: Set owner of csr
-  file:
-    path:                     "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr"
-    owner:                    nginx
-    group:                    nginx
-    mode:                     'u=rw,g=r,o=r'
+# - name: Output return value
+#   debug:
+#     msg:                      "{{ shell_result }}"
+#   when:                       debug_output
+
+# - name: Generate an certificate signing request for an intermediate ca
+#   openssl_csr:
+#     path:                     "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr"
+#     privatekey_path:          "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.key.pem"
+#     common_name:              "{{ pki_intermediate_ca.common_name }}"
+#     country_name:             "{{ pki_intermediate_ca.country_name }}"
+#     state_or_province_name:   "{{ pki_intermediate_ca.state_or_province_name }}"
+#     organization_name:        "{{ pki_intermediate_ca.organization_name }}"
+#     email_address:            "{{ pki_intermediate_ca.email_address }}"
+#     organizational_unit_name: "{{ pki_intermediate_ca.organizational_unit_name }}"
+#     key_usage:                "{{ pki_intermediate_ca.key_usage }}"
+
+# - name: Set owner of csr
+#   file:
+#     path:                     "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr"
+#     owner:                    nginx
+#     group:                    nginx
+#     mode:                     'u=rw,g=r,o=r'

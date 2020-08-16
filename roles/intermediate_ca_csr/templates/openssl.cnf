@@ -37,7 +37,7 @@ default_days	   = 365
 default_crl_days = 30
 default_md	     = sha256
 preserve	       = no
-policy		       = policy_match
+policy		       = policy_anything
 email_in_dn      = no
 rand_serial      = no
 
@@ -93,10 +93,10 @@ basicConstraints = CA:FALSE
 keyUsage         = nonRepudiation, digitalSignature, keyEncipherment
 
 [ v3_ca ]
-subjectKeyIdentifier   = hash
+subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid:always,issuer
-basicConstraints       = critical,CA:true
-
+basicConstraints = critical, CA:true, pathlen:0
+keyUsage = critical, digitalSignature, cRLSign, keyCertSign
 
 [ crl_ext ]
 authorityKeyIdentifier = keyid:always

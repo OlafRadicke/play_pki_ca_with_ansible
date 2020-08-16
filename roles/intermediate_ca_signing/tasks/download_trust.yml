@@ -10,9 +10,3 @@
     url:                      "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
     dest:                     "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
   when: root_ca is not defined
-
-- name: Download certificate signing request files from owner
-  get_url:
-    url:                      "{{ item.value.owner_url }}/{{ item.key }}.csr"
-    dest:                     "{{ pki_csr_local_dir }}/{{ item.key }}.csr"
-  with_dict:                  "{{ pki_owner_csr }}"

@@ -8,12 +8,11 @@
   loop:
     - "{{ pki_private_dir }}"
     - "{{ pki_private_dir }}/private"
-    # - "/crl"
 
 - name: Create index file
-  shell:     "touch index.txt"
+  shell:     "touch {{ pki_index_file }}"
   args:
-    creates: "index.txt"
+    creates: "{{ pki_index_file }}"
 
 - name: Create serial file if it not exist
   shell: "echo 1 > {{ pki_serial_file }}"
