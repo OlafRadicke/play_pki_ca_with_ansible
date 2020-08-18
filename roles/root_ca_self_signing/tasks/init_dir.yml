@@ -10,9 +10,9 @@
     - "{{ pki_private_dir }}/private"
 
 - name: Create index file
-  shell:     "touch {{ pki_private_dir }}/index.txt"
+  shell:     "touch {{ pki_index_file }}"
   args:
-    creates: "{{ pki_private_dir }}/index.txt"
+    creates: "{{ pki_index_file }}"
 
 - name: Create serial file if it not exist
   shell: "echo 1 > {{ pki_serial_file }}"

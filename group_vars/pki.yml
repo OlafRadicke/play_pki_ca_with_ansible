@@ -1,6 +1,7 @@
 ---
 
 debug_output:               true
+ignore_errors:              yes
 
 root_ca_ip:                 "192.168.178.76"
 policy_ca_service_ip:       "192.168.178.76"

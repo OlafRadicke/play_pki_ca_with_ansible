@@ -1,0 +1,31 @@
+---
+
+- name:       Create httpd root directory for CSRs
+  file:
+    path:     "{{ pki_publication_dir }}"
+    state:    directory
+    owner:    nginx
+    group:    nginx
+    mode:     'u=rwx,g=rx,o=rx'
+
+- name:       Create basic nginx config
+  copy:
+    src:      "nginx.conf"
+    dest:     "/etc/nginx/nginx.conf"
+    owner:    nginx
+    group:    nginx
+    mode:     'u=rx,g=r,o=r'
+
+- name:       Create nginx config for CSR exchange
+  template:
+    src:      "csr-exchange.conf"
+    dest:     "/etc/nginx/conf.d/csr-exchange.conf"
+    owner:    nginx
+    group:    nginx
+    mode:     'u=rx,g=r,o=r'
+
+- name:       Start service nginx, if not started
+  service:
+    name:     nginx
+    state:    restarted
+    enabled:  yes

@@ -8,7 +8,7 @@
 
 - name: Check service with curl
   shell:           "curl https://{{ fake_service_url }}/index.html"
-  ignore_errors:   debug_output
+  ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output
 
@@ -22,7 +22,7 @@
     url:           https://{{ fake_service_url }}/index.html
     dest:          /tmp/index.html
     client_cert:   "{{ ca_trust_source_dir}}/{{ referrenc_ca_name }}.bundle.pem"
-  ignore_errors:   debug_output
+  ignore_errors:   "{{ debug_output }}"
   register:        get_url_result
   when:            debug_output
 

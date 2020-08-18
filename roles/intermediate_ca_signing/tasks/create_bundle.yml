@@ -27,7 +27,7 @@
   register:                   check_result
   with_dict:                  "{{ pki_owner_csr }}"
   when:                       debug_output
-  ignore_errors: yes
+  ignore_errors:   "{{ debug_output }}"
 
 - name: Output return value
   debug:

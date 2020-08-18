@@ -2,13 +2,13 @@
 
 - name: Generate keys for end entities
   openssl_privatekey:
-    path:                     "{{ pki_end_entities_dir }}/{{ item.key }}.pem"
+    path:                     "{{ pki_end_entities_dir }}/{{ item.key }}.key.pem"
   with_dict:                  "{{ end_entity_csr }}"
 
 - name: Generate an Certificate Signing Request for end entities
   openssl_csr:
-    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr"
-    privatekey_path:          "{{ pki_end_entities_dir }}/{{ item.key }}.pem"
+    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr.pem"
+    privatekey_path:          "{{ pki_end_entities_dir }}/{{ item.key }}.key.pem"
     common_name:              "{{ item.key }}"
     country_name:             "{{ end_entity_common.country_name }}"
     state_or_province_name:   "{{ end_entity_common.state_or_province_name }}"
@@ -20,7 +20,7 @@
 
 - name: Set owner of csr
   file:
-    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr"
+    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr.pem"
     owner:                    nginx
     group:                    nginx
     mode:                     'u=rw,g=r,o=r'

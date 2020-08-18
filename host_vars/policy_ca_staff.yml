@@ -15,24 +15,25 @@ pki_intermediate_ca:
   organizational_unit_name: "Security department"
   not_after:                "+52w"
   key_usage:
-    - digitalSignature
-    - keyAgreement
+    -                       digitalSignature
+    -                       keyAgreement
 
-pki_private_dir:       "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
-pki_opensslconfig:     "{{ pki_private_dir }}/openssl.cnf"
-pki_priv_key:          "{{ pki_private_dir }}/private/{{ pki_intermediate_ca.common_name }}.key.pem"
-pki_password_file:     "{{ pki_private_dir }}/keypassword.txt"
-pki_serial_file:       "{{ pki_private_dir }}/serial"
-pki_index_file:        "{{ pki_private_dir }}/index.txt"
-pki_cert_file:         "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
-pki_csr_file:          "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr.pem"
+pki_private_dir:           "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
+pki_opensslconfig:         "{{ pki_private_dir }}/openssl.cnf"
+pki_priv_key:              "{{ pki_private_dir }}/private/{{ pki_intermediate_ca.common_name }}.key.pem"
+pki_password_file:         "{{ pki_private_dir }}/keypassword.txt"
+pki_serial_file:           "{{ pki_private_dir }}/serial"
+pki_index_file:            "{{ pki_private_dir }}/index"
+pki_crlnumber_file:        "{ pki_private_dir }}/crlnumber"
+pki_cert_file:             "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+pki_csr_file:              "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr.pem"
 
 pki_owner_csr:
   "staff-issue-ca-01.dum.my":
-      owner_url:        "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"
-      referrenc_ca_url: "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
-      ca:               "staff-policy-ca-01.dum.my"
-      not_after:        "+52w"
+      owner_url:          "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"
+      referrenc_ca_url:   "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+      ca:                 "staff-policy-ca-01.dum.my"
+      not_after:          "+52w"
 ### EXAMPLE
 # "staff-issue-ca-02.dum.my":
 #     owner_url:        "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"

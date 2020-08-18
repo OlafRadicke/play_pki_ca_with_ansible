@@ -1,12 +1,26 @@
 ---
 
-- name: Download signing certificate files from the referrenc ca
+- name:          Download signing certificate files from the referrenc ca
   get_url:
-    url:                      "{{ referrenc_ca_url }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
-    dest:                     "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+    url:         "{{ referrenc_ca_url }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+    dest:        "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
 
-- name: Download certificate bundle files from the referrenc ca
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+- name:          Download certificate bundle files from the referrenc ca
   get_url:
-    url:                      "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
-    dest:                     "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
-  when: root_ca is not defined
+    url:         "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
+    dest:        "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
+  when:          root_ca is not defined
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output

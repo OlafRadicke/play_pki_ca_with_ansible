@@ -18,7 +18,7 @@
   poll: 3
   register:                   shell_result
   when:                       debug_output
-  ignore_errors:              debug_output
+  ignore_errors:              "{{ debug_output }}"
 
 - name: Output return value
   debug:
@@ -39,7 +39,7 @@
 - name: Verify root Certificate
   shell: |
     openssl x509 -noout -text -in "{{ pki_cert_file }}"
-  ignore_errors:              debug_output
+  ignore_errors:              "{{ debug_output }}"
   register:                   shell_result
   when:                       debug_output
 
@@ -69,7 +69,7 @@
 #   poll: 3
 #   register:                   shell_result
 #   when:                       debug_output
-#   ignore_errors: yes
+#   ignore_errors:  "{{ debug_output }}"
 
 # - name: Output return value
 #   debug:

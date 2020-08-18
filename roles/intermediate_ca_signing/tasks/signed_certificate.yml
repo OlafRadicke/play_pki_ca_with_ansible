@@ -1,67 +1,89 @@
 ---
 
+- name:           Singing command
+  debug:
+    msg:          |
+                  openssl ca \
+                  -config {{ pki_opensslconfig }} \
+                  -days 2650 \
+                  -notext \
+                  -batch \
+                  -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
+                  -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  with_dict:      "{{ pki_owner_csr }}"
+  when:           debug_output
 
-  # -passin file:mypass.enc \
-
-  # -extensions v3_intermediate_ca \
-- name: Sign and generate immediate CA certificate
+- name:           Generate and sign immediate CA certificate
   shell: |
-    openssl ca \
-    -config {{ pki_opensslconfig }} \
-    -days 2650 \
-    -notext \
-    -batch \
-    -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
-    -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+                  openssl ca \
+                  -config {{ pki_opensslconfig }} \
+                  -days 2650 \
+                  -notext \
+                  -batch \
+                  -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
+                  -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
   args:
-    chdir:                    "{{ pki_private_dir }}"
-    creates:                  "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
-  with_dict:                  "{{ pki_owner_csr }}"
+    chdir:        "{{ pki_private_dir }}"
+    creates:      "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
+  with_dict:      "{{ pki_owner_csr }}"
+  register:       shell_result
 
-
-- name: Check file type of cert
-  shell: |
-    file {{ pki_publication_dir }}/{{ item.key }}.crt.pem
-  register:                   shell_result
-  when:                       debug_output
-  with_dict:                  "{{ pki_owner_csr }}"
-
-- name: Output return value
+- name:           Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output
 
-
-- name: Verify with the intermediate certificate
+- name:           Check file type of cert
   shell: |
-    openssl verify \
-    -CAfile  {{ pki_ca_dir }}/{{ referrenc_ca_name }}.crt.pem \
-     {{ pki_publication_dir }}/{{ item.key }}.crt.pem
-  with_dict:                  "{{ pki_owner_csr }}"
-  ignore_errors:              debug_output
-  register:                   shell_result
-  when:                       debug_output
+                  file {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  register:       shell_result
+  when:           debug_output
+  with_dict:      "{{ pki_owner_csr }}"
 
-- name: Output return value
+- name:           Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output
 
-- name: Set owner of crt file
+# - name:           Verify with the intermediate certificate
+#   shell: |
+#                   openssl verify \
+#                   -CAfile  {{ pki_ca_dir }}/{{ referrenc_ca_name }}.crt.pem \
+#                   {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+#   with_dict:      "{{ pki_owner_csr }}"
+#   ignore_errors:  "{{ debug_output }}"
+#   register:       shell_result
+
+- name:           Verify with the intermediate certificate with the bundle file
+  shell: |
+                  openssl verify \
+                  -CAfile  {{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem \
+                  {{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem
+  with_dict:      "{{ pki_owner_csr }}"
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
+
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+- name:           Set owner of crt file
   file:
-    path:                     "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
-    owner:                    nginx
-    group:                    nginx
-    mode:                     'u=rw,g=r,o=r'
-  with_dict:                  "{{ pki_owner_csr }}"
+    path:         "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
+    owner:        nginx
+    group:        nginx
+    mode:         'u=rw,g=r,o=r'
+  with_dict:      "{{ pki_owner_csr }}"
 
-- name: Check index file
+- name:           Check index file
   shell: |
-    cat  {{ pki_private_dir }}/index.txt
-  register:                   shell_result
-  when:                       debug_output
+                  cat  {{ pki_index_file }}
+  register:       shell_result
+  when:           debug_output
 
-- name: Output return value
+- name:           Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output
