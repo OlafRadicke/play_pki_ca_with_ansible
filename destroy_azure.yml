@@ -1,0 +1,6 @@
+---
+
+- name: Preparation of azure VMs
+  hosts: ansible_git_checkout
+  roles:
+    - destroy_azure_vms

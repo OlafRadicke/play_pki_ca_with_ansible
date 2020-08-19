@@ -1,0 +1,7 @@
+---
+
+- name:    Include create_terraform_config.yml
+  include: create_terraform_config.yml
+
+- name:    Include run_terraform_raw.yml
+  include: run_terraform_raw.yml

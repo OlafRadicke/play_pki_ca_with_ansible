@@ -11,6 +11,40 @@ That is the work flow of the certification:
 
 ![docs/pki-tree.png](docs/pki-flow.png)
 
+
+Azure pre setup
+---------------
+
+For creating VMs in Azure cloud, you can use the playbook setup_azure.yml. Enter:
+
+```bash
+ansible-playbook -i hosts.yml setup_azure.yml
+```
+
+If your secrets encryptet than you can enter:
+
+```bash
+ansible-playbook  \
+  --vault-password-file ~/.ssh/vault-password \
+  -i hosts.yml \
+  ./setup_azure.yml
+```
+
+Get the public ips:
+
+```bash
+az network public-ip list
+```
+
+For removing the azure setup enter:
+
+```bash
+ansible-playbook  \
+  --vault-password-file ~/.ssh/vault-password \
+  -i hosts.yml \
+  ./destroy_azure.yml
+```
+
 Run
 ---
 

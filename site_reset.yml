@@ -3,4 +3,4 @@
 - name: Preparation of all nodes for their job
   hosts: pki
   roles:
-    - pki_reset
+    - deploy_azur_vms

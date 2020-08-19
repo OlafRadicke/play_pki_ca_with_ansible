@@ -1,0 +1,12 @@
+---
+
+- name:           Run terraform destroy in raw variation
+  shell:          "terraform destroy -auto-approve"
+  args:
+    chdir:        "{{ terraform_base_dir }}"
+  register:       task_result
+  ignore_errors:  "{{ debug_output }}"
+
+- debug:
+    msg:          "{{ task_result }}"
+  when:           debug_output
