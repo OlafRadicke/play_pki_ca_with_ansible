@@ -1,0 +1,5 @@
+---
+
+  ansible_connection:   "local"
+  connection:           "local"
+  ansible_become:       false

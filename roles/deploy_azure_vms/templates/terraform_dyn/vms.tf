@@ -7,7 +7,7 @@ resource "azurerm_linux_virtual_machine" "{{ azure_prefix }}-{{ item.name }}" {
   location               = azurerm_resource_group.main.location
   size                   = "{{ azure_vm_size }}"
   admin_username         = "{{ admin_username }}"
-  network_interface_ids  = [azurerm_network_interface.{{ azure_prefix }}-{{ item.name }}.id]
+  network_interface_ids  = [azurerm_network_interface.{{ azure_prefix }}-{{ item.name }}-nic.id]
 
   admin_ssh_key {
     username             = "{{ admin_username }}"
@@ -26,12 +26,5 @@ resource "azurerm_linux_virtual_machine" "{{ azure_prefix }}-{{ item.name }}" {
     sku                  = "7.5"
     version              = "latest"
   }
-
-  # source_image_reference {
-  #   publisher            = "OpenLogic"
-  #   offer                = "CentOS"
-  #   sku                  = "8.2"
-  #   version              = "latest"
-  # }
 }
 {% endfor %}

@@ -1,6 +1,6 @@
 ---
 
 - name: Preparation of azure VMs
-  hosts: ansible_git_checkout
+  hosts: pki_azure_deploy
   roles:
     - destroy_azure_vms

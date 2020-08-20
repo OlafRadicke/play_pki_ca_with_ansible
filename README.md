@@ -15,6 +15,7 @@ That is the work flow of the certification:
 Azure pre setup
 ---------------
 
+The configuration of the Azure setup is in the file group_vars/azure_deploy.yml.
 For creating VMs in Azure cloud, you can use the playbook setup_azure.yml. Enter:
 
 ```bash
@@ -30,11 +31,6 @@ ansible-playbook  \
   ./setup_azure.yml
 ```
 
-Get the public ips:
-
-```bash
-az network public-ip list
-```
 
 For removing the azure setup enter:
 
@@ -45,11 +41,24 @@ ansible-playbook  \
   ./destroy_azure.yml
 ```
 
-Run
----
+Run the main playbook
+---------------------
 
-*Preparation:* Edit the host_vars file and change the IPs of the VMs. And
-maybe the ansible userin the file pki.yml in the group_vars.
+*Preparation:* Edit the host_vars file and change the IPs of the
+VMs (in group_vars/pki.yml). And maybe the ansible user in the file pki.yml in
+the group_vars.
+
+For gedding the IPs of the VMs from Azure enter:
+To obtain the IPs of the VMs from Azure, enter:
+
+```bash
+az network public-ip list --output table
+Name                           ResourceGroup    Location            Zones    Address         AddressVersion    AllocationMethod    IdleTimeoutInMinutes    ProvisioningState
+-----------------------------  ---------------  ------------------  -------  --------------  ----------------  ------------------  ----------------------  -------------------
+demo-pki-policy-ca-service-ip  demo-pki         germanywestcentral           20.52.35.205    IPv4              Dynamic             30                      Succeeded
+demo-pki-root-ca-ip            demo-pki         germanywestcentral           51.116.185.237  IPv4              Dynamic             30                      Succeeded
+```
+
 
 For run this example enter:
 

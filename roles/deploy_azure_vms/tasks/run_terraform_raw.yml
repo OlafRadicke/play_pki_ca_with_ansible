@@ -32,3 +32,14 @@
 - debug:
     msg:          "{{ task_result }}"
   when:           debug_output
+
+- name:           Get the IPs of the new VMs
+  shell:          "az network public-ip list --output table"
+  args:
+    chdir:        "{{ terraform_base_dir }}"
+  register:       task_result
+  ignore_errors:  "{{ debug_output }}"
+
+- debug:
+    msg:          "{{ task_result }}"
+  when:           debug_output

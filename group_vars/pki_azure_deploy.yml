@@ -8,8 +8,11 @@ plan_file:                          "{{ terraform_base_dir }}/.plan_file"
 azure_prefix:                       "demo-pki"
 azure_location:                     "Germany West Central"
 azure_ssh_public_key:               "~/.ssh/id_rsa.pub"
-azure_vm_size:                      "Standard_DS1_v2" #"Standard_DS2_v3"
-admin_username:                     "pkiuser"
+azure_vm_size:                      "Standard_B1ls"   # ~€3,6937/Monat
+                                  # "Standard_DS1_v2" # ~€41,2459/Monat
+                                  # "Standard_DS2_v2" # ~€81,8760/Monat
+admin_username:                     "dummy"
+pki_csr_exchange_port:              "8011"
 azure_vm:
   - name:                           "root-ca"
   - name:                           "policy-ca-service"

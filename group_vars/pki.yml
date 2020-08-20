@@ -11,7 +11,8 @@ issue_ca_staff_ip:          "192.168.178.77"
 end_entity_service_ip:      "192.168.178.26"
 end_entity_staff_ip:        "192.168.178.77"
 fake_service_ip:            "192.168.178.26"
-ansible_git_checkout_ip:    "local"
+# ansible_git_checkout_ip:    "local"
+# azure_control_server_ip:    "local"
 
 ansible_user:               dummy
 ansible_become:             yes
