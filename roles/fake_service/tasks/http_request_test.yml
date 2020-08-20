@@ -1,23 +1,23 @@
 ---
 
-- name: Add a fake seivice in hosts
+- name:            Add a fake seivice in hosts
   lineinfile:
     path:          "/etc/hosts"
     line:          "{{ fake_service_ip }}  {{ fake_service_url }}"
     create: yes
 
-- name: Check service with curl
+- name:            Check service with curl
   shell:           "curl https://{{ fake_service_url }}/index.html"
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output
 
-- name: Output return value
+- name:            Output return value
   debug:
     msg:           "{{ shell_result }}"
   when:            debug_output
 
-- name: Check service
+- name:            Check service
   get_url:
     url:           https://{{ fake_service_url }}/index.html
     dest:          /tmp/index.html
@@ -26,7 +26,7 @@
   register:        get_url_result
   when:            debug_output
 
-- name: Output return value
+- name:            Output return value
   debug:
     msg:           "{{ get_url_result }}"
   when:            debug_output

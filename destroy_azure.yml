@@ -1,6 +1,6 @@
 ---
 
-- name: Preparation of azure VMs
+- name:  Preparation of azure VMs
   hosts: pki_azure_deploy
   roles:
-    - destroy_azure_vms
+    -    destroy_azure_vms

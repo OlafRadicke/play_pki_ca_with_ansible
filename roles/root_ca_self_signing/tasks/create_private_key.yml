@@ -1,46 +1,46 @@
 ---
 
-- name: Generate an root ca private key with the default values
+- name:       Generate an root ca private key with the default values
   shell: |
-      openssl genrsa \
-      -passout file:{{ pki_password_file }} \
-      -out {{ pki_priv_key }}.crypt
+              openssl genrsa \
+              -passout file:{{ pki_password_file }} \
+              -out {{ pki_priv_key }}.crypt
   args:
-    chdir:   "{{ pki_private_dir }}"
-    creates: "{{ pki_priv_key }}.crypt"
+    chdir:    "{{ pki_private_dir }}"
+    creates:  "{{ pki_priv_key }}.crypt"
 
-- name: Remove passwor of private key
+- name:       Remove passwor of private key
   shell: |
-    openssl rsa \
-    -passout file:{{ pki_password_file }} \
-    -in {{ pki_priv_key }}.crypt \
-    -out {{ pki_priv_key }}
+              openssl rsa \
+              -passout file:{{ pki_password_file }} \
+              -in {{ pki_priv_key }}.crypt \
+              -out {{ pki_priv_key }}
   args:
-    chdir:   "{{ pki_private_dir }}"
-    creates: "{{ pki_priv_key }}"
+    chdir:    "{{ pki_private_dir }}"
+    creates:  "{{ pki_priv_key }}"
 
 
-- name: Check file type of private key
+- name:       Check file type of private key
   shell: |
-    file {{ pki_priv_key }}
-  register:                   shell_result
-  when:                       debug_output
+              file {{ pki_priv_key }}
+  register:   shell_result
+  when:       debug_output
 
-- name: Output return value
+- name:       Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:      "{{ shell_result }}"
+  when:       debug_output
 
-- name: View the content of private key
+- name:       View the content of private key
   shell: |
-    openssl rsa \
-    -noout \
-    -text \
-    -in {{ pki_priv_key }}
-  register:                   shell_result
-  when:                       debug_output
+              openssl rsa \
+              -noout \
+              -text \
+              -in {{ pki_priv_key }}
+  register:   shell_result
+  when:       debug_output
 
-- name: Output return value
+- name:       Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:      "{{ shell_result }}"
+  when:       debug_output

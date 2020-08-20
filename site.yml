@@ -45,7 +45,7 @@
   roles:
     -    intermediate_ca_signing
 
-# - name:  Create fake services for tests
-#   hosts: pki_fake_service
-#   roles:
-#     -    fake_service
+- name:  Create fake services for tests
+  hosts: pki_fake_service
+  roles:
+    -    fake_service

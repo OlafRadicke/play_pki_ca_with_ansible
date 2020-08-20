@@ -1,8 +1,14 @@
 ---
 
-
-- name:       Download certificate signing request files from owner
+- name:          Download certificate signing request files from owner
   get_url:
-    url:      "{{ item.value.owner_url }}/{{ item.key }}.csr.pem"
-    dest:     "{{ pki_csr_local_dir }}/{{ item.key }}.csr.pem"
-  with_dict:  "{{ pki_owner_csr }}"
+    url:         "{{ item.value.owner_url }}/{{ item.key }}.csr.pem"
+    dest:        "{{ pki_csr_local_dir }}/{{ item.key }}.csr.pem"
+  with_dict:     "{{ pki_owner_csr }}"
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output

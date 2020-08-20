@@ -1,11 +1,11 @@
 ---
 
-- name: Create a base directory for policy ca
+- name:            Create a base directory for policy ca
   file:
     path:          "{{ pki_repo_dest }}"
     state:         absent
 
-- name: Check the fingerprint of the commit sign
+- name:            Check the fingerprint of the commit sign
   git:
     repo:          "{{ pki_repo }}"
     dest:          "{{ pki_repo_dest }}"

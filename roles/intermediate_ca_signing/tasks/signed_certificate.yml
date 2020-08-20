@@ -30,43 +30,7 @@
 
 - name:           Output return value
   debug:
-    msg:          "{{ shell_result }}"
-  when:           debug_output
-
-- name:           Check file type of cert
-  shell: |
-                  file {{ pki_publication_dir }}/{{ item.key }}.crt.pem
-  register:       shell_result
-  when:           debug_output
-  with_dict:      "{{ pki_owner_csr }}"
-
-- name:           Output return value
-  debug:
-    msg:          "{{ shell_result }}"
-  when:           debug_output
-
-# - name:           Verify with the intermediate certificate
-#   shell: |
-#                   openssl verify \
-#                   -CAfile  {{ pki_ca_dir }}/{{ referrenc_ca_name }}.crt.pem \
-#                   {{ pki_publication_dir }}/{{ item.key }}.crt.pem
-#   with_dict:      "{{ pki_owner_csr }}"
-#   ignore_errors:  "{{ debug_output }}"
-#   register:       shell_result
-
-- name:           Verify with the intermediate certificate with the bundle file
-  shell: |
-                  openssl verify \
-                  -CAfile  {{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem \
-                  {{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem
-  with_dict:      "{{ pki_owner_csr }}"
-  ignore_errors:  "{{ debug_output }}"
-  register:       shell_result
-
-
-- name:           Output return value
-  debug:
-    msg:          "{{ shell_result }}"
+    msg:          "{{ shell_result.results }}"
   when:           debug_output
 
 - name:           Set owner of crt file
@@ -76,14 +40,3 @@
     group:        nginx
     mode:         'u=rw,g=r,o=r'
   with_dict:      "{{ pki_owner_csr }}"
-
-- name:           Check index file
-  shell: |
-                  cat  {{ pki_index_file }}
-  register:       shell_result
-  when:           debug_output
-
-- name:           Output return value
-  debug:
-    msg:          "{{ shell_result }}"
-  when:           debug_output

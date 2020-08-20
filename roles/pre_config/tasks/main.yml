@@ -1,4 +1,4 @@
 ---
 
-- name: Include fedora support
+- name:    Include fedora support
   include: "fedora.yml"

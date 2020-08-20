@@ -1,77 +1,60 @@
 ---
 
-- name: Generate a Self Signed OpenSSL root certificate
+- name:            Generate a Self Signed OpenSSL root certificate
   shell: |
-    openssl req \
-    -new \
-    -x509 \
-    -days 3650 \
-    -nodes \
-    -config {{ pki_opensslconfig }} \
-    -extensions v3_ca \
-    -key {{ pki_priv_key }} \
-    -out {{ pki_cert_file }}
+                   openssl req \
+                   -new \
+                   -x509 \
+                   -days 3650 \
+                   -nodes \
+                   -config {{ pki_opensslconfig }} \
+                   -extensions v3_ca \
+                   -key {{ pki_priv_key }} \
+                   -out {{ pki_cert_file }}
   args:
-    chdir:   "{{ pki_private_dir }}"
-    creates: "{{ pki_cert_file }}"
-  async: 5
-  poll: 3
-  register:                   shell_result
-  when:                       debug_output
-  ignore_errors:              "{{ debug_output }}"
+    chdir:         "{{ pki_private_dir }}"
+    creates:       "{{ pki_cert_file }}"
+  register:        shell_result
+  when:            debug_output
+  ignore_errors:   "{{ debug_output }}"
 
-- name: Output return value
+- name:            Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:           "{{ shell_result }}"
+  when:            debug_output
 
-- name: Check file type of pki_cert_file
+- name:            Check file type of pki_cert_file
   shell: |
-    file {{ pki_cert_file }}
-  register:                   shell_result
-  when:                       debug_output
+                   file {{ pki_cert_file }}
+  register:        shell_result
+  when:            debug_output
 
-- name: Output return value
+- name:            Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:           "{{ shell_result }}"
+  when:            debug_output
 
-- name: Verify root Certificate
+- name:            Verify root Certificate
   shell: |
-    openssl x509 -noout -text -in "{{ pki_cert_file }}"
-  ignore_errors:              "{{ debug_output }}"
-  register:                   shell_result
-  when:                       debug_output
+                   openssl x509 -noout -text -in "{{ pki_cert_file }}"
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
 
-- name: Output return value
+- name:            Output return value
   debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+    msg:           "{{ shell_result }}"
+  when:            debug_output
 
-- name: Set owner of crt file
+- name:            Copy root cert.pem to public httpd dir
+  shell: |
+                   cat {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem \
+                   > {{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem
+  when:            root_ca
+
+- name:            Set owner of crt file
   file:
-    path:                     "{{ pki_cert_file }}"
-    owner:                    nginx
-    group:                    nginx
-    mode:                     'u=rw,g=r,o=r'
-
-# - name: Change the certificate to PEM format
-#   shell: |
-#     openssl x509 \
-#     -in {{ pki_cert_file }} \
-#     -inform DER \
-#     -out {{ pki_cert_file }}.2 \
-#     -outform PEM
-#   args:
-#     chdir:   "{{ pki_private_dir }}"
-#     creates: "{{ pki_cert_file }}.2"
-#   async: 5
-#   poll: 3
-#   register:                   shell_result
-#   when:                       debug_output
-#   ignore_errors:  "{{ debug_output }}"
-
-# - name: Output return value
-#   debug:
-#     msg:                      "{{ shell_result }}"
-#   when:                       debug_output
+    path:          "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+    owner:         nginx
+    group:         nginx
+    mode:          'u=rw,g=r,o=r'

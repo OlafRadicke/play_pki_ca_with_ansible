@@ -11,3 +11,6 @@
 
 - name: Include setup of trust
   include:  "create_bundle.yml"
+
+- name: Include fie checks
+  include:  "check_files.yml"

@@ -1,0 +1,77 @@
+---
+
+- name:           Check file type of cert
+  shell: |
+                  file {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  register:       shell_result
+  when:           debug_output
+  with_dict:      "{{ pki_owner_csr }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result.results }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:            Check XXXXX.bundle.cert.pem with openssl
+  shell: |
+                   openssl verify \
+                   -CAfile {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem \
+                   {{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem
+  register:        check_result
+  with_dict:       "{{ pki_owner_csr }}"
+  when:            debug_output
+  ignore_errors:   "{{ debug_output }}"
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:           Verify with the owner certificate with issuer ca
+  shell: |
+                  openssl verify \
+                  -verbose \
+                  -CAfile  {{ pki_cert_file }} \
+                  {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  with_dict:      "{{ pki_owner_csr }}"
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result.results }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Verify with the owner certificate with the bundle file
+  shell: |
+                  openssl verify \
+                  -verbose \
+                  -CAfile  {{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem \
+                  {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  with_dict:      "{{ pki_owner_csr }}"
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Check index file
+  shell: |
+                  cat  {{ pki_index_file }}
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output

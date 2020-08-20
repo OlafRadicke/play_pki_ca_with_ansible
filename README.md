@@ -1,6 +1,9 @@
 Ansible playbook as PKI with CA and RA
 ======================================
 
+The concept
+-----------
+
 This is a example for ansible as CA in a PKI.
 
 That is the CA tree, that is created by the Ansible-Playbook:
@@ -11,6 +14,11 @@ That is the work flow of the certification:
 
 ![docs/pki-tree.png](docs/pki-flow.png)
 
+
+First of all
+------------
+
+Has the variable *debug_output* in the file *group_vars/pki.yml* the value *true*, you get a lot of output.
 
 Azure pre setup
 ---------------
