@@ -1,25 +1,23 @@
 ---
 
-- name:      Disable SELinux
-  selinux:
-    state:   disabled
+- name:      Install python-apt
+  package:
+    name:
+      -      python-apt
+  throttle: 1
 
 - name:      Install needed packages
   package:
     name:
-      -      python3-pyOpenSSL
+      -      python3-openssl
       -      nginx
+  throttle: 1
 
 - name:      Start service nginx, if not started
   service:
     name:    nginx
     state:   started
 
-- name:      Stoping service firewalld
-  service:
-    name:    firewalld
-    state:   stopped
-    enabled: no
 
 - name:      Create public directories for ca
   file:

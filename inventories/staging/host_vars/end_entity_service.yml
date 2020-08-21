@@ -1,0 +1,36 @@
+---
+
+ansible_host:                     "{{ end_entity_service_ip }}"
+
+pki_referrenc_ca_url:             "http://192.168.178.78:{{ pki_csr_exchange_port }}"
+pki_service_http_root_dir:        "/srv/http"
+
+end_entity_common:
+    referrenc_ca_url:             "http://192.168.178.78:{{ pki_csr_exchange_port }}"
+    country_name:                 "{{ pki_country_name }}"
+    state_or_province_name:       "{{ pki_state_or_province_name }}"
+    city_name:                    "{{ pki_city_name }}"
+    organization_name:            "{{ pki_organization_name }}"
+
+end_entity_csr:
+    "foo.dum.my":
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Foobar service department"
+        not_after:                "+26w"
+        key_usage:
+            -                     digitalSignature
+            -                     keyAgreement
+    "bar.dum.my":
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Foobar service department"
+        not_after:                "+26w"
+        key_usage:
+            -                     digitalSignature
+            -                     keyAgreement
+    "baz.dum.my":
+        email_address:            "service-ca@dum.my"
+        organizational_unit_name: "Foobar service department"
+        not_after:                "+26w"
+        key_usage:
+            -                     digitalSignature
+            -                    keyAgreement

@@ -4,11 +4,17 @@
   selinux:
     state:   disabled
 
+- name:      Enable EPEL
+  package:
+    name:
+      -      epel-release
+
 - name:      Install needed packages
   package:
     name:
-      -      python3-pyOpenSSL
+      -      pyOpenSSL
       -      nginx
+      -      openssl
 
 - name:      Start service nginx, if not started
   service:

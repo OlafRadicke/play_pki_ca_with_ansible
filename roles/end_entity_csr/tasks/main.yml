@@ -17,6 +17,14 @@
     organizational_unit_name: "{{ item.value.organizational_unit_name }}"
     key_usage:                "{{ item.value.key_usage }}"
   with_dict:                  "{{ end_entity_csr }}"
+  register:                   shell_result
+  ignore_errors:              "{{ debug_output }}"
+  when:                       debug_output
+
+- name:                       Output return value
+  debug:
+    msg:                      "{{ shell_result }}"
+  when:                       debug_output
 
 - name:                       Set owner of csr
   file:

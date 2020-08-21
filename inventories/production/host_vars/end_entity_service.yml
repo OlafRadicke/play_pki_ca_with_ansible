@@ -33,4 +33,4 @@ end_entity_csr:
         not_after:                "+26w"
         key_usage:
             -                     digitalSignature
-            -                     keyAgreement
+            -                    keyAgreement

@@ -1,0 +1,34 @@
+---
+
+ansible_host:                 "{{ end_entity_staff_ip }}"
+
+pki_referrenc_ca_url:         "http://192.168.178.78:{{ pki_csr_exchange_port }}"
+pki_service_http_root_dir:    "/srv/http"
+
+end_entity_common:
+    referrenc_ca_url:         "http://192.168.178.78:{{ pki_csr_exchange_port }}"
+    country_name:             "{{ pki_country_name }}"
+    state_or_province_name:   "{{ pki_state_or_province_name }}"
+    city_name:                "{{ pki_city_name }}"
+    organization_name:        "{{ pki_organization_name }}"
+
+end_entity_csr: []
+    ## EXAPLE:
+    # "jane.doe@dum.my":
+    #     email_address:            "jane.doe@dum.my"
+    #     organizational_unit_name: "Foobar service department"
+    #     not_after:                "+26w"
+    #     key_usage:
+    #        - digitalSignature
+    #        - keyAgreement
+    #     extended_key_usage:
+    #        - clientAuth
+    # "john.doe":
+    #     email_address:            "john.doe@dum.my"
+    #     organizational_unit_name: "Foobar service department"
+    #     not_after:                "+26w"
+    #     key_usage:
+    #        - digitalSignature
+    #        - keyAgreement
+    #     extended_key_usage:
+    #        - clientAuth

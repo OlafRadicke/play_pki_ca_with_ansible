@@ -3,20 +3,24 @@
 debug_output:               true
 ignore_errors:              yes
 
-root_ca_ip:                 "192.168.178.76"
-policy_ca_service_ip:       "192.168.178.76"
-policy_ca_staff_ip:         "192.168.178.76"
-issue_ca_service_ip:        "192.168.178.78"
-issue_ca_staff_ip:          "192.168.178.77"
-end_entity_service_ip:      "192.168.178.26"
-end_entity_staff_ip:        "192.168.178.77"
-fake_service_ip:            "192.168.178.26"
+vm_01:                      "20.52.33.242"
+vm_02:                      "20.52.32.49"
+vm_03:                      "51.116.188.152"
+vm_04:                      "20.52.34.90"
+
+root_ca_ip:                 "{{ vm_01 }}"
+policy_ca_staff_ip:         "{{ vm_01 }}"
+policy_ca_service_ip:       "{{ vm_01 }}"
+issue_ca_staff_ip:          "{{ vm_02 }}"
+issue_ca_service_ip:        "{{ vm_03 }}"
+end_entity_staff_ip:        "{{ vm_02 }}"
+end_entity_service_ip:      "{{ vm_04 }}"
+fake_service_ip:            "{{ vm_04 }}"
 # ansible_git_checkout_ip:    "local"
 # azure_control_server_ip:    "local"
 
 ansible_user:               dummy
 ansible_become:             yes
-
 
 pki_workspace:              "/srv/pki"
 pki_publication_dir:        "/srv/pki/html"

@@ -2,3 +2,26 @@
 
 - name:    Include fedora support
   include: "fedora.yml"
+  when:    ansible_distribution == "Fedora"
+
+- name:    Include CentOS support
+  include: "centos.yml"
+  when:    ansible_distribution == "CentOS"
+
+- name:    Include Ubuntu support
+  include: "ubuntu.yml"
+  when:    ansible_distribution == "Ubuntu"
+
+- name:    Include nginx setup for fedora & co
+  include: "nginx.yml"
+  when:    ansible_distribution != "Ubuntu"
+
+
+- name:    Include nginx setup for ubuntu
+  include: "nginx_ubuntu.yml"
+  when:    ansible_distribution != "Ubuntu"
+
+- name:    Copy openssl base config
+  copy:
+    src:   opensslcnf.config
+    dest:  "{{ pki_workspace }}/opensslcnf.config"

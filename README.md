@@ -8,7 +8,12 @@ This is a example for ansible as CA in a PKI.
 
 That is the CA tree, that is created by the Ansible-Playbook:
 
-![docs/pki-tree.png](docs/pki-tree.png)
+| As staging variation with 4 VMs | And as production variation with 8 VMs |
+|---------------------------------|--------------------------------------|
+| ![docs/pki-tree.png](docs/pki-tree.png) | ![docs/pki-tree-prod.png](docs/pki-tree-prod.png)   |
+
+The staging variation is in the inventory directory [*inventories/staging*](inventories/staging) and
+the production variation is in the inventory directory [*inventories/production*](inventories/production)
 
 That is the work flow of the certification:
 
@@ -30,7 +35,7 @@ For creating VMs in Azure cloud, you can use the playbook setup_azure.yml. Enter
 ansible-playbook -i hosts.yml setup_azure.yml
 ```
 
-If your secrets encryptet than you can enter:
+If your secrets encrypted than you can enter:
 
 ```bash
 ansible-playbook  \
@@ -71,7 +76,8 @@ demo-pki-root-ca-ip            demo-pki         germanywestcentral           51.
 For run this example enter:
 
 ```bash
-ansible-playbook -i ./hosts.yml  ./site.yml
+export ANSIBLE_HOST_KEY_CHECKING=False &&
+ansible-playbook -i ./hosts.yml  ./setup_pki.yml
 ```
 
 
@@ -86,6 +92,7 @@ Helpful tools
 
 * [kleopatra](https://docs.kde.org/stable5/en/pim/kleopatra//)
 * [Xca](https://hohnstaedt.de/xca/)
+* [draw.io](https://www.draw.io/)
 
 Helpful docs
 ------------
@@ -94,6 +101,8 @@ Helpful docs
 
 TODOs
 -----
+
+- roles/end_entity_csr/tasks/main.yml move to low level openssl
 
 ### Check sign commits
 

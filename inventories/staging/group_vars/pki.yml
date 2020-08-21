@@ -1,0 +1,39 @@
+---
+
+debug_output:               false
+ignore_errors:              yes
+
+vm_01:                      "192.168.178.76"
+vm_02:                      "192.168.178.77"
+vm_03:                      "192.168.178.78"
+vm_04:                      "192.168.178.26"
+
+
+root_ca_ip:                 "{{ vm_01 }}"
+policy_ca_staff_ip:         "{{ vm_01 }}"
+policy_ca_service_ip:       "{{ vm_01 }}"
+issue_ca_staff_ip:          "{{ vm_02 }}"
+issue_ca_service_ip:        "{{ vm_03 }}"
+end_entity_staff_ip:        "{{ vm_02 }}"
+end_entity_service_ip:      "{{ vm_04 }}"
+fake_service_ip:            "{{ vm_04 }}"
+# ansible_git_checkout_ip:    "local"
+# azure_control_server_ip:    "local"
+
+ansible_user:               dummy
+ansible_become:             yes
+
+
+pki_workspace:              "/srv/pki"
+pki_publication_dir:        "/srv/pki/html"
+pki_ca_dir:                 "{{ pki_workspace }}/ca"
+pki_csr_local_dir:          "{{ pki_workspace }}/csr"
+pki_end_entities_dir:       "{{ pki_workspace }}/end_entities"
+
+pki_key_password:           "fake"
+pki_csr_exchange_port:      "8011"
+
+pki_country_name:           "DE"
+pki_state_or_province_name: "Dummyfild"
+pki_city_name:              "Dummy Town"
+pki_organization_name:      "Dummy GmbH"

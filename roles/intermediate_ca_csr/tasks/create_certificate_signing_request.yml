@@ -1,36 +1,44 @@
 ---
 
-- name:      Create csr file
+- name:           Create csr file
   shell: |
-             openssl req \
-             -new \
-             -sha256 \
-             -nodes \
-             -config {{ pki_opensslconfig }} \
-             -key {{ pki_priv_key }} \
-             -out {{ pki_csr_file }}
+                  openssl req \
+                  -new \
+                  -sha256 \
+                  -nodes \
+                  -config {{ pki_opensslconfig }} \
+                  -key {{ pki_priv_key }} \
+                  -out {{ pki_csr_file }}
   args:
-    chdir:   "{{ pki_private_dir }}"
-    creates: "{{ pki_csr_file }}"
+    chdir:        "{{ pki_private_dir }}"
+    creates:      "{{ pki_csr_file }}"
+  register:       shell_result
+  ignore_errors:  "{{ debug_output }}"
+  when:           debug_output
 
-- name:      Check file type of csr file
-  shell: |
-             file {{ pki_csr_file }}
-  register:  shell_result
-  when:      debug_output
-
-- name:      Output return value
+- name:           Output return value
   debug:
-    msg:     "{{ shell_result }}"
-  when:      debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output
 
-- name:      Check index file
+- name:           Check file type of csr file
   shell: |
-             cat  {{ pki_index_file }}
-  register:  shell_result
-  when:      debug_output
+                  file {{ pki_csr_file }}
+  register:       shell_result
+  when:           debug_output
 
-- name:      Output return value
+- name:           Output return value
   debug:
-    msg:     "{{ shell_result }}"
-  when:      debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+- name:           Check index file
+  shell: |
+                  cat  {{ pki_index_file }}
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
