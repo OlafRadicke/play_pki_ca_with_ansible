@@ -14,9 +14,8 @@ pki_intermediate_ca:
   organization_name:        "{{ pki_organization_name }}"
   organizational_unit_name: "Security department"
   not_after:                "+52w"
-  key_usage:
-    -                       digitalSignature
-    -                       keyAgreement
+  key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
+  key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
 pki_private_dir:           "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
 pki_opensslconfig:         "{{ pki_private_dir }}/openssl.cnf"

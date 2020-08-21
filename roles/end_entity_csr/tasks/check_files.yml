@@ -1,0 +1,28 @@
+---
+
+- name:          Check file type of private key
+  shell: |
+                 file {{ pki_priv_key }}
+  register:      shell_result
+  when:          debug_output
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+###############################################################################
+
+- name:          View the content of private key
+  shell: |
+                 openssl rsa \
+                 -noout \
+                 -text \
+                 -in {{ pki_priv_key }}
+  register:      shell_result
+  when:          debug_output
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output

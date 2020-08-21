@@ -40,8 +40,8 @@ If your secrets encrypted than you can enter:
 ```bash
 ansible-playbook  \
   --vault-password-file ~/.ssh/vault-password \
-  -i hosts.yml \
-  ./setup_azure.yml
+  -i ./inventories/production/hosts.yml \
+  ./azure_bootstrap.yml
 ```
 
 
@@ -50,8 +50,8 @@ For removing the azure setup enter:
 ```bash
 ansible-playbook  \
   --vault-password-file ~/.ssh/vault-password \
-  -i hosts.yml \
-  ./destroy_azure.yml
+  -i ./inventories/production/hosts.yml \
+  ./azure_destroy.yml
 ```
 
 Run the main playbook
@@ -77,7 +77,9 @@ For run this example enter:
 
 ```bash
 export ANSIBLE_HOST_KEY_CHECKING=False &&
-ansible-playbook -i ./hosts.yml  ./setup_pki.yml
+ansible-playbook \
+-i ./inventories/production/hosts.yml
+./pki_bootstrap.yml
 ```
 
 
@@ -97,7 +99,7 @@ Helpful tools
 Helpful docs
 ------------
 
-* [](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)
+* [golinuxcloud.com](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)
 
 TODOs
 -----

@@ -8,3 +8,6 @@
 
 - name:    Include creating csr
   include: "create_certificate_signing_request.yml"
+
+- name:    Include private key file check
+  include: "check_files.yml"

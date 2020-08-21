@@ -41,7 +41,7 @@ default_days	   = 365
 default_crl_days = 30
 default_md	     = sha256
 preserve	       = no
-policy		       = policy_match
+policy		       = policy_anything
 email_in_dn      = no
 rand_serial      = no
 
@@ -74,13 +74,13 @@ string_mask             = utf8only
 req_extensions          = v3_req
 
 [ req_distinguished_name ]
-countryName			            = {{ pki_intermediate_ca.country_name }}
-stateOrProvinceName		      = {{ pki_intermediate_ca.state_or_province_name }}
-localityName			          = {{ pki_intermediate_ca.city_name }}
-organizationName      	  	= {{ pki_intermediate_ca.organization_name }}
-organizationalUnitName	  	= {{ pki_intermediate_ca.organization_name }}
-commonName			            = {{ pki_intermediate_ca.common_name }}
-emailAddress		           	= {{ pki_intermediate_ca.email_address }}
+countryName			            = {{ end_entity.country_name }}
+stateOrProvinceName		      = {{ end_entity.state_or_province_name }}
+localityName			          = {{ end_entity.city_name }}
+organizationName      	  	= {{ end_entity.organization_name }}
+organizationalUnitName	  	= {{ end_entity.organization_name }}
+commonName			            = {{ end_entity.common_name }}
+emailAddress		           	= {{ end_entity.email_address }}
 
 [ req_attributes ]
 challengePassword		    = A challenge password
@@ -93,14 +93,14 @@ subjectKeyIdentifier    = hash
 authorityKeyIdentifier  = keyid,issuer
 
 [ v3_req ]
-basicConstraints = CA:FALSE
-keyUsage         = nonRepudiation, digitalSignature, keyEncipherment
+basicConstraints       = CA:FALSE
+keyUsage               = {{ end_entity.key_usage_req }}
 
 [ v3_ca ]
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always,issuer
-basicConstraints       = critical,CA:true
-
+basicConstraints       = critical, CA:true, pathlen:0
+keyUsage               = {{ end_entity.key_usage_ca }}
 
 [ crl_ext ]
 authorityKeyIdentifier = keyid:always

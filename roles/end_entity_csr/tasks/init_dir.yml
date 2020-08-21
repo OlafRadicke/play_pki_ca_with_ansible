@@ -1,6 +1,6 @@
 ---
 
-- name:      Create private directory for ca
+- name:      Create private directory for end entity
   file:
     path:    "{{ item }}"
     state:   directory
@@ -8,6 +8,8 @@
   loop:
     -        "{{ pki_private_dir }}"
     -        "{{ pki_private_dir }}/private"
+
+###############################################################################
 
 - name:      Create index file
   shell:     "touch {{ pki_index_file }}"
@@ -28,6 +30,7 @@
             echo $NEWSERIAL > {{ pki_serial_file }}
 
 ###############################################################################
+
 
 - name:      Create  crlnumber file if it not exist
   shell:     "echo 1 > {{ pki_crlnumber_file }}"

@@ -1,17 +1,17 @@
 ---
 
-- name:           Singing command
-  debug:
-    msg:          |
-                  openssl ca \
-                  -config {{ pki_opensslconfig }} \
-                  -days 2650 \
-                  -notext \
-                  -batch \
-                  -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
-                  -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
-  with_dict:      "{{ pki_owner_csr }}"
-  when:           debug_output
+# - name:           Singing command
+#   debug:
+#     msg:          |
+#                   openssl ca \
+#                   -config {{ pki_opensslconfig }} \
+#                   -days 2650 \
+#                   -notext \
+#                   -batch \
+#                   -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
+#                   -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+#   with_dict:      "{{ pki_owner_csr }}"
+#   when:           debug_output
 
 - name:           Generate and sign immediate CA certificate
   shell: |
@@ -26,6 +26,7 @@
     chdir:        "{{ pki_private_dir }}"
     creates:      "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
   with_dict:      "{{ pki_owner_csr }}"
+  ignore_errors: "{{ debug_output }}"
   register:       shell_result
 
 - name:           Output return value
@@ -40,3 +41,4 @@
     group:        nginx
     mode:         'u=rw,g=r,o=r'
   with_dict:      "{{ pki_owner_csr }}"
+  when:           ansible_distribution != "Ubuntu"

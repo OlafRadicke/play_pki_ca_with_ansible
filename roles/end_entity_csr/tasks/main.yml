@@ -1,35 +1,13 @@
 ---
 
-- name:                       Generate keys for end entities
-  openssl_privatekey:
-    path:                     "{{ pki_end_entities_dir }}/{{ item.key }}.key.pem"
-  with_dict:                  "{{ end_entity_csr }}"
+- name:    Include task for init directory
+  include: "init_dir.yml"
 
-- name:                       Generate an Certificate Signing Request for end entities
-  openssl_csr:
-    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr.pem"
-    privatekey_path:          "{{ pki_end_entities_dir }}/{{ item.key }}.key.pem"
-    common_name:              "{{ item.key }}"
-    country_name:             "{{ end_entity_common.country_name }}"
-    state_or_province_name:   "{{ end_entity_common.state_or_province_name }}"
-    organization_name:        "{{ end_entity_common.organization_name }}"
-    email_address:            "{{ item.value.email_address }}"
-    organizational_unit_name: "{{ item.value.organizational_unit_name }}"
-    key_usage:                "{{ item.value.key_usage }}"
-  with_dict:                  "{{ end_entity_csr }}"
-  register:                   shell_result
-  ignore_errors:              "{{ debug_output }}"
-  when:                       debug_output
+- name:    Include creating private key
+  include: "create_private_key.yml"
 
-- name:                       Output return value
-  debug:
-    msg:                      "{{ shell_result }}"
-  when:                       debug_output
+- name:    Include creating csr
+  include: "create_certificate_signing_request.yml"
 
-- name:                       Set owner of csr
-  file:
-    path:                     "{{ pki_publication_dir }}/{{ item.key }}.csr.pem"
-    owner:                    nginx
-    group:                    nginx
-    mode:                     'u=rw,g=r,o=r'
-  with_dict:                  "{{ end_entity_csr }}"
+- name:    Include private key file check
+  include: "check_files.yml"

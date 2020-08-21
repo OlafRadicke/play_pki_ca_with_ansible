@@ -1,0 +1,7 @@
+---
+
+- name:     Include setup of trust
+  include:  "download_trust.yml"
+
+- name:     Include http test request
+  include:  "http_request_test.yml"

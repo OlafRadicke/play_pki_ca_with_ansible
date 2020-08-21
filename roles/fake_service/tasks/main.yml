@@ -5,6 +5,8 @@
 
 - name:     Include setup of nginx for the services
   include:  "nginx.yml"
+  when:     ansible_distribution != "Ubuntu"
 
-- name:     Include http test request
-  include:  "http_request_test.yml"
+- name:     Include setup of nginx for the services
+  include:  "nginx_ubuntu.yml"
+  when:     ansible_distribution == "Ubuntu"

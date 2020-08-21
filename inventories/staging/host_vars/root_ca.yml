@@ -15,9 +15,8 @@ pki_intermediate_ca:
   organization_name:        "Dummy GmbH"
   organizational_unit_name: "Security department"
   not_after:                "+1300w"
-  key_usage:
-      -                     digitalSignature
-      -                     keyAgreement
+  key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
+  key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
 pki_private_dir:           "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
 pki_opensslconfig:         "{{ pki_private_dir }}/openssl.cnf"

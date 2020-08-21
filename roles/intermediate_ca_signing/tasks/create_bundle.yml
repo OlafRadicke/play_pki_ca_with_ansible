@@ -6,6 +6,7 @@
                    {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem \
                    > {{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem
   when:            root_ca is not defined
+  ignore_errors:   "{{ debug_output }}"
 
 - name:            Create XXXXX.bundle.cert.pem as root ca
   shell: |
@@ -19,3 +20,4 @@
     owner:         nginx
     group:         nginx
     mode:          'u=rw,g=r,o=r'
+  when:    ansible_distribution != "Ubuntu"

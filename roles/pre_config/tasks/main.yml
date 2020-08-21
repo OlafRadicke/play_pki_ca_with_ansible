@@ -16,12 +16,12 @@
   include: "nginx.yml"
   when:    ansible_distribution != "Ubuntu"
 
-
 - name:    Include nginx setup for ubuntu
   include: "nginx_ubuntu.yml"
-  when:    ansible_distribution != "Ubuntu"
+  when:    ansible_distribution == "Ubuntu"
 
 - name:    Copy openssl base config
   copy:
     src:   opensslcnf.config
     dest:  "{{ pki_workspace }}/opensslcnf.config"
+  when:    ansible_distribution != "Ubuntu"

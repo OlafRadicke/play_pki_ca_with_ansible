@@ -1,5 +1,7 @@
 HOME		    	= .
 oid_section		= new_oids
+
+{% if ansible_distribution != "Ubuntu" %}
 openssl_conf  = default_modules
 
 [ default_modules ]
@@ -10,6 +12,8 @@ system_default = crypto_policy
 
 [ crypto_policy ]
 .include = {{ pki_workspace }}/opensslcnf.config
+
+{% endif %}
 
 [ new_oids ]
 tsa_policy1 = 1.2.3.4.1
@@ -89,14 +93,14 @@ subjectKeyIdentifier    = hash
 authorityKeyIdentifier  = keyid,issuer
 
 [ v3_req ]
-basicConstraints = CA:FALSE
-keyUsage         = nonRepudiation, digitalSignature, keyEncipherment
+basicConstraints       = CA:FALSE
+keyUsage               = {{ pki_intermediate_ca.key_usage_req }}
 
 [ v3_ca ]
-subjectKeyIdentifier = hash
+subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always,issuer
-basicConstraints = critical, CA:true, pathlen:0
-keyUsage = critical, digitalSignature, cRLSign, keyCertSign
+basicConstraints       = critical, CA:true, pathlen:0
+keyUsage               = {{ pki_intermediate_ca.key_usage_ca }}
 
 [ crl_ext ]
 authorityKeyIdentifier = keyid:always

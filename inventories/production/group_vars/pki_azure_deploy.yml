@@ -18,14 +18,10 @@ azure_vm:
   - name:                           "vm-02"
   - name:                           "vm-03"
   - name:                           "vm-04"
-  # - name:                           "root-ca"
-  # - name:                           "policy-ca-service"
-  # - name:                           "policy-ca-staff"
-  # - name:                           "issue_ca_service"
-  # - name:                           "issue_ca_staff"
-  # - name:                           "end_entity_service"
-  # - name:                           "end_entity_staff"
-  # - name:                           "fake_service"
+  - name:                           "vm-05"
+  - name:                           "vm-06"
+  - name:                           "vm-07"
+  - name:                           "vm-08"
 
 secret_service_principal_password:  !vault |
                                     $ANSIBLE_VAULT;1.1;AES256
