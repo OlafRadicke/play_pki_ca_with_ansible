@@ -1,24 +1,35 @@
 ---
 
-- name:      Create httpd root directory for services
+- name:          Create httpd root directory for services
   file:
-    path:    "{{ pki_service_http_root_dir }}/{{ fake_service_url }}"
-    state:   directory
-    mode:    'u=rwx,g=rx,o=rx'
+    path:        "{{ pki_service_http_root_dir }}"
+    state:       directory
+    mode:        'u=rwx,g=rx,o=rx'
 
-- name:      Copy index files
+- name:           Copy index files
   copy:
-    src:     index.html
-    dest:    "{{ pki_service_http_root_dir }}/{{ fake_service_url }}/index.html"
-    mode:    'u=xwr,g=xr,o=xr'
+    src:          index.html
+    dest:         "{{ pki_service_http_root_dir }}/index.html"
+    mode:         'u=xwr,g=xr,o=xr'
 
-- name:      Create nginx config for service
+- name:           Create nginx config for service
   template:
-    src:     "{{ fake_service_url }}.conf"
-    dest:    "/etc/nginx/conf.d/{{ fake_service_url }}.conf"
-    mode:    'u=rx,g=r,o=r'
+    src:          "fake.conf"
+    dest:         "/etc/nginx/conf.d/{{ end_entity.common_name }}.conf"
+    mode:         'u=rx,g=r,o=r'
 
-- name:      Start service nginx, if not started
+- name:           Check nginx config
+  shell:          nginx -t
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+- name:           Start service nginx, if not started
   service:
-    name:    nginx
-    state:   restarted
+    name:         nginx
+    state:        restarted

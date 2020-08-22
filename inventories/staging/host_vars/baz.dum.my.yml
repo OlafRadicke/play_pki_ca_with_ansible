@@ -1,11 +1,9 @@
 ---
 
-ansible_host:                     "{{ baz_dum_my_ip }}"
+ansible_host:                 "{{ baz_dum_my_ip }}"
 
-pki_referrenc_ca_url:             "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
-pki_service_http_root_dir:        "/srv/http"
-
-
+pki_referrenc_ca_url:         "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_name:            "service-policy-ca-01.dum.my"
 
 end_entity:
     common_name:              "baz.dum.my"
@@ -28,3 +26,4 @@ pki_index_file:               "{{ pki_private_dir }}/index"
 pki_crlnumber_file:           "{ pki_private_dir }}/crlnumber"
 pki_cert_file:                "{{ pki_ca_dir }}/{{ end_entity.common_name }}.crt.pem"
 pki_csr_file:                 "{{ pki_publication_dir }}/{{ end_entity.common_name }}.csr.pem"
+pki_service_http_root_dir:    "/srv/http/{{ end_entity.common_name }}"

@@ -1,6 +1,6 @@
 ---
 
-- name:     Include setup of trust
+- name:     Include setup of download trust
   include:  "download_trust.yml"
 
 - name:     Include setup of nginx for the services

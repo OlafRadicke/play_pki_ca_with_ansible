@@ -3,6 +3,5 @@
 ansible_host:              "{{ fake_service_ip }}"
 referrenc_ca_url:          "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
 referrenc_ca_name:         "service-policy-ca-01.dum.my"
-ca_trust_source_dir:       "/usr/share/pki/ca-trust-source/anchors/"
 fake_service_url:          "foo.dum.my"
 pki_service_http_root_dir: "/srv/http"

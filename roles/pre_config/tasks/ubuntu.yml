@@ -11,6 +11,7 @@
     name:
       -      python3-openssl
       -      nginx
+      -      ca-certificates
   throttle: 1
 
 - name:      Start service nginx, if not started
