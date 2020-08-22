@@ -24,8 +24,10 @@ pki_priv_key:              "{{ pki_private_dir }}/private/{{ pki_intermediate_ca
 pki_password_file:         "{{ pki_private_dir }}/keypassword.txt"
 pki_serial_file:           "{{ pki_private_dir }}/serial"
 pki_index_file:            "{{ pki_private_dir }}/index"
+pki_index_attr_file:       "{{ pki_private_dir }}/index.attr"
 pki_crlnumber_file:        "{{ pki_private_dir }}/crlnumber"
 pki_cert_file:             "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+pki_bundle_file:              "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem"
 
 pki_owner_csr:
   "staff-policy-ca-01.dum.my":

@@ -76,7 +76,7 @@ demo-pki-root-ca-ip            demo-pki         germanywestcentral           51.
 For run this example enter:
 
 ```bash
-export ANSIBLE_HOST_KEY_CHECKING=False &&
+export ANSIBLE_HOST_KEY_CHECKING=False && \
 ansible-playbook \
 -i ./inventories/production/hosts.yml
 ./pki_bootstrap.yml
@@ -104,15 +104,14 @@ Helpful docs
 TODOs
 -----
 
-- roles/end_entity_csr/tasks/main.yml move to low level openssl
+### Tasks
 
-### Check sign commits
+- Nothing
 
-```yml
-- name: Convert the format of the certificate to pem format
-  shell: |
-    openssl x509 \
-    -in {{ pki_publication_dir }}/{{ root_ca.common_name }}.crt \
-    -out {{ pki_publication_dir }}/{{ root_ca.common_name }}.crt.pem \
-    -outform PEM
-```
+
+### Other interisting things
+
+- [RabbitMQ](https://de.wikipedia.org/wiki/RabbitMQ)
+- [PKI as JavaScript lib](https://github.com/PeculiarVentures/PKI.js)
+- [Sharkey is a service for managing certificates for use by OpenSSH (Writen in Go)](https://github.com/square/sharkey)
+-

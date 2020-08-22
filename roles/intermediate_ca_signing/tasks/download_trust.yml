@@ -15,7 +15,7 @@
 - name:          Download certificate bundle files from the referrenc ca
   get_url:
     url:         "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
-    dest:        "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
+    dest:        "{{ pki_referrenc_ca_bundle_file}}"
   when:          root_ca is not defined
   ignore_errors: "{{ debug_output }}"
   register:      shell_result

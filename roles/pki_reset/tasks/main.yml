@@ -1,6 +1,6 @@
 ---
 
-- name:      Create a base directory for policy ca
+- name:      Remove directories of pki CAs
   file:
     path:    "{{ item }}"
     state:   absent
@@ -10,4 +10,4 @@
     -        "{{ pki_csr_local_dir }}"
     -        "{{ pki_end_entities_dir }}"
     -        "{{ pki_publication_dir }}"
-    -        "/etc/nginx/conf.d/foo.dum.my.conf"
+    # -        "/etc/nginx/conf.d/foo.dum.my.conf"

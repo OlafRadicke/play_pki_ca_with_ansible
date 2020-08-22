@@ -7,8 +7,9 @@
 
 - name:        Download signing certificate files of end entity / services
   get_url:
-    url:       "{{ referrenc_ca_url }}/{{ fake_service_url }}.crt.pem"
+    url:       "{{ pki_referrenc_ca_url }}/{{ fake_service_url }}.crt.pem"
     dest:      "{{ pki_end_entities_dir }}/{{ fake_service_url }}.crt.pem"
+
 
 # - name:        Update ca trust
 #   shell:       "update-ca-trust"

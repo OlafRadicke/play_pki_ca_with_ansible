@@ -14,6 +14,11 @@
   args:
     creates: "{{ pki_index_file }}"
 
+- name:      Create index.attr file
+  shell:     "touch {{ pki_index_attr_file}}"
+  args:
+    creates: "{{ pki_index_attr_file }}"
+
 ###############################################################################
 
 - name:      Create serial file if it not exist

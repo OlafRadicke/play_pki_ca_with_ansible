@@ -24,17 +24,20 @@ pki_priv_key:                 "{{ pki_private_dir }}/private/{{ pki_intermediate
 pki_password_file:            "{{ pki_private_dir }}/keypassword.txt"
 pki_serial_file:              "{{ pki_private_dir }}/serial"
 pki_index_file:               "{{ pki_private_dir }}/index"
+pki_index_attr_file:          "{{ pki_private_dir }}/index.attr"
 pki_crlnumber_file:           "{ pki_private_dir }}/crlnumber"
 pki_cert_file:                "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
 pki_csr_file:                 "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr.pem"
+pki_referrenc_ca_bundle_file: "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
+pki_bundle_file:              "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem"
 
 pki_owner_csr:
     "foo.dum.my":
-        owner_url:           "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
+        owner_url:           "http://{{ foo_dum_my_ip }}:{{ pki_csr_exchange_port }}"
         not_after:           "+26w"
     "bar.dum.my":
-        owner_url:           "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
+        owner_url:           "http://{{ bar_dum_my_ip }}:{{ pki_csr_exchange_port }}"
         not_after:           "+26w"
     "baz.dum.my":
-        owner_url:           "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
+        owner_url:           "http://{{ baz_dum_my_ip }}:{{ pki_csr_exchange_port }}"
         not_after:           "+26w"
