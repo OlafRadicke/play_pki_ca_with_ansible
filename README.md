@@ -106,7 +106,9 @@ TODOs
 
 ### Tasks
 
-- Nothing
+- For umbuntu:
+```bashln -s /etc/nginx/conf.d/foo.dum.my.conf /etc/nginx/sites-enabled/foo.dum.my.conf
+```
 
 
 ### Other interisting things
