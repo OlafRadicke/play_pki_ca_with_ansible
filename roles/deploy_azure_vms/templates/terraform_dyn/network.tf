@@ -51,9 +51,40 @@ resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-http" {
   network_security_group_name      = azurerm_network_security_group.{{ azure_prefix }}-sec-group.name
 }
 
-resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-outbound" {
-  name                             = "{{ azure_prefix }}-sec-rule-outbound"
+
+resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-https-8443" {
+  name                             = "{{ azure_prefix }}-sec-rule-https-in"
   priority                         = 1002
+  direction                        = "Inbound"
+  access                           = "Allow"
+  protocol                         = "*"
+  source_port_range                = "*"
+  destination_port_range           = "8443"
+  source_address_prefix            = "*"
+  destination_address_prefix       = "*"
+
+  resource_group_name              = azurerm_resource_group.main.name
+  network_security_group_name      = azurerm_network_security_group.{{ azure_prefix }}-sec-group.name
+}
+
+resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-https" {
+  name                             = "{{ azure_prefix }}-sec-rule-https-out"
+  priority                         = 1003
+  direction                        = "Outbound"
+  access                           = "Allow"
+  protocol                         = "*"
+  source_port_range                = "*"
+  destination_port_range           = "443"
+  source_address_prefix            = "*"
+  destination_address_prefix       = "*"
+
+  resource_group_name              = azurerm_resource_group.main.name
+  network_security_group_name      = azurerm_network_security_group.{{ azure_prefix }}-sec-group.name
+}
+
+resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-outbound" {
+  name                             = "{{ azure_prefix }}-sec-rule-outbound-all"
+  priority                         = 1004
   direction                        = "Outbound"
   access                           = "Allow"
   protocol                         = "*"

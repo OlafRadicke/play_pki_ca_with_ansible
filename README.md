@@ -32,7 +32,9 @@ The configuration of the Azure setup is in the file group_vars/azure_deploy.yml.
 For creating VMs in Azure cloud, you can use the playbook setup_azure.yml. Enter:
 
 ```bash
-ansible-playbook -i hosts.yml setup_azure.yml
+ansible-playbook
+  -i ./inventories/staging/hosts.yml \
+  ./azure_bootstrap.yml
 ```
 
 If your secrets encrypted than you can enter:
@@ -40,7 +42,7 @@ If your secrets encrypted than you can enter:
 ```bash
 ansible-playbook  \
   --vault-password-file ~/.ssh/vault-password \
-  -i ./inventories/production/hosts.yml \
+  -i ./inventories/staging/hosts.yml \
   ./azure_bootstrap.yml
 ```
 
@@ -50,7 +52,7 @@ For removing the azure setup enter:
 ```bash
 ansible-playbook  \
   --vault-password-file ~/.ssh/vault-password \
-  -i ./inventories/production/hosts.yml \
+  -i ./inventories/staging/hosts.yml \
   ./azure_destroy.yml
 ```
 
@@ -78,7 +80,7 @@ For run this example enter:
 ```bash
 export ANSIBLE_HOST_KEY_CHECKING=False && \
 ansible-playbook \
--i ./inventories/production/hosts.yml
+-i ./inventories/staging/hosts.yml \
 ./pki_bootstrap.yml
 ```
 
@@ -106,9 +108,11 @@ TODOs
 
 ### Tasks
 
+- "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - For umbuntu:
 ```bashln -s /etc/nginx/conf.d/foo.dum.my.conf /etc/nginx/sites-enabled/foo.dum.my.conf
 ```
+- Renaming group_vars and host_vars files
 
 
 ### Other interisting things

@@ -10,7 +10,7 @@
 ###############################################################################
 - name:            Check service with get_url
   get_url:
-    url:           https://{{ fake_service_url }}/index.html
+    url:           https://{{ fake_service_url }}:{{ service_port }}/index.html
     dest:          /tmp/index.html
   ignore_errors:   "{{ debug_output }}"
   register:        get_url_result
@@ -24,7 +24,7 @@
 ###############################################################################
 
 - name:            Check service with curl
-  shell:           "curl https://{{ fake_service_url }}/index.html"
+  shell:           "curl https://{{ fake_service_url }}:{{ service_port }}/index.html"
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output

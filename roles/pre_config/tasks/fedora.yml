@@ -1,41 +1,52 @@
 ---
 
-- name:      Disable SELinux
+- name:           Disable SELinux
   selinux:
-    state:   disabled
+    state:        disabled
 
-- name:      Install needed packages
+- name:           Install needed packages
   package:
     name:
-      -      python3-pyOpenSSL
-      -      nginx
+      -           python3-pyOpenSSL
+      -           nginx
 
-- name:      Start service nginx, if not started
+- name:           Check nginx config
+  shell:          nginx -t
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+- name:           Start service nginx, if not started
   service:
-    name:    nginx
-    state:   started
+    name:         nginx
+    state:        started
 
-- name:      Stoping service firewalld
+- name:           Stoping service firewalld
   service:
-    name:    firewalld
-    state:   stopped
-    enabled: no
+    name:         firewalld
+    state:        stopped
+    enabled:      no
 
-- name:      Create public directories for ca
+- name:           Create public directories for ca
   file:
-    path:    "{{ item }}"
-    state:   directory
-    mode:    'u=rwx,g=rx,o=rx'
+    path:         "{{ item }}"
+    state:        directory
+    mode:         'u=rwx,g=rx,o=rx'
   loop:
-    -        "{{ pki_csr_local_dir }}"
-    -        "{{ pki_workspace }}"
-    -        "{{ pki_publication_dir }}"
+    -             "{{ pki_csr_local_dir }}"
+    -             "{{ pki_workspace }}"
+    -             "{{ pki_publication_dir }}"
 
-- name:      Create private directories for ca
+- name:           Create private directories for ca
   file:
-    path:    "{{ item }}"
-    state:   directory
-    mode:    'u=rwx,g=rx,o-rwx'
+    path:         "{{ item }}"
+    state:        directory
+    mode:         'u=rwx,g=rx,o-rwx'
   loop:
-    -        "{{ pki_ca_dir }}"
-    -        "{{ pki_end_entities_dir }}"
+    -             "{{ pki_ca_dir }}"
+    -             "{{ pki_end_entities_dir }}"
