@@ -6,13 +6,14 @@
 #     -    check_git_sign
 
 
-#   # If one hoste hase multiple roles than the package database
-#   # can be blocking, is this not "serial: 1"
-# - name:  Preparation of all nodes for their job
-#   hosts: pki
-#   serial: 1
-#   roles:
-#     -    pre_config
+  # If one hoste hase multiple roles than the package database
+  # can be blocking, is this not "serial: 1"
+- name:  Preparation of all nodes for their job
+  hosts: pki
+  serial: 1
+  roles:
+    -    set_special_host_facts
+    -    pre_config
 
 - name:  Creating CSRs for the end entities
   hosts: pki_end_entity

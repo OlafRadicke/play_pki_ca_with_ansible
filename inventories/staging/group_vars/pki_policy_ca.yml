@@ -1,1 +1,4 @@
 ---
+
+referrenc_ca_url:             "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_name:            "root-ca-01.dum.my"
