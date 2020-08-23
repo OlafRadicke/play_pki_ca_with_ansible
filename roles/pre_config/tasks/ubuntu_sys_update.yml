@@ -1,0 +1,48 @@
+---
+
+- name:               Update apt-get repo and cache
+  apt:
+    update_cache:     yes
+    force_apt_get:    yes
+    cache_valid_time: 3600
+
+- name:               Upgrade all apt packages
+  apt:
+    upgrade:          dist
+    force_apt_get:    yes
+
+###############################################################################
+
+- name:               Install python-apt
+  package:
+    name:
+      -               python-apt
+
+- name:               Install needed packages
+  package:
+    name:
+      -               python3-openssl
+      -               nginx
+      -               ca-certificates
+
+###############################################################################
+
+
+- name:               Create public directories for ca
+  file:
+    path:             "{{ item }}"
+    state:            directory
+    mode:             'u=rwx,g=rx,o=rx'
+  loop:
+    -                 "{{ pki_csr_local_dir }}"
+    -                 "{{ pki_workspace }}"
+    -                 "{{ pki_publication_dir }}"
+
+- name:               Create private directories for ca
+  file:
+    path:             "{{ item }}"
+    state:            directory
+    mode:             'u=rwx,g=rx,o-rwx'
+  loop:
+    -                 "{{ pki_ca_dir }}"
+    -                 "{{ pki_end_entities_dir }}"

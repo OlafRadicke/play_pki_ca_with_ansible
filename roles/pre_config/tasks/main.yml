@@ -8,20 +8,28 @@
   include: "centos.yml"
   when:    ansible_distribution == "CentOS"
 
-- name:    Include Ubuntu support
-  include: "ubuntu.yml"
-  when:    ansible_distribution == "Ubuntu"
-
 - name:    Include nginx setup for fedora & co
   include: "nginx.yml"
   when:    ansible_distribution != "Ubuntu"
-
-- name:    Include nginx setup for ubuntu
-  include: "nginx_ubuntu.yml"
-  when:    ansible_distribution == "Ubuntu"
 
 - name:    Copy openssl base config
   copy:
     src:   opensslcnf.config
     dest:  "{{ pki_workspace }}/opensslcnf.config"
   when:    ansible_distribution != "Ubuntu"
+
+- name:    Include system update for Ubuntu
+  include: "ubuntu_sys_update.yml"
+  when:    ansible_distribution == "Ubuntu"
+
+- name:    Include package install for Ubuntu
+  include: "ubuntu_package_install.yml"
+  when:    ansible_distribution == "Ubuntu"
+
+- name:    Include create needed directories for Ubuntu
+  include: "ubuntu_create_dirs.yml"
+  when:    ansible_distribution == "Ubuntu"
+
+- name:    Include nginx setup for ubuntu
+  include: "ubuntu_nginx.yml"
+  when:    ansible_distribution == "Ubuntu"

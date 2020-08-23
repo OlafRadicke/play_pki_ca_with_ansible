@@ -5,10 +5,14 @@
 #   roles:
 #     -    check_git_sign
 
-- name:  Preparation of all nodes for their job
-  hosts: pki
-  roles:
-    -    pre_config
+
+#   # If one hoste hase multiple roles than the package database
+#   # can be blocking, is this not "serial: 1"
+# - name:  Preparation of all nodes for their job
+#   hosts: pki
+#   serial: 1
+#   roles:
+#     -    pre_config
 
 - name:  Creating CSRs for the end entities
   hosts: pki_end_entity
@@ -31,7 +35,7 @@
     -    root_ca_self_signing
 
 - name:  Signed policy ca cert by the root ca
-  hosts: root_ca
+  hosts: pki_root_ca
   roles:
     -    intermediate_ca_signing
 

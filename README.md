@@ -109,6 +109,7 @@ TODOs
 ### Tasks
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
+- Add links from stage to production inventory
 - For umbuntu:
 ```bashln -s /etc/nginx/conf.d/foo.dum.my.conf /etc/nginx/sites-enabled/foo.dum.my.conf
 ```
