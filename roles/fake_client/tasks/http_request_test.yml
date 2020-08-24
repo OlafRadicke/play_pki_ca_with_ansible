@@ -24,7 +24,10 @@
 ###############################################################################
 
 - name:            Check service with curl
-  shell:           "curl https://{{ fake_service_url }}:{{ service_port }}/index.html"
+  shell:           |
+                   "curl \
+                   --with-ca-bundle=/usr/local/share/ca-certificates/{{ referrenc_ca_name }} \
+                   https://{{ fake_service_url }}:{{ service_port }}/index.html"
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output

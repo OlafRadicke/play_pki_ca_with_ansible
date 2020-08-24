@@ -10,4 +10,16 @@
     -        "{{ pki_csr_local_dir }}"
     -        "{{ pki_end_entities_dir }}"
     -        "{{ pki_publication_dir }}"
-    # -        "/etc/nginx/conf.d/foo.dum.my.conf"
+
+- name:      Remove nginx configs
+  shell:     "rm -vf {{ item }}"
+  loop:
+    -        "/etc/nginx/conf.d/*.dum.my.conf"
+    -        "/etc/nginx/conf.d/csr-exchange.conf"
+  register:  shell_result
+  when:      debug_output
+
+- name:      Output return value
+  debug:
+    msg:     "{{ shell_result }}"
+  when:      debug_output

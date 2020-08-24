@@ -1,77 +1,77 @@
-HOME		    	   = .
-oid_section		   = new_oids
+HOME		    	              = .
+oid_section		              = new_oids
 
 {% if ansible_distribution != "Ubuntu" %}
-openssl_conf     = default_modules
+openssl_conf                = default_modules
 
 [ default_modules ]
-ssl_conf         = ssl_module
+ssl_conf                    = ssl_module
 
 [ ssl_module ]
-system_default   = crypto_policy
+system_default              = crypto_policy
 
 [ crypto_policy ]
-.include         = {{ pki_workspace }}/opensslcnf.config
+.include                    = {{ pki_workspace }}/opensslcnf.config
 
 {% endif %}
 
 [ new_oids ]
-tsa_policy1      = 1.2.3.4.1
-tsa_policy2      = 1.2.3.4.5.6
-tsa_policy3      = 1.2.3.4.5.7
+tsa_policy1                 = 1.2.3.4.1
+tsa_policy2                 = 1.2.3.4.5.6
+tsa_policy3                 = 1.2.3.4.5.7
 
 [ ca ]
-default_ca	     = CA_default
+default_ca	                = CA_default
 
 [ CA_default ]
-dir              = {{ pki_private_dir }}
-certs            = $dir/certs
-crl_dir          = {{ pki_publication_dir}}
-database         = {{ pki_index_file }}
-new_certs_dir    = {{ pki_publication_dir}}
-certificate	     = {{ pki_cert_file }}
-serial           = {{ pki_serial_file }}
-crlnumber	       = $dir/crlnumber
-crl		           = $dir/crl.pem
-private_key      = {{ pki_priv_key }}
-x509_extensions	 = usr_cert
-name_opt 	       = ca_default
-cert_opt 	       = ca_default
-default_days	   = 365
-default_crl_days = 30
-default_md	     = sha256
-preserve	       = no
-policy		       = policy_match
-email_in_dn      = no
-rand_serial      = no
+dir                         = {{ pki_private_dir }}
+certs                       = $dir/certs
+crl_dir                     = {{ pki_publication_dir}}
+database                    = {{ pki_index_file }}
+new_certs_dir               = {{ pki_publication_dir}}
+certificate	                = {{ pki_cert_file }}
+serial                      = {{ pki_serial_file }}
+crlnumber	                  = $dir/crlnumber
+crl		                      = $dir/crl.pem
+private_key                 = {{ pki_priv_key }}
+x509_extensions	            = usr_cert
+name_opt 	                  = ca_default
+cert_opt 	                  = ca_default
+default_days	              = 365
+default_crl_days            = 30
+default_md	                = sha256
+preserve	                  = no
+policy		                  = policy_match
+email_in_dn                 = no
+rand_serial                 = no
 
 [ policy_match ]
-countryName		          = match
-stateOrProvinceName	    = match
-organizationName	      = match
-organizationalUnitName	= optional
-commonName		          = supplied
-emailAddress		        = optional
+countryName		              = match
+stateOrProvinceName	        = match
+organizationName	          = match
+organizationalUnitName     	= optional
+commonName		              = supplied
+emailAddress		            = optional
 
 [ policy_anything ]
-countryName		          = optional
-stateOrProvinceName    	= optional
-localityName	        	= optional
-organizationName	      = optional
-organizationalUnitName	= optional
-commonName	          	= supplied
-emailAddress	        	= optional
+countryName		              = optional
+stateOrProvinceName        	= optional
+localityName	            	= optional
+organizationName	          = optional
+organizationalUnitName    	= optional
+commonName	              	= supplied
+emailAddress	            	= optional
 
 [ req ]
-prompt                  = no
-default_bits		        = 4096
-default_md		          = sha256
-default_keyfile 	      = privkey.pem
-distinguished_name	    = req_distinguished_name
-attributes		          = req_attributes
-x509_extensions	        = v3_ca
-string_mask             = utf8only
-req_extensions          = v3_req
+prompt                      = no
+default_bits		            = 4096
+default_md		              = sha256
+default_keyfile 	          = privkey.pem
+distinguished_name	        = req_distinguished_name
+attributes		              = req_attributes
+x509_extensions	            = v3_ca
+string_mask                 = utf8only
+req_extensions              = v3_req
 
 [ req_distinguished_name ]
 countryName			            = {{ pki_intermediate_ca.country_name }}
@@ -87,13 +87,13 @@ challengePassword		        = A challenge password
 unstructuredName		        = An optional company name
 
 [ usr_cert ]
-basicConstraints            = CA:FALSE
+basicConstraints            = critical,CA:true,pathlen:5
 nsComment			              = "OpenSSL Generated Certificate"
 subjectKeyIdentifier        = hash
 authorityKeyIdentifier      = keyid,issuer
 
 [ v3_req ]
-basicConstraints            = CA:FALSE
+basicConstraints            = critical,CA:true,pathlen:5
 keyUsage                    = nonRepudiation, digitalSignature, keyEncipherment
 
 [ v3_ca ]
@@ -106,7 +106,7 @@ basicConstraints            = critical,CA:true
 authorityKeyIdentifier      = keyid:always
 
 [ proxy_cert_ext ]
-basicConstraints            = CA:FALSE
+basicConstraints            = critical,CA:true,pathlen:5
 nsComment			              = "OpenSSL Generated Certificate"
 subjectKeyIdentifier        = hash
 authorityKeyIdentifier      = keyid,issuer

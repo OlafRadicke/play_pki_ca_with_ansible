@@ -14,18 +14,7 @@ pki_intermediate_ca:
     key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
     key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
-# pki_private_dir:              "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
-# pki_opensslconfig:            "{{ pki_private_dir }}/openssl.cnf"
-# pki_priv_key:                 "{{ pki_private_dir }}/private/{{ pki_intermediate_ca.common_name }}.key.pem"
-# pki_password_file:            "{{ pki_private_dir }}/keypassword.txt"
-# pki_serial_file:              "{{ pki_private_dir }}/serial"
-# pki_index_file:               "{{ pki_private_dir }}/index"
-# pki_index_attr_file:          "{{ pki_private_dir }}/index.attr"
-# pki_crlnumber_file:           "{ pki_private_dir }}/crlnumber"
-# pki_cert_file:                "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
-# pki_csr_file:                 "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr.pem"
-# pki_referrenc_ca_bundle_file: "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
-# pki_bundle_file:              "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem"
+
 
 pki_owner_csr:
     "service-issue-ca-01.dum.my":

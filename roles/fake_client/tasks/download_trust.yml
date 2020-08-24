@@ -6,12 +6,13 @@
     dest:      "/usr/share/pki/ca-trust-source/anchors/{{ referrenc_ca_name }}.bundle.pem"
   when:        ansible_distribution != "Ubuntu"
 
-
-- name:        Download certificate bundle files from the referrenc ca (RedHat & Co)
+               # The .crt extension is very important!
+- name:        Download certificate bundle files from the referrenc ca (Ubuntu & Co)
   get_url:
     url:       "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
-    dest:      "/usr/local/share/ca-certificates/{{ referrenc_ca_name }}.bundle.pem"
+    dest:      "/usr/local/share/ca-certificates/{{ referrenc_ca_name }}.bundle.crt"
   when:        ansible_distribution == "Ubuntu"
+
 
 
 ###############################################################################
@@ -30,7 +31,10 @@
 ###############################################################################
 
 - name:        Update ca trust for Ubuntu
-  shell:       "update-ca-certificates"
+  shell:       |
+               update-ca-certificates \
+               --verbose \
+               --fresh
   register:    shell_result
   when:        ansible_distribution == "Ubuntu"
 
