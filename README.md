@@ -25,8 +25,8 @@ First of all
 
 Has the variable *debug_output* in the file *group_vars/pki.yml* the value *true*, you get a lot of output.
 
-Azure pre setup
----------------
+Azure pre setup (Azure cloud)
+-----------------------------
 
 The configuration of the Azure setup is in the file group_vars/azure_deploy.yml.
 For creating VMs in Azure cloud, you can use the playbook setup_azure.yml. Enter:
@@ -55,6 +55,62 @@ ansible-playbook  \
   -i ./inventories/staging/hosts.yml \
   ./azure_destroy.yml
 ```
+
+Undesanding inventory
+---------------------
+
+For the most of the inventory (directory) you find  only links between the
+tiers. The goal is reduction the redundancies.
+
+The differences are:
+
+- *inventories/production/group_vars/pki.yml*
+- *inventories/production/group_vars/pki_azure_deploy.yml*
+
+```bash
+$ diff ./staging/group_vars/pki.yml  ./production/group_vars/pki.yml
+
+6,10c6,13
+< vm_01:                      "20.52.48.16"
+< vm_02:                      "20.52.33.191"
+< vm_03:                      "51.116.189.138"
+< vm_04:                      "51.116.185.109"
+<
+---
+> vm_01:                      "20.52.33.242"
+> vm_02:                      "20.52.32.49"
+> vm_03:                      "51.116.188.152"
+> vm_04:                      "20.52.34.90"
+> vm_05:                      "20.52.33.242"
+> vm_06:                      "20.52.32.49"
+> vm_07:                      "51.116.188.152"
+> vm_08:                      "20.52.34.90"
+13,23c16,23
+< policy_ca_staff_ip:         "{{ vm_01 }}"
+< policy_ca_service_ip:       "{{ vm_01 }}"
+< issue_ca_staff_ip:          "{{ vm_02 }}"
+< issue_ca_service_ip:        "{{ vm_03 }}"
+< end_entity_staff_ip:        "{{ vm_02 }}"
+< end_entity_service_ip:      "{{ vm_04 }}"
+< fake_service_ip:            "{{ vm_04 }}"
+< fake_client_ip:             "{{ vm_04 }}"
+< foo_dum_my_ip:              "{{ vm_04 }}"
+< bar_dum_my_ip:              "{{ vm_04 }}"
+< baz_dum_my_ip:              "{{ vm_04 }}"
+---
+> policy_ca_staff_ip:         "{{ vm_02 }}"
+> policy_ca_service_ip:       "{{ vm_03 }}"
+> issue_ca_staff_ip:          "{{ vm_04 }}"
+> issue_ca_service_ip:        "{{ vm_05 }}"
+> end_entity_staff_ip:        "{{ vm_06 }}"
+> end_entity_service_ip:      "{{ vm_07 }}"
+> fake_service_ip:            "{{ vm_07 }}"
+> fake_client_ip:             "{{ vm_08 }}"
+29d28
+<
+```
+
+The differences is, that *production* use more VMs as staging.
 
 Run the main playbook
 ---------------------
