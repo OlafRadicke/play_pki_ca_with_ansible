@@ -2,7 +2,7 @@
 
 ansible_host:                 "{{ bar_dum_my_ip }}"
 
-pki_referrenc_ca_url:         "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_url:             "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
 referrenc_ca_name:            "service-policy-ca-01.dum.my"
 
 end_entity:

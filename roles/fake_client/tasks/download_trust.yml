@@ -1,56 +1,69 @@
 ---
 
-- name:        Download certificate bundle files from the referrenc ca (RedHat & Co)
+
+- name:          Download root ca certificate files from the referrenc ca (RedHat)
   get_url:
-    url:       "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
-    dest:      "/usr/share/pki/ca-trust-source/anchors/{{ referrenc_ca_name }}.bundle.pem"
-  when:        ansible_distribution != "Ubuntu"
+    url:         "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
+    dest:        "/usr/share/pki/ca-trust-source/anchors/{{ pki_root_ca_cert }}"
+  when:          ansible_distribution != "Ubuntu"
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
 
-               # The .crt extension is very important!
-- name:        Download certificate bundle files from the referrenc ca (Ubuntu & Co)
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+
+- name:          Download root ca certificate files from the referrenc ca (Ubuntu)
   get_url:
-    url:       "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
-    dest:      "/usr/local/share/ca-certificates/{{ referrenc_ca_name }}.bundle.crt"
-  when:        ansible_distribution == "Ubuntu"
+    url:         "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
+    dest:        "/usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt"
+  when:          ansible_distribution == "Ubuntu"
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
 
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+###############################################################################
+
+- name:          Update ca trust for RedHat and Co
+  shell:         "update-ca-trust"
+  register:      shell_result
+  when:          ansible_distribution != "Ubuntu"
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
 
 
 ###############################################################################
 
-- name:        Update ca trust for RedHat and Co
-  shell:       "update-ca-trust"
-  register:    shell_result
-  when:        ansible_distribution != "Ubuntu"
+- name:          Update ca trust for Ubuntu
+  shell:         |
+                 update-ca-certificates \
+                 --verbose \
+                 --fresh
+  register:      shell_result
+  when:          ansible_distribution == "Ubuntu"
 
-- name:        Output return value
+- name:          Output return value
   debug:
-    msg:       "{{ shell_result }}"
-  when:        debug_output
-
+    msg:         "{{ shell_result }}"
+  when:          debug_output
 
 ###############################################################################
 
-- name:        Update ca trust for Ubuntu
-  shell:       |
-               update-ca-certificates \
-               --verbose \
-               --fresh
-  register:    shell_result
-  when:        ansible_distribution == "Ubuntu"
+- name:          Get trust list
+  shell:         "trust list"
+  register:      shell_result
+  when:          ansible_distribution != "Ubuntu"
 
-- name:        Output return value
+- name:          Output return value
   debug:
-    msg:       "{{ shell_result }}"
-  when:        debug_output
-
-###############################################################################
-
-- name:        Get trust list
-  shell:       "trust list"
-  register:    shell_result
-  when:        ansible_distribution != "Ubuntu"
-
-- name:        Output return value
-  debug:
-    msg:       "{{ shell_result }}"
-  when:        debug_output
+    msg:         "{{ shell_result }}"
+  when:          debug_output

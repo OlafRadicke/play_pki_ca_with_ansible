@@ -1,16 +1,17 @@
 ---
 
-- name:      Remove XXXXX.bundle.cert.pem file
+- name:            Remove XXXXX.bundle.cert.pem file
   file:
-    path:    "{{ pki_bundle_file }}"
-    state:   absent
+    path:          "{{ pki_bundle_file }}"
+    state:         absent
 
 ###############################################################################
 
 - name:            Create XXXXX.bundle.cert.pem as intermediate ca
-  shell: |
-                   cat {{ pki_referrenc_ca_bundle_file}} \
+  shell:           |
+                   cat \
                    {{ pki_cert_file }} \
+                   {{ pki_referrenc_ca_bundle_file}} \
                    >> {{ pki_bundle_file }}
   args:
     creates:      "{{ pki_bundle_file }}"
@@ -27,7 +28,7 @@
 
 
 - name:            Create XXXXX.bundle.cert.pem as root ca
-  shell: |
+  shell:           |
                    cat {{ pki_cert_file }} \
                    >> {{ pki_bundle_file }}
   args:

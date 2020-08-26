@@ -62,7 +62,9 @@
       pki_index_file:                 "{{ pki_private_dir }}/index"
       pki_crlnumber_file:             "{{ pki_private_dir }}/crlnumber"
       pki_cert_file:                  "{{ pki_ca_dir }}/{{ end_entity.common_name }}.crt.pem"
+      pki_bundle_file:                "{{ pki_publication_dir }}/{{ end_entity.common_name }}.bundle.pem"
       pki_csr_file:                   "{{ pki_publication_dir }}/{{ end_entity.common_name }}.csr.pem"
+      pki_referrenc_ca_bundle_file:   "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
       pki_service_http_root_dir:      "/srv/http/{{ end_entity.common_name }}"
       cacheable:                      yes
   when:                               end_entity is defined

@@ -5,6 +5,10 @@
 #   roles:
 #     -    check_git_sign
 
+- name:  Set special host facts
+  hosts: pki
+  roles:
+    -    set_special_host_facts
 
   # If one hoste hase multiple roles than the package database
   # can be blocking, is this not "serial: 1"
@@ -12,7 +16,6 @@
   hosts: pki
   serial: 1
   roles:
-    -    set_special_host_facts
     -    pre_config
 
 - name:  Creating CSRs for the end entities

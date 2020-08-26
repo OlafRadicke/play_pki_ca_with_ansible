@@ -1,6 +1,56 @@
 ---
 
-- name:        Download signing certificate files of end entity / services
+- name:          Download certificate bundle files from the referrenc ca
   get_url:
-    url:       "{{ pki_referrenc_ca_url }}/{{ end_entity.common_name }}.crt.pem"
-    dest:      "{{ pki_cert_file }}"
+    url:         "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
+    dest:        "{{ pki_referrenc_ca_bundle_file }}"
+  when:          root_ca is not defined
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+###############################################################################
+
+- name:            Download signing certificate files of end entity / services
+  get_url:
+    url:           "{{ referrenc_ca_url }}/{{ end_entity.common_name }}.crt.pem"
+    dest:          "{{ pki_cert_file }}"
+
+###############################################################################
+
+- name:            Create own XXXXX.bundle.cert.pem for the service
+  shell:           |
+                   cat \
+                   {{ pki_cert_file }} \
+                   {{ pki_referrenc_ca_bundle_file}} \
+                   > {{ pki_bundle_file }}
+  args:
+    creates:      "{{ pki_bundle_file }}"
+  when:            root_ca is not defined
+  register:        shell_result
+  ignore_errors:   "{{ debug_output }}"
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:           Verify with the owner certificate with the bundle file
+  shell:          |
+                  openssl verify \
+                  -verbose \
+                  -CAfile  {{ pki_bundle_file }} \
+                  {{ pki_cert_file }}
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output

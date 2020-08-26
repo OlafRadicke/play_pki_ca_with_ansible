@@ -68,14 +68,13 @@ The differences are:
 - *inventories/production/group_vars/pki_azure_deploy.yml*
 
 ```bash
-$ diff ./staging/group_vars/pki.yml  ./production/group_vars/pki.yml
+$ diff ./inventories/staging/group_vars/pki.yml  ./inventories/production/group_vars/pki.yml
 
 6,10c6,13
 < vm_01:                      "20.52.48.16"
 < vm_02:                      "20.52.33.191"
 < vm_03:                      "51.116.189.138"
 < vm_04:                      "51.116.185.109"
-<
 ---
 > vm_01:                      "20.52.33.242"
 > vm_02:                      "20.52.32.49"
@@ -85,18 +84,17 @@ $ diff ./staging/group_vars/pki.yml  ./production/group_vars/pki.yml
 > vm_06:                      "20.52.32.49"
 > vm_07:                      "51.116.188.152"
 > vm_08:                      "20.52.34.90"
-13,23c16,23
+13,22c16,25
 < policy_ca_staff_ip:         "{{ vm_01 }}"
 < policy_ca_service_ip:       "{{ vm_01 }}"
 < issue_ca_staff_ip:          "{{ vm_02 }}"
 < issue_ca_service_ip:        "{{ vm_03 }}"
 < end_entity_staff_ip:        "{{ vm_02 }}"
 < end_entity_service_ip:      "{{ vm_04 }}"
-< fake_service_ip:            "{{ vm_04 }}"
-< fake_client_ip:             "{{ vm_04 }}"
 < foo_dum_my_ip:              "{{ vm_04 }}"
 < bar_dum_my_ip:              "{{ vm_04 }}"
 < baz_dum_my_ip:              "{{ vm_04 }}"
+< fake_client_ip:             "{{ vm_04 }}"
 ---
 > policy_ca_staff_ip:         "{{ vm_02 }}"
 > policy_ca_service_ip:       "{{ vm_03 }}"
@@ -104,10 +102,11 @@ $ diff ./staging/group_vars/pki.yml  ./production/group_vars/pki.yml
 > issue_ca_service_ip:        "{{ vm_05 }}"
 > end_entity_staff_ip:        "{{ vm_06 }}"
 > end_entity_service_ip:      "{{ vm_07 }}"
-> fake_service_ip:            "{{ vm_07 }}"
+> foo_dum_my_ip:              "{{ vm_07 }}"
+> bar_dum_my_ip:              "{{ vm_07 }}"
+> baz_dum_my_ip:              "{{ vm_07 }}"
 > fake_client_ip:             "{{ vm_08 }}"
-29d28
-<
+28d30
 ```
 
 The differences is, that *production* use more VMs as staging.
@@ -144,8 +143,10 @@ ansible-playbook \
 Known issue
 -----------
 
-The playbook is switched off selinux. But for an effect,  ths need a restart
+- The playbook is switched off selinux. But for an effect,  ths need a restart
 of the virtual machine.
+- Some times under Ubuntu: The step "TASK [pre_config : Upgrade all apt packages]" hangs up. Solution: Restart the playbook.
+
 
 Helpful tools
 -------------
@@ -165,10 +166,7 @@ TODOs
 ### Tasks
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
-- Add links from stage to production inventory
-
-- Renaming group_vars and host_vars files
-
+- Mutual Authentication
 
 ### Other interisting things
 

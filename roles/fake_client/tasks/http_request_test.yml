@@ -3,7 +3,7 @@
 - name:            Add a fake seivice in hosts
   lineinfile:
     path:          "/etc/hosts"
-    line:          "{{ fake_service_ip }}  {{ fake_service_url }}"
+    line:          "{{ foo_dum_my_ip }}  {{ fake_service_url }}"
     create: yes
 
 
@@ -21,13 +21,27 @@
     msg:           "{{ get_url_result }}"
   when:            debug_output
 
+
 ###############################################################################
 
 - name:            Check service with curl
+  shell:           curl https://{{ fake_service_url }}:{{ service_port }}/index.html
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:            Check service with curl with expicit cacert
   shell:           |
-                   "curl \
-                   --with-ca-bundle=/usr/local/share/ca-certificates/{{ referrenc_ca_name }} \
-                   https://{{ fake_service_url }}:{{ service_port }}/index.html"
+                   curl \
+                   --cacert /usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt \
+                   https://{{ fake_service_url }}:{{ service_port }}/index.html
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output
