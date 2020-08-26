@@ -8,7 +8,7 @@ This is a example for ansible as CA in a PKI.
 
 That is the CA tree, that is created by the Ansible-Playbook:
 
-| As staging variation with 4 VMs | And as production variation with 8 VMs |
+| As staging variation with 4 VMs | And as production variation with 7 VMs |
 |---------------------------------|--------------------------------------|
 | ![docs/pki-tree.png](docs/pki-tree.png) | ![docs/pki-tree-prod.png](docs/pki-tree-prod.png)   |
 
