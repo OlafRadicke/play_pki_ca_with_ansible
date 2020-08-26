@@ -12,16 +12,16 @@
 
   # If one hoste hase multiple roles than the package database
   # can be blocking, is this not "serial: 1"
-# - name:  Update and install needed software
-#   hosts: pki
-#   serial: 1
-#   roles:
-#     -    pre_update_and_install
+- name:  Update and install needed software
+  hosts: pki
+  serial: 1
+  roles:
+    -    pre_update_and_install
 
-# - name:  Preparation of all nodes for their job
-#   hosts: pki
-#   roles:
-#       -  pre_config
+- name:  Preparation of all nodes for their job
+  hosts: pki
+  roles:
+      -  pre_config
 
 - name:  Creating CSRs for the end entities
   hosts: pki_end_entity
