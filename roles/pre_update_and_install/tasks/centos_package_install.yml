@@ -1,0 +1,13 @@
+---
+
+- name:           Enable EPEL
+  package:
+    name:
+      -           epel-release
+
+- name:           Install needed packages
+  package:
+    name:
+      -           pyOpenSSL
+      -           nginx
+      -           openssl

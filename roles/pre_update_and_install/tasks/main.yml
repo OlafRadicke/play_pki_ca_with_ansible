@@ -1,0 +1,18 @@
+---
+
+- name:    Include fedora support
+  include: "fedora_package_install.yml"
+  when:    ansible_distribution == "Fedora"
+
+- name:    Include CentOS support
+  include: "centos_package_install.yml"
+  when:    ansible_distribution == "CentOS"
+
+
+- name:    Include system update for Ubuntu
+  include: "ubuntu_sys_update.yml"
+  when:    ansible_distribution == "Ubuntu"
+
+- name:    Include package install for Ubuntu
+  include: "ubuntu_package_install.yml"
+  when:    ansible_distribution == "Ubuntu"

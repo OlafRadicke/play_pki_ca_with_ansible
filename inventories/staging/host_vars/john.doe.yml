@@ -1,0 +1,18 @@
+---
+
+ansible_host:                 "{{ john_doe_ip }}"
+referrenc_ca_url:             "http://{{ issue_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
+referrenc_ca_name:            "staff-issue-ca-01.dum.my"
+fake_service_url:             "foo.dum.my"
+
+end_entity:
+    common_name:              "john.doe"
+    email_address:            "john.doe@dum.my"
+    country_name:             "{{ pki_country_name }}"
+    state_or_province_name:   "{{ pki_state_or_province_name }}"
+    city_name:                "{{ pki_city_name }}"
+    organization_name:        "{{ pki_organization_name }}"
+    organizational_unit_name: "Foobar staff department"
+    not_after:                "+26w"
+    key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
+    key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"

@@ -9,15 +9,13 @@
     -        "{{ pki_private_dir }}"
     -        "{{ pki_private_dir }}/private"
 
-- name:      Create index file
-  shell:     "touch {{ pki_index_file }}"
-  args:
-    creates: "{{ pki_index_file }}"
-
-- name:      Create index.attr file
-  shell:     "touch {{ pki_index_attr_file}}"
-  args:
-    creates: "{{ pki_index_attr_file }}"
+- name: Touch a files
+  file:
+    path: "{{ item }}"
+    state: touch
+  loop:
+    - "{{ pki_index_file }}"
+    - "{{ pki_index_attr_file}}"
 
 ###############################################################################
 

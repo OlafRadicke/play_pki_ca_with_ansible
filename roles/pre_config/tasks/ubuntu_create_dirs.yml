@@ -1,6 +1,5 @@
 ---
 
-
 - name:               Create public directories for ca
   file:
     path:             "{{ item }}"

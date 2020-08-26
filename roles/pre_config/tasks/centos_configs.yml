@@ -4,18 +4,6 @@
   selinux:
     state:        disabled
 
-- name:           Enable EPEL
-  package:
-    name:
-      -           epel-release
-
-- name:           Install needed packages
-  package:
-    name:
-      -           pyOpenSSL
-      -           nginx
-      -           openssl
-
 - name:           Check nginx config
   shell:          nginx -t
   ignore_errors:  "{{ debug_output }}"
@@ -56,3 +44,9 @@
   loop:
     -             "{{ pki_ca_dir }}"
     -             "{{ pki_end_entities_dir }}"
+
+- name:           Copy openssl base config
+  copy:
+    src:          opensslcnf.config
+    dest:         "{{ pki_workspace }}/opensslcnf.config"
+  when:           ansible_distribution != "Ubuntu"

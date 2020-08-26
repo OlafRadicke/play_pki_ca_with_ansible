@@ -17,26 +17,10 @@ pki_intermediate_ca:
     key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
     key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
-
-end_entity_csr: []
-# EXAMPLE
-# end_entity_csr:
-#   "jane.doe":
-#       owner_url:        "{{ end_entity_common.owner_url }}"
-#       referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
-#       email_address:    "jane.doe@dum.my"
-#       ca:               "jane.doe@dum.my"
-#   "john.doe":
-#       owner_url:        "{{ end_entity_common.owner_url }}"
-#       referrenc_ca_url: "{{ end_entity_common.referrenc_ca_url }}"
-#       email_address:    "john.doe@dum.my"
-#       ca:               "john.doe@dum.my"
-
-pki_owner_csr: []
-# EXAMPLE
-    # "jane.doe":
-    #     owner_url:        "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
-    #     not_after:        "+26w"
-    # "john.doe":
-    #     owner_url:        "http://{{ end_entity_service_ip }}:{{ pki_csr_exchange_port }}"
-    #     not_after:        "+26w"
+pki_owner_csr:
+    "jane.doe":
+        owner_url:           "http://{{ jane_doe_ip }}:{{ pki_csr_exchange_port }}"
+        not_after:           "+26w"
+    "john.doe":
+        owner_url:           "http://{{ john_doe_ip }}:{{ pki_csr_exchange_port }}"
+        not_after:           "+26w"

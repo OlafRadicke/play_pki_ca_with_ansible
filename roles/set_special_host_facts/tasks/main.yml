@@ -4,7 +4,7 @@
   block:
     - set_fact:
         pki_private_dir:              "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
-        cacheable:                    yes
+        # cacheable:                    yes
 
     - set_fact:
         pki_opensslconfig:            "{{ pki_private_dir }}/openssl.cnf"
@@ -16,7 +16,7 @@
         pki_cert_file:                "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
         pki_index_attr_file:          "{{ pki_private_dir }}/index.attr"
         pki_bundle_file:              "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem"
-        cacheable:                    yes
+        # cacheable:                    yes
   when:                               root_ca is defined
 
 ###############################################################################
@@ -26,7 +26,7 @@
   block:
     - set_fact:
         pki_private_dir:              "{{ pki_workspace }}/{{ pki_intermediate_ca.common_name }}"
-        cacheable:                    yes
+        # cacheable:                    yes
 
     - set_fact:
         pki_opensslconfig:            "{{ pki_private_dir }}/openssl.cnf"
@@ -40,7 +40,7 @@
         pki_bundle_file:              "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem"
         pki_csr_file:                 "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr.pem"
         pki_referrenc_ca_bundle_file: "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
-        cacheable:                    yes
+        # cacheable:                    yes
   when:
     -                                 pki_intermediate_ca is defined
     -                                 root_ca             is not defined
@@ -51,7 +51,7 @@
   block:
   - set_fact:
       pki_private_dir:                "{{ pki_workspace }}/{{ end_entity.common_name }}"
-      cacheable:                      yes
+      # cacheable:                      yes
 
   - set_fact:
       pki_private_dir:                "{{ pki_workspace }}/{{ end_entity.common_name }}"
@@ -66,5 +66,6 @@
       pki_csr_file:                   "{{ pki_publication_dir }}/{{ end_entity.common_name }}.csr.pem"
       pki_referrenc_ca_bundle_file:   "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
       pki_service_http_root_dir:      "/srv/http/{{ end_entity.common_name }}"
-      cacheable:                      yes
+      # pki_ssl_client_certificate:     "{{ pki_private_dir }}/client_root_ca.crt;
+      # cacheable:                      yes
   when:                               end_entity is defined

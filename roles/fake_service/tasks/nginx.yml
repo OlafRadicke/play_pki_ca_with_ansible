@@ -2,24 +2,44 @@
 
 - name:           Create httpd root directory for services
   file:
-    path:         "{{ pki_service_http_root_dir }}/{{ fake_service_url }}"
+    path:         "{{ item }}"
     state:        directory
     owner:        nginx
     group:        nginx
     mode:         'u=rwx,g=rx,o=rx'
+  loop:
+    -             "{{ pki_service_http_root_dir }}/{{ end_entity.common_name }}/"
+    -             "{{ pki_service_http_root_dir }}/{{ end_entity.common_name }}/mutual"
+    -             "{{ pki_service_http_root_dir }}/{{ end_entity.common_name }}/company-mutual"
 
 - name:           Copy index files
   copy:
     src:          index.html
-    dest:         "{{ pki_service_http_root_dir }}/{{ fake_service_url }}/index.html"
+    dest:         "{{ pki_service_http_root_dir }}/{{ end_entity.common_name }}/index.html"
+    owner:        nginx
+    group:        nginx
+    mode:         'u=xwr,g=xr,o=xr'
+
+- name:           Copy index files for the mutual section
+  copy:
+    src:          mutual-index.html
+    dest:         "{{ pki_service_http_root_dir }}/{{ end_entity.common_name }}/mutual/index.html"
+    owner:        nginx
+    group:        nginx
+    mode:         'u=xwr,g=xr,o=xr'
+
+- name:           Copy index files for the company mutual section
+  copy:
+    src:          company-mutual.html
+    dest:         "{{ pki_service_http_root_dir }}/{{ end_entity.common_name }}/company-mutual/index.html"
     owner:        nginx
     group:        nginx
     mode:         'u=xwr,g=xr,o=xr'
 
 - name:           Create nginx config for service
   template:
-    src:          "{{ fake_service_url }}.conf"
-    dest:         "/etc/nginx/conf.d/{{ fake_service_url }}.conf"
+    src:          "{{ end_entity.common_name }}.conf"
+    dest:         "/etc/nginx/conf.d/{{ end_entity.common_name }}.conf"
     owner:        nginx
     group:        nginx
     mode:         'u=rx,g=r,o=r'

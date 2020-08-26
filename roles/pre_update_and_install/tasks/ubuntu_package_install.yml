@@ -1,0 +1,13 @@
+---
+
+- name:               Install python-apt
+  package:
+    name:
+      -               python-apt
+
+- name:               Install needed packages
+  package:
+    name:
+      -               python3-openssl
+      -               nginx
+      -               ca-certificates

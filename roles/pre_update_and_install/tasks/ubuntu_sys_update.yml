@@ -1,0 +1,25 @@
+---
+                        # this need a lot of time and some times it hangs up.
+# - name:               Update apt-get repo and cache
+#   apt:
+#     update_cache:     yes
+#     cache_valid_time: 3600
+
+- name:               Upgrade all apt packages
+  apt:
+    upgrade:          dist
+    force_apt_get:    yes
+
+###############################################################################
+
+- name:               Install python-apt
+  package:
+    name:
+      -               python-apt
+
+- name:               Install needed packages
+  package:
+    name:
+      -               python3-openssl
+      -               nginx
+      -               ca-certificates

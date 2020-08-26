@@ -3,11 +3,10 @@
 debug_output:               true
 ignore_errors:              yes
 
-vm_01:                      "51.116.115.9"
-vm_02:                      "51.116.114.180"
-vm_03:                      "51.116.114.144"
-vm_04:                      "51.116.115.0"
-
+vm_01:                      "20.52.48.21"
+vm_02:                      "20.52.48.20"
+vm_03:                      "20.52.48.209"
+vm_04:                      "20.52.48.208"
 
 root_ca_ip:                 "{{ vm_01 }}"
 policy_ca_staff_ip:         "{{ vm_01 }}"
@@ -19,7 +18,9 @@ end_entity_service_ip:      "{{ vm_04 }}"
 foo_dum_my_ip:              "{{ vm_04 }}"
 bar_dum_my_ip:              "{{ vm_04 }}"
 baz_dum_my_ip:              "{{ vm_04 }}"
-fake_client_ip:             "{{ vm_04 }}"
+# fake_client_ip:             "{{ vm_02 }}"
+jane_doe_ip:                "{{ vm_02 }}"
+john_doe_ip:                "{{ vm_02 }}"
 # ansible_git_checkout_ip:    "local"
 # azure_control_server_ip:    "local"
 

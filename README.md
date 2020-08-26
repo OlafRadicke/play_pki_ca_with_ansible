@@ -167,6 +167,7 @@ TODOs
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Mutual Authentication
+- Clean up roles/set_special_host_facts/tasks/main.yml
 
 ### Other interisting things
 
