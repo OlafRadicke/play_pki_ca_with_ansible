@@ -1,69 +1,41 @@
 ---
 
+- name:            Download root ca certificate files from the referrenc ca (RedHat)
+  block:
 
-- name:          Download root ca certificate files from the referrenc ca (RedHat)
-  get_url:
-    url:         "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
-    dest:        "/usr/share/pki/ca-trust-source/anchors/{{ pki_root_ca_cert }}"
-  when:          ansible_distribution != "Ubuntu"
-  ignore_errors: "{{ debug_output }}"
-  register:      shell_result
+  - name:          Download
+    get_url:
+      url:         "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
+      dest:        "/usr/share/pki/ca-trust-source/anchors/{{ pki_root_ca_cert }}"
+    ignore_errors: "{{ debug_output }}"
+    register:      shell_result
 
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
-
-
-- name:          Download root ca certificate files from the referrenc ca (Ubuntu)
-  get_url:
-    url:         "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
-    dest:        "/usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt"
-  when:          ansible_distribution == "Ubuntu"
-  ignore_errors: "{{ debug_output }}"
-  register:      shell_result
-
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
-
-###############################################################################
-
-- name:          Update ca trust for RedHat and Co
-  shell:         "update-ca-trust"
-  register:      shell_result
+  - name:          Output return value
+    debug:
+      msg:         "{{ shell_result }}"
+    when:          debug_output
   when:          ansible_distribution != "Ubuntu"
 
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
 
+- name:            Download root ca certificate files from the referrenc ca (Ubuntu)
+  block:
 
-###############################################################################
+  - name:          Download
+    get_url:
+      url:         "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
+      dest:        "/usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt"
+    ignore_errors: "{{ debug_output }}"
+    register:      shell_result
 
-- name:          Update ca trust for Ubuntu
-  shell:         |
-                 update-ca-certificates \
-                 --verbose \
-                 --fresh
-  register:      shell_result
+  - name:          Output return value
+    debug:
+      msg:         "{{ shell_result }}"
+    when:          debug_output
   when:          ansible_distribution == "Ubuntu"
 
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
-
 ###############################################################################
 
-- name:          Get trust list
-  shell:         "trust list"
-  register:      shell_result
-  when:          ansible_distribution != "Ubuntu"
-
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+- name:            Download signing certificate files of the end entity / services
+  get_url:
+    url:           "{{ referrenc_ca_url }}/{{ end_entity.common_name }}.crt.pem"
+    dest:          "{{ pki_cert_file }}"

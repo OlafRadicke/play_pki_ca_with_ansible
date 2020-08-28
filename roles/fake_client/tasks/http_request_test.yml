@@ -25,7 +25,10 @@
 ###############################################################################
 
 - name:            Check service with curl
-  shell:           curl https://{{ fake_service_url }}:{{ service_port }}/index.html
+  shell:           |
+                   curl \
+                   -v \
+                   https://{{ fake_service_url }}:{{ service_port }}/
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output
@@ -40,6 +43,7 @@
 - name:            Check service with curl with expicit cacert
   shell:           |
                    curl \
+                   -v \
                    --cacert /usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt \
                    https://{{ fake_service_url }}:{{ service_port }}/index.html
   ignore_errors:   "{{ debug_output }}"
@@ -49,4 +53,42 @@
 - name:            Output return value
   debug:
     msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:            Check service with curl with simple mutual tls
+  shell:           |
+                   curl \
+                   -v \
+                   --cacert /usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt \
+                   --key {{ pki_priv_key }} \
+                   --cert {{ pki_bundle_file }} \
+                   https://{{ fake_service_url }}:{{ service_port }}/mutual/index.html
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:             "{{ shell_result }}"
+  when:            debug_output
+
+# ###############################################################################
+
+- name:            Check service with curl with enhanced mutual tls
+  shell:           |
+                   curl \
+                   -v \
+                   --cacert /usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt \
+                   --key {{ pki_priv_key }} \
+                   --cert {{ pki_bundle_file }} \
+                   https://{{ fake_service_url }}:{{ service_port }}/company-mutual/index.html
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:             "{{ shell_result }}"
   when:            debug_output

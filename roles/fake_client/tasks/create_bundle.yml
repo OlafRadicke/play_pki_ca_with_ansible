@@ -1,0 +1,62 @@
+---
+
+- name:            Remove XXXXX.bundle.cert.pem file
+  file:
+    path:          "{{ pki_bundle_file }}"
+    state:         absent
+
+###############################################################################
+
+- name:            Create XXXXX.bundle.cert.pem as intermediate ca
+  shell:           |
+                   cat \
+                   {{ pki_cert_file }} \
+                   {{ pki_referrenc_ca_bundle_file}} \
+                   >> {{ pki_bundle_file }}
+  args:
+    creates:      "{{ pki_bundle_file }}"
+  when:            root_ca is not defined
+  register:        shell_result
+  ignore_errors:   "{{ debug_output }}"
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+
+- name:            Create XXXXX.bundle.cert.pem as root ca
+  shell:           |
+                   cat {{ pki_cert_file }} \
+                   >> {{ pki_bundle_file }}
+  args:
+    creates:      "{{ pki_bundle_file }}"
+  when:            root_ca is defined
+  register:        shell_result
+  ignore_errors:   "{{ debug_output }}"
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:              Set owner of bundle file for the RedHat family
+  block:
+  - name:            Set owner of bundle file
+    file:
+      path:          "{{ pki_bundle_file }}m"
+      owner:         nginx
+      group:         nginx
+      mode:          'u=rw,g=r,o=r'
+    when:            ansible_distribution != "Ubuntu"
+    register:        shell_result
+    ignore_errors:   "{{ debug_output }}"
+
+  - name:            Output return value
+    debug:
+      msg:           "{{ shell_result }}"
+    when:            debug_output

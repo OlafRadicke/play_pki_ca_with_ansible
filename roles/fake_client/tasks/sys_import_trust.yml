@@ -1,0 +1,40 @@
+---
+
+
+- name:          Update ca trust for RedHat and Co
+  shell:         "update-ca-trust"
+  register:      shell_result
+  when:          ansible_distribution != "Ubuntu"
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+
+###############################################################################
+
+- name:          Update ca trust for Ubuntu
+  shell:         |
+                 update-ca-certificates \
+                 --verbose \
+                 --fresh
+  register:      shell_result
+  when:          ansible_distribution == "Ubuntu"
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+###############################################################################
+
+- name:          Get trust list
+  shell:         "trust list"
+  register:      shell_result
+  when:          ansible_distribution != "Ubuntu"
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output

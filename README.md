@@ -130,7 +130,7 @@ demo-pki-root-ca-ip            demo-pki         germanywestcentral           51.
 ```
 
 
-For run this example enter:
+For run this example enter (this runs about 15 minutes):
 
 ```bash
 export ANSIBLE_HOST_KEY_CHECKING=False && \
@@ -168,6 +168,8 @@ TODOs
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Mutual Authentication
 - Clean up roles/set_special_host_facts/tasks/main.yml
+- Fix "OU=Dummy GmbH"
+- Fix "Not After : Aug 25 13:26:32 2027 GMT" für "CN=staff-policy-ca-01.dum.my"
 
 ### Other interisting things
 

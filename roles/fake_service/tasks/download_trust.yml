@@ -15,7 +15,7 @@
 
 ###############################################################################
 
-- name:            Download signing certificate files of end entity / services
+- name:            Download signing certificate files of the end entity / services
   get_url:
     url:           "{{ referrenc_ca_url }}/{{ end_entity.common_name }}.crt.pem"
     dest:          "{{ pki_cert_file }}"
