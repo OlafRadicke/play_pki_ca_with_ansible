@@ -166,14 +166,12 @@ TODOs
 ### Tasks
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
-- Mutual Authentication
-- Clean up roles/set_special_host_facts/tasks/main.yml
 - Fix "OU=Dummy GmbH"
 - Fix "Not After : Aug 25 13:26:32 2027 GMT" für "CN=staff-policy-ca-01.dum.my"
+- Recheck playbook with more VMs.
 
 ### Other interisting things
 
 - [RabbitMQ](https://de.wikipedia.org/wiki/RabbitMQ)
 - [PKI as JavaScript lib](https://github.com/PeculiarVentures/PKI.js)
 - [Sharkey is a service for managing certificates for use by OpenSSH (Writen in Go)](https://github.com/square/sharkey)
--
