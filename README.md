@@ -19,6 +19,11 @@ That is the work flow of the certification:
 
 ![docs/pki-tree.png](docs/pki-flow.png)
 
+This is the proposal how the Ansible-PKI can be embedded in a sign certificates process.
+
+![docs/big-picture-csp.png](docs/big-picture-csp.png)
+
+
 
 First of all
 ------------
