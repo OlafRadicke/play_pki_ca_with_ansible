@@ -53,7 +53,7 @@ For removing the azure setup enter:
 ansible-playbook  \
   --vault-password-file ~/.ssh/vault-password \
   -i ./inventories/staging/hosts.yml \
-  ./azure_destroy.yml
+    
 ```
 
 Undesanding inventory
@@ -70,43 +70,41 @@ The differences are:
 ```bash
 $ diff ./inventories/staging/group_vars/pki.yml  ./inventories/production/group_vars/pki.yml
 
-6,10c6,13
-< vm_01:                      "20.52.48.16"
-< vm_02:                      "20.52.33.191"
-< vm_03:                      "51.116.189.138"
-< vm_04:                      "51.116.185.109"
+6,9c6,12
+< vm_01:                      "51.116.225.106"
+< vm_02:                      "51.116.114.242"
+< vm_03:                      "51.116.114.249"
+< vm_04:                      "51.116.115.5"
 ---
-> vm_01:                      "20.52.33.242"
-> vm_02:                      "20.52.32.49"
-> vm_03:                      "51.116.188.152"
-> vm_04:                      "20.52.34.90"
-> vm_05:                      "20.52.33.242"
-> vm_06:                      "20.52.32.49"
-> vm_07:                      "51.116.188.152"
-> vm_08:                      "20.52.34.90"
-13,22c16,25
+> vm_01:                      "20.52.41.243"
+> vm_02:                      "20.52.41.152"
+> vm_03:                      "20.52.41.88"
+> vm_04:                      "20.52.41.223"
+> vm_05:                      "51.116.186.241"
+> vm_06:                      "51.116.187.148"
+> vm_07:                      "20.52.41.92"
+13,21c16,24
 < policy_ca_staff_ip:         "{{ vm_01 }}"
 < policy_ca_service_ip:       "{{ vm_01 }}"
 < issue_ca_staff_ip:          "{{ vm_02 }}"
 < issue_ca_service_ip:        "{{ vm_03 }}"
-< end_entity_staff_ip:        "{{ vm_02 }}"
-< end_entity_service_ip:      "{{ vm_04 }}"
 < foo_dum_my_ip:              "{{ vm_04 }}"
 < bar_dum_my_ip:              "{{ vm_04 }}"
 < baz_dum_my_ip:              "{{ vm_04 }}"
-< fake_client_ip:             "{{ vm_04 }}"
+< jane_doe_ip:                "{{ vm_02 }}"
+< john_doe_ip:                "{{ vm_02 }}"
 ---
 > policy_ca_staff_ip:         "{{ vm_02 }}"
 > policy_ca_service_ip:       "{{ vm_03 }}"
 > issue_ca_staff_ip:          "{{ vm_04 }}"
 > issue_ca_service_ip:        "{{ vm_05 }}"
-> end_entity_staff_ip:        "{{ vm_06 }}"
-> end_entity_service_ip:      "{{ vm_07 }}"
+> jane_doe_ip:                "{{ vm_06 }}"
+> john_doe_ip:                "{{ vm_06 }}"
 > foo_dum_my_ip:              "{{ vm_07 }}"
 > bar_dum_my_ip:              "{{ vm_07 }}"
 > baz_dum_my_ip:              "{{ vm_07 }}"
-> fake_client_ip:             "{{ vm_08 }}"
-28d30
+27d29
+
 ```
 
 The differences is, that *production* use more VMs as staging.
@@ -166,7 +164,6 @@ TODOs
 ### Tasks
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
-- Fix "OU=Dummy GmbH"
 - Fix "Not After : Aug 25 13:26:32 2027 GMT" für "CN=staff-policy-ca-01.dum.my"
 - Recheck playbook with more VMs.
 

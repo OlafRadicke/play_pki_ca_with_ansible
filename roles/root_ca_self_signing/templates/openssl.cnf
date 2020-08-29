@@ -78,7 +78,7 @@ countryName			            = {{ pki_intermediate_ca.country_name }}
 stateOrProvinceName		      = {{ pki_intermediate_ca.state_or_province_name }}
 localityName			          = {{ pki_intermediate_ca.city_name }}
 organizationName      	  	= {{ pki_intermediate_ca.organization_name }}
-organizationalUnitName	  	= {{ pki_intermediate_ca.organization_name }}
+organizationalUnitName	  	= {{ pki_intermediate_ca.organizational_unit_name }}
 commonName			            = {{ pki_intermediate_ca.common_name }}
 emailAddress		           	= {{ pki_intermediate_ca.email_address }}
 

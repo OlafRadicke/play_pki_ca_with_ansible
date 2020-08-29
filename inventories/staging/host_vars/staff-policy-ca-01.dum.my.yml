@@ -17,9 +17,7 @@ pki_intermediate_ca:
 
 pki_owner_csr:
   "staff-issue-ca-01.dum.my":
-      owner_url:          "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"
-      referrenc_ca_url:   "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
-      ca:                 "staff-policy-ca-01.dum.my"
+      owner_url:          "http://{{ issue_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
       not_after:          "+52w"
 ### EXAMPLE
 # "staff-issue-ca-02.dum.my":

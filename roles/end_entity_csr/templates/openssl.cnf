@@ -56,7 +56,7 @@ emailAddress		            = optional
 [ policy_anything ]
 countryName		              = optional
 stateOrProvinceName       	= optional
-localityName	             	= optional
+localityName	              = optional
 organizationName	          = optional
 organizationalUnitName    	= optional
 commonName	              	= supplied
@@ -78,7 +78,7 @@ countryName			            = {{ end_entity.country_name }}
 stateOrProvinceName		      = {{ end_entity.state_or_province_name }}
 localityName			          = {{ end_entity.city_name }}
 organizationName      	  	= {{ end_entity.organization_name }}
-organizationalUnitName	  	= {{ end_entity.organization_name }}
+organizationalUnitName	  	= {{ end_entity.organizational_unit_name }}
 commonName			            = {{ end_entity.common_name }}
 emailAddress		           	= {{ end_entity.email_address }}
 

@@ -3,26 +3,25 @@
 debug_output:               true
 ignore_errors:              yes
 
-vm_01:                      "20.52.33.242"
-vm_02:                      "20.52.32.49"
-vm_03:                      "51.116.188.152"
-vm_04:                      "20.52.34.90"
-vm_05:                      "20.52.33.242"
-vm_06:                      "20.52.32.49"
-vm_07:                      "51.116.188.152"
-vm_08:                      "20.52.34.90"
+vm_01:                      "20.52.41.243"
+vm_02:                      "20.52.41.152"
+vm_03:                      "20.52.41.88"
+vm_04:                      "20.52.41.223"
+vm_05:                      "51.116.186.241"
+vm_06:                      "51.116.187.148"
+vm_07:                      "20.52.41.92"
+
 
 root_ca_ip:                 "{{ vm_01 }}"
 policy_ca_staff_ip:         "{{ vm_02 }}"
 policy_ca_service_ip:       "{{ vm_03 }}"
 issue_ca_staff_ip:          "{{ vm_04 }}"
 issue_ca_service_ip:        "{{ vm_05 }}"
-end_entity_staff_ip:        "{{ vm_06 }}"
-end_entity_service_ip:      "{{ vm_07 }}"
+jane_doe_ip:                "{{ vm_06 }}"
+john_doe_ip:                "{{ vm_06 }}"
 foo_dum_my_ip:              "{{ vm_07 }}"
 bar_dum_my_ip:              "{{ vm_07 }}"
 baz_dum_my_ip:              "{{ vm_07 }}"
-fake_client_ip:             "{{ vm_08 }}"
 # ansible_git_checkout_ip:    "local"
 # azure_control_server_ip:    "local"
 
