@@ -58,7 +58,7 @@ For removing the azure setup enter:
 ansible-playbook  \
   --vault-password-file ~/.ssh/vault-password \
   -i ./inventories/staging/hosts.yml \
-    
+
 ```
 
 Undesanding inventory
@@ -170,7 +170,6 @@ TODOs
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Fix "Not After : Aug 25 13:26:32 2027 GMT" für "CN=staff-policy-ca-01.dum.my"
-- Recheck playbook with more VMs.
 
 ### Other interisting things
 
