@@ -162,6 +162,7 @@ Helpful docs
 ------------
 
 * [golinuxcloud.com](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)
+* [wikipedia.org to X.509](https://en.wikipedia.org/wiki/X.509)
 
 TODOs
 -----
@@ -170,6 +171,7 @@ TODOs
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Fix "Not After : Aug 25 13:26:32 2027 GMT" für "CN=staff-policy-ca-01.dum.my"
+- Adding a root CA offline mode to jump over the CAs thats a offline.
 
 ### Other interisting things
 
