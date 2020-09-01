@@ -13,14 +13,14 @@ pki_intermediate_ca:
     city_name:                "{{ pki_city_name }}"
     organization_name:        "{{ pki_organization_name }}"
     organizational_unit_name: "staff department"
-    not_after:                "+26w"
+    not_after_days:           "180"
     key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
     key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
 pki_owner_csr:
     "jane.doe":
         owner_url:           "http://{{ jane_doe_ip }}:{{ pki_csr_exchange_port }}"
-        not_after:           "+26w"
+        not_after_days:      "90"
     "john.doe":
         owner_url:           "http://{{ john_doe_ip }}:{{ pki_csr_exchange_port }}"
-        not_after:           "+26w"
+        not_after_days:      "90"

@@ -1,23 +1,10 @@
 ---
 
-# - name:           Singing command
-#   debug:
-#     msg:          |
-#                   openssl ca \
-#                   -config {{ pki_opensslconfig }} \
-#                   -days 2650 \
-#                   -notext \
-#                   -batch \
-#                   -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
-#                   -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
-#   with_dict:      "{{ pki_owner_csr }}"
-#   when:           debug_output
-
 - name:           Generate and sign immediate CA certificate
   shell: |
                   openssl ca \
                   -config {{ pki_opensslconfig }} \
-                  -days 2650 \
+                  -days {{ item.value.not_after_days }} \
                   -notext \
                   -batch \
                   -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \

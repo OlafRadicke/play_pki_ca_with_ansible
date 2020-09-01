@@ -13,6 +13,6 @@ end_entity:
     city_name:                "{{ pki_city_name }}"
     organization_name:        "{{ pki_organization_name }}"
     organizational_unit_name: "bazbar service department"
-    not_after:                "+26w"
+    not_after_days:           "90"
     key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
     key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
