@@ -10,7 +10,7 @@ pki_intermediate_ca:
     city_name:                "{{ pki_city_name }}"
     organization_name:        "{{ pki_organization_name }}"
     organizational_unit_name: "Security department"
-    not_after:                "+26w"
+    not_after_days:           "365"
     key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
     key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
@@ -19,8 +19,8 @@ pki_intermediate_ca:
 pki_owner_csr:
     "service-issue-ca-01.dum.my":
         owner_url:           "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
-        not_after:           "+26w"
+        not_after_days:      "180"
 ### EXAMPLE
 # "service-issue-ca-02.dum.my":
 #     owner_url:        "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
-#     not_after:        "+26w"
+#     not_after_days:   "180"

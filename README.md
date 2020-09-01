@@ -58,7 +58,7 @@ For removing the azure setup enter:
 ansible-playbook  \
   --vault-password-file ~/.ssh/vault-password \
   -i ./inventories/staging/hosts.yml \
-    
+  azure_destroy.yml
 ```
 
 Undesanding inventory
@@ -162,6 +162,9 @@ Helpful docs
 ------------
 
 * [golinuxcloud.com](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)
+* [wikipedia.org to X.509](https://en.wikipedia.org/wiki/X.509)
+* [openssl cookbook](https://www.feistyduck.com/library/openssl-cookbook/online/)
+* [openssl man page](https://www.openssl.org/docs/manmaster/)
 
 TODOs
 -----
@@ -170,7 +173,7 @@ TODOs
 
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Fix "Not After : Aug 25 13:26:32 2027 GMT" für "CN=staff-policy-ca-01.dum.my"
-- Recheck playbook with more VMs.
+- Adding a root CA offline mode to jump over the CAs thats a offline.
 
 ### Other interisting things
 

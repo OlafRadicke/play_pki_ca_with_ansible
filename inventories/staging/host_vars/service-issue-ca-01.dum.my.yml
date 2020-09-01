@@ -13,7 +13,7 @@ pki_intermediate_ca:
     city_name:                "{{ pki_city_name }}"
     organization_name:        "{{ pki_organization_name }}"
     organizational_unit_name: "Service department"
-    not_after:                "+26w"
+    not_after_days:           "180"
     key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
     key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
@@ -21,10 +21,10 @@ pki_intermediate_ca:
 pki_owner_csr:
     "foo.dum.my":
         owner_url:           "http://{{ foo_dum_my_ip }}:{{ pki_csr_exchange_port }}"
-        not_after:           "+26w"
+        not_after_days:      "90"
     "bar.dum.my":
         owner_url:           "http://{{ bar_dum_my_ip }}:{{ pki_csr_exchange_port }}"
-        not_after:           "+26w"
+        not_after_days:      "90"
     "baz.dum.my":
         owner_url:           "http://{{ baz_dum_my_ip }}:{{ pki_csr_exchange_port }}"
-        not_after:           "+26w"
+        not_after_days:      "90"

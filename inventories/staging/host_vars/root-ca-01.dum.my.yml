@@ -14,7 +14,7 @@ pki_intermediate_ca:
   city_name:                "Dummy Town"
   organization_name:        "Dummy GmbH"
   organizational_unit_name: "Security department"
-  not_after:                "+1300w"
+  not_after_days:           "9125"
   key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
   key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
 
@@ -22,7 +22,7 @@ pki_intermediate_ca:
 pki_owner_csr:
   "staff-policy-ca-01.dum.my":
       owner_url:           "http://{{ policy_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
-      not_after:           "+52w"
+      not_after_days:      "365"
   "service-policy-ca-01.dum.my":
       owner_url:           "http://{{ policy_ca_service_ip }}:{{ pki_csr_exchange_port }}"
-      not_after:           "+26w"
+      not_after_days:      "365"

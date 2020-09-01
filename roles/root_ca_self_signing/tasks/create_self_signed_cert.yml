@@ -5,7 +5,7 @@
                    openssl req \
                    -new \
                    -x509 \
-                   -days 3650 \
+                   -days {{ pki_intermediate_ca.not_after_days }} \
                    -nodes \
                    -config {{ pki_opensslconfig }} \
                    -extensions v3_ca \
