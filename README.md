@@ -30,6 +30,12 @@ First of all
 
 Has the variable *debug_output* in the file *group_vars/pki.yml* the value *true*, you get a lot of output.
 
+
+Checking git repo integrity
+---------------------------
+
+The Playbook ```git_check.yml``` is only a example for checking the integrity of the git code.
+
 Azure pre setup (Azure cloud)
 -----------------------------
 

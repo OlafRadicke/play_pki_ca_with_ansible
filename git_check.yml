@@ -1,0 +1,6 @@
+---
+
+- name:  Checkout ansible code an the git tag finger print
+  hosts: pki_ansible
+  roles:
+    -    check_git_sign
