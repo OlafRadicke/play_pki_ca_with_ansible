@@ -177,6 +177,7 @@ TODOs
 
 ### Tasks
 
+- Remove section "challengePassword" in the openssl config?
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Adding a root CA offline mode to jump over the CAs thats a offline.
 

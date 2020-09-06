@@ -17,6 +17,8 @@
     - "{{ pki_index_file }}"
     - "{{ pki_index_attr_file}}"
 
+###############################################################################
+
 - name:       Create serial file if it not exist
   shell:      "echo 1 > {{ pki_serial_file }}"
   args:
@@ -28,10 +30,27 @@
               let NEWSERIAL=$SERIAL+1
               echo $NEWSERIAL > {{ pki_serial_file }}
 
+###############################################################################
+
+- name:      Create  crlnumber file if it not exist
+  shell:     "echo 1 > {{ pki_crlnumber_file }}"
+  args:
+    creates: "{{ pki_crlnumber_file }}"
+
+- name:      Count up crlnumber
+  shell: |
+            SERIAL=$( cat {{ pki_crlnumber_file }} )
+            let NEWSERIAL=$SERIAL+1
+            echo $NEWSERIAL > {{ pki_crlnumber_file }}
+
+###############################################################################
+
 - name:       Create openssl.cnf
   template:
     src:      openssl.cnf
     dest:     "{{ pki_opensslconfig }}"
+
+###############################################################################
 
 - name:       Create password file
   shell: |

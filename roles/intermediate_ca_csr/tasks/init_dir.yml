@@ -15,7 +15,7 @@
     state: touch
   loop:
     - "{{ pki_index_file }}"
-    - "{{ pki_index_attr_file}}"
+    - "{{ pki_index_attr_file }}"
 
 ###############################################################################
 
