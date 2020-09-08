@@ -17,12 +17,18 @@ the production variation is in the inventory directory [*inventories/production*
 
 That is the work flow of the certification:
 
-![docs/pki-tree.png](docs/pki-flow.png)
+| ![docs/pki-tree.png](docs/pki-flow.png) |
+|-----------------------------------------|
+
+Certificate and csr will be exchange over http (nginx)
+
+| ![docs/exchange-over-http.png](docs/exchange-over-http.png)|
+|------------------------------------------------------------|
 
 This is the proposal how the Ansible-PKI can be embedded in a sign certificates process.
 
-![docs/big-picture-csp.png](docs/big-picture-csp.png)
-
+| ![docs/big-picture-csp.png](docs/big-picture-csp.png) |
+|-------------------------------------------------------|
 
 
 First of all
@@ -177,7 +183,7 @@ TODOs
 
 ### Tasks
 
-- Remove section "challengePassword" in the openssl config?
+- Try playbook with OpenSUSE
 - "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Adding a root CA offline mode to jump over the CAs thats a offline.
 

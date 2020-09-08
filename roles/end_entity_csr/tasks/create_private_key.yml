@@ -4,10 +4,10 @@
   shell: |
               openssl genrsa \
               -passout file:{{ pki_password_file }} \
-              -out {{ pki_priv_key }}.crypt
+              -out {{ pki_priv_key }}
   args:
     chdir:    "{{ pki_private_dir }}"
-    creates:  "{{ pki_priv_key }}.crypt"
+    creates:  "{{ pki_priv_key }}"
   ignore_errors: "{{ debug_output }}"
   register:      shell_result
 
@@ -15,22 +15,3 @@
   debug:
     msg:         "{{ shell_result }}"
   when:          debug_output
-
-###############################################################################
-
-- name:          Remove password of private key
-  shell: |
-                 openssl rsa \
-                 -passout file:{{ pki_password_file }} \
-                 -in {{ pki_priv_key }}.crypt \
-                 -out {{ pki_priv_key }}
-  args:
-    chdir:       "{{ pki_private_dir }}"
-    creates:     "{{ pki_priv_key }}"
-  ignore_errors: "{{ debug_output }}"
-  register:      shell_result
-
-- name:        Output return value
-  debug:
-    msg:       "{{ shell_result }}"
-  when:        debug_output

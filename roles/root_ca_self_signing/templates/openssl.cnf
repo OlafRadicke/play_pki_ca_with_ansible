@@ -83,7 +83,6 @@ commonName			            = {{ pki_intermediate_ca.common_name }}
 emailAddress		           	= {{ pki_intermediate_ca.email_address }}
 
 [ req_attributes ]
-challengePassword		        = A challenge password
 unstructuredName		        = An optional company name
 
 [ usr_cert ]
