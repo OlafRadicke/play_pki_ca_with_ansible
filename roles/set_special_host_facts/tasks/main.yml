@@ -8,7 +8,6 @@
     - set_fact:
         pki_opensslconfig:            "{{ pki_private_dir }}/openssl.cnf"
         pki_priv_key:                 "{{ pki_private_dir }}/private/{{ pki_intermediate_ca.common_name }}.key.pem"
-        pki_password_file:            "{{ pki_private_dir }}/keypassword.txt"
         pki_serial_file:              "{{ pki_private_dir }}/serial"
         pki_index_file:               "{{ pki_private_dir }}/index"
         pki_crlnumber_file:           "{{ pki_private_dir }}/crlnumber"
@@ -28,7 +27,6 @@
     - set_fact:
         pki_opensslconfig:            "{{ pki_private_dir }}/openssl.cnf"
         pki_priv_key:                 "{{ pki_private_dir }}/private/{{ pki_intermediate_ca.common_name }}.key.pem"
-        pki_password_file:            "{{ pki_private_dir }}/keypassword.txt"
         pki_serial_file:              "{{ pki_private_dir }}/serial"
         pki_index_file:               "{{ pki_private_dir }}/index"
         pki_crlnumber_file:           "{{ pki_private_dir }}/crlnumber"
@@ -53,7 +51,6 @@
       pki_private_dir:                "{{ pki_workspace }}/end_entities/{{ end_entity.common_name }}/private/"
       pki_opensslconfig:              "{{ pki_private_dir }}/openssl.cnf"
       pki_priv_key:                   "{{ pki_private_dir }}/{{ end_entity.common_name }}.key.pem"
-      pki_password_file:              "{{ pki_private_dir }}/keypassword.txt"
       pki_serial_file:                "{{ pki_private_dir }}/serial"
       pki_index_file:                 "{{ pki_private_dir }}/index"
       pki_crlnumber_file:             "{{ pki_private_dir }}/crlnumber"

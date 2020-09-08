@@ -3,7 +3,6 @@
 - name:       Generate an root ca private key
   shell: |
               openssl genrsa \
-              -passout file:{{ pki_password_file }} \
               -out {{ pki_priv_key }}
   args:
     chdir:    "{{ pki_private_dir }}"

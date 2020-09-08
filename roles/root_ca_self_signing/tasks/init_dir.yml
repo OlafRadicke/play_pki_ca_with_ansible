@@ -50,11 +50,3 @@
     src:      openssl.cnf
     dest:     "{{ pki_opensslconfig }}"
 
-###############################################################################
-
-- name:       Create password file
-  shell: |
-              echo "{{ pki_key_password }}" \
-              > {{ pki_password_file }}
-  args:
-    creates:  "{{ pki_password_file }}"
