@@ -1,7 +1,6 @@
 ---
 
 debug_output:               true
-ignore_errors:              yes
 
 vm_01:                      "51.116.112.42"
 vm_02:                      "51.116.175.33"

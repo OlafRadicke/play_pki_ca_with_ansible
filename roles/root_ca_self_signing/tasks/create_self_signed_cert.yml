@@ -15,7 +15,6 @@
     chdir:         "{{ pki_private_dir }}"
     creates:       "{{ pki_cert_file }}"
   register:        shell_result
-  when:            debug_output
   ignore_errors:   "{{ debug_output }}"
 
 - name:            Output return value
