@@ -19,16 +19,16 @@
 
 ###############################################################################
 
-- name:       Create serial file if it not exist
-  shell:      "echo 1 > {{ pki_serial_file }}"
+- name:      Create serial file if it not exist
+  shell:     "echo 1 > {{ pki_serial_file }}"
   args:
-    creates:  "{{ pki_serial_file }}"
+    creates: "{{ pki_serial_file }}"
 
-- name:       Count up serial
+- name:      Count up serial
   shell: |
-              SERIAL=$( cat {{ pki_serial_file }} )
-              let NEWSERIAL=$SERIAL+1
-              echo $NEWSERIAL > {{ pki_serial_file }}
+             SERIAL=$( cat {{ pki_serial_file }} )
+             let NEWSERIAL=$SERIAL+1
+             echo $NEWSERIAL > {{ pki_serial_file }}
 
 ###############################################################################
 
@@ -39,14 +39,14 @@
 
 - name:      Count up crlnumber
   shell: |
-            SERIAL=$( cat {{ pki_crlnumber_file }} )
-            let NEWSERIAL=$SERIAL+1
-            echo $NEWSERIAL > {{ pki_crlnumber_file }}
+             SERIAL=$( cat {{ pki_crlnumber_file }} )
+             let NEWSERIAL=$SERIAL+1
+             echo $NEWSERIAL > {{ pki_crlnumber_file }}
 
 ###############################################################################
 
-- name:       Create openssl.cnf
+- name:      Create openssl.cnf
   template:
-    src:      openssl.cnf
-    dest:     "{{ pki_opensslconfig }}"
+    src:     openssl.cnf
+    dest:    "{{ pki_opensslconfig }}"
 

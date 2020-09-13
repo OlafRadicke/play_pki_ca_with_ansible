@@ -9,13 +9,13 @@
     -        "{{ pki_private_dir }}"
     -        "{{ pki_private_dir }}/private"
 
-- name: Touch a files
+- name:      Touch a files
   file:
-    path: "{{ item }}"
-    state: touch
+    path:    "{{ item }}"
+    state:   touch
   loop:
-    - "{{ pki_index_file }}"
-    - "{{ pki_index_attr_file }}"
+    -        "{{ pki_index_file }}"
+    -        "{{ pki_index_attr_file }}"
 
 ###############################################################################
 
@@ -26,9 +26,9 @@
 
 - name:      Count up serial
   shell: |
-            SERIAL=$( cat {{ pki_serial_file }} )
-            let NEWSERIAL=$SERIAL+1
-            echo $NEWSERIAL > {{ pki_serial_file }}
+             SERIAL=$( cat {{ pki_serial_file }} )
+             let NEWSERIAL=$SERIAL+1
+             echo $NEWSERIAL > {{ pki_serial_file }}
 
 ###############################################################################
 
@@ -39,9 +39,9 @@
 
 - name:      Count up crlnumber
   shell: |
-            SERIAL=$( cat {{ pki_crlnumber_file }} )
-            let NEWSERIAL=$SERIAL+1
-            echo $NEWSERIAL > {{ pki_crlnumber_file }}
+             SERIAL=$( cat {{ pki_crlnumber_file }} )
+             let NEWSERIAL=$SERIAL+1
+             echo $NEWSERIAL > {{ pki_crlnumber_file }}
 
 ###############################################################################
 

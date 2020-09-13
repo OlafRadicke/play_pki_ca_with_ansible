@@ -86,26 +86,26 @@ emailAddress		           	= {{ pki_intermediate_ca.email_address }}
 unstructuredName		        = An optional company name
 
 [ usr_cert ]
-basicConstraints            = critical,CA:true,pathlen:5
+basicConstraints            = critical,CA:true,pathlen:{{ pki_intermediate_ca.pathlen }}
 nsComment			              = "OpenSSL Generated Certificate"
 subjectKeyIdentifier        = hash
 authorityKeyIdentifier      = keyid,issuer
 
 [ v3_req ]
-basicConstraints            = critical,CA:true,pathlen:5
+basicConstraints            = critical,CA:true,pathlen:{{ pki_intermediate_ca.pathlen }}
 keyUsage                    = {{ pki_intermediate_ca.key_usage_req }}
 
 [ v3_ca ]
 subjectKeyIdentifier        = hash
 authorityKeyIdentifier      = keyid:always,issuer
-basicConstraints            = critical, CA:true, pathlen:0
+basicConstraints            = critical, CA:true, pathlen:{{ pki_intermediate_ca.pathlen }}
 keyUsage                    = {{ pki_intermediate_ca.key_usage_ca }}
 
 [ crl_ext ]
 authorityKeyIdentifier      = keyid:always
 
 [ proxy_cert_ext ]
-basicConstraints            = critical,CA:true,pathlen:5
+basicConstraints            = critical,CA:true,pathlen:{{ pki_intermediate_ca.pathlen }}
 nsComment			              = "OpenSSL Generated Certificate"
 subjectKeyIdentifier        = hash
 authorityKeyIdentifier      = keyid,issuer

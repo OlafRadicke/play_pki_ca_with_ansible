@@ -1,12 +1,12 @@
 ---
 
-- name:       Generate an root ca private key
+- name:          Generate an root ca private key
   shell: |
-              openssl genrsa \
-              -out {{ pki_priv_key }}
+                 openssl genrsa \
+                 -out {{ pki_priv_key }}
   args:
-    chdir:    "{{ pki_private_dir }}"
-    creates:  "{{ pki_priv_key }}"
+    chdir:       "{{ pki_private_dir }}"
+    creates:     "{{ pki_priv_key }}"
   ignore_errors: "{{ debug_output }}"
   register:      shell_result
 

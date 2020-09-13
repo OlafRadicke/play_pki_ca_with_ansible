@@ -176,7 +176,7 @@ Helpful docs
 * [golinuxcloud.com](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)
 * [wikipedia.org to X.509](https://en.wikipedia.org/wiki/X.509)
 * [openssl cookbook](https://www.feistyduck.com/library/openssl-cookbook/online/)
-* [openssl man page](https://www.openssl.org/docs/manmaster/)
+* [openssl man page](https://www.openssl.org/docs/manpages.html)
 
 TODOs
 -----

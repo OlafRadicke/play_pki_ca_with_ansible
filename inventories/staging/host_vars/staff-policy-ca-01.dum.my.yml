@@ -3,22 +3,23 @@
 ansible_host:               "{{ policy_ca_staff_ip }}"
 
 pki_intermediate_ca:
-  common_name:              "staff-policy-ca-01.dum.my"
-  email_address:            "staff-ca@dum.my"
-  country_name:             "{{ pki_country_name }}"
-  state_or_province_name:   "{{ pki_state_or_province_name }}"
-  city_name:                "{{ pki_city_name }}"
-  organization_name:        "{{ pki_organization_name }}"
-  organizational_unit_name: "Security department"
-  not_after_days:           "365"
-  key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
-  key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
+    common_name:              "staff-policy-ca-01.dum.my"
+    email_address:            "staff-ca@dum.my"
+    country_name:             "{{ pki_country_name }}"
+    state_or_province_name:   "{{ pki_state_or_province_name }}"
+    city_name:                "{{ pki_city_name }}"
+    organization_name:        "{{ pki_organization_name }}"
+    organizational_unit_name: "Security department"
+    not_after_days:           "365"
+    key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
+    key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
+    pathlen:                  "5"
 
 
 pki_owner_csr:
-  "staff-issue-ca-01.dum.my":
-      owner_url:          "http://{{ issue_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
-      not_after_days:     "180"
+    "staff-issue-ca-01.dum.my":
+       owner_url:             "http://{{ issue_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
+       not_after_days:        "180"
 ### EXAMPLE
 # "staff-issue-ca-02.dum.my":
 #     owner_url:        "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"
