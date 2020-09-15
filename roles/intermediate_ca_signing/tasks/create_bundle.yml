@@ -26,7 +26,6 @@
 
 ###############################################################################
 
-
 - name:            Create XXXXX.bundle.cert.pem as root ca
   shell:           |
                    cat {{ pki_cert_file }} \
@@ -50,7 +49,7 @@
     owner:         nginx
     group:         nginx
     mode:          'u=rw,g=r,o=r'
-  when:    ansible_distribution != "Ubuntu"
+  when:            ansible_distribution != "Ubuntu"
   register:        shell_result
   ignore_errors:   "{{ debug_output }}"
 
