@@ -4,6 +4,7 @@
   get_url:
     url:         "{{ referrenc_ca_url }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
     dest:        "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+  when:          root_ca is defined
   ignore_errors: "{{ debug_output }}"
   register:      shell_result
 
@@ -11,7 +12,6 @@
   debug:
     msg:         "{{ shell_result }}"
   when:          debug_output
-
 
 - name:          Download root ca certificate files from the referrenc ca
   get_url:
