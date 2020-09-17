@@ -1,6 +1,6 @@
 ---
 
-ansible_host:               "{{ policy_ca_service_ip }}"
+ansible_host:                 "{{ policy_ca_service_ip }}"
 
 pki_intermediate_ca:
     common_name:              "service-policy-ca-01.dum.my"
@@ -19,8 +19,8 @@ pki_intermediate_ca:
 
 pki_owner_csr:
     "service-issue-ca-01.dum.my":
-        owner_url:           "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
-        not_after_days:      "180"
+        owner_url:            "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
+        not_after_days:       "180"
 ### EXAMPLE
 # "service-issue-ca-02.dum.my":
 #     owner_url:        "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"

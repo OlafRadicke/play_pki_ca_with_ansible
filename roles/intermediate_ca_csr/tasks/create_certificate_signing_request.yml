@@ -1,7 +1,7 @@
 ---
 
 - name:           Create csr file
-  shell: |
+  shell:          |
                   openssl req \
                   -new \
                   -sha256 \

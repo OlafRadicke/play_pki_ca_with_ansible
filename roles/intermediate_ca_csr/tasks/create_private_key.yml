@@ -1,7 +1,7 @@
 ---
 
 - name:          Generate an root ca private key
-  shell: |
+  shell:         |
                  openssl genrsa \
                  -out {{ pki_priv_key }}
   args:

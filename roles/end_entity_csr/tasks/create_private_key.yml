@@ -1,16 +1,16 @@
 ---
 
-- name:       Generate an end entit private key
-  shell: |
-              openssl genrsa \
-              -out {{ pki_priv_key }}
+- name:           Generate an end entit private key
+  shell:          |
+                  openssl genrsa \
+                  -out {{ pki_priv_key }}
   args:
-    chdir:    "{{ pki_private_dir }}"
-    creates:  "{{ pki_priv_key }}"
-  ignore_errors: "{{ debug_output }}"
-  register:      shell_result
+    chdir:        "{{ pki_private_dir }}"
+    creates:      "{{ pki_priv_key }}"
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
 
-- name:          Output return value
+- name:           Output return value
   debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output

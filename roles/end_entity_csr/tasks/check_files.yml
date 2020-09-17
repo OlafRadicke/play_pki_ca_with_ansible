@@ -1,28 +1,67 @@
 ---
 
-- name:          Check file type of private key
-  shell: |
-                 file {{ pki_priv_key }}
-  register:      shell_result
-  when:          debug_output
+- name:           Check file type of private key
+  shell:          |
+                  file {{ pki_priv_key }}
+  register:       shell_result
+  when:           debug_output
 
-- name:          Output return value
+- name:           Output return value
   debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output
 
 ###############################################################################
 
-- name:          View the content of private key
-  shell: |
-                 openssl rsa \
-                 -noout \
-                 -text \
-                 -in {{ pki_priv_key }}
-  register:      shell_result
-  when:          debug_output
+- name:           View the content of private key
+  shell:          |
+                  openssl rsa \
+                  -noout \
+                  -text \
+                  -in {{ pki_priv_key }}
+  register:       shell_result
+  when:           debug_output
 
-- name:          Output return value
+- name:           Output return value
   debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Check file type of csr file
+  shell:          |
+                  file {{ pki_csr_file }}
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Check content of csr file
+  shell:          |
+                  openssl req -noout -text -in {{ pki_csr_file }}
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Check index file
+  shell:          |
+                  cat  {{ pki_index_file }}
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output

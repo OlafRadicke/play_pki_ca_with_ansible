@@ -6,7 +6,7 @@ referrenc_ca_url:           "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}
 referrenc_ca_name:          "root-ca-01.dum.my"
 
 root_ca:                    true
-pki_intermediate_ca:
+pki_intermediate_ca: # TODO
   common_name:              "root-ca-01.dum.my"
   email_address:            "ca-admin@dum.my"
   country_name:             "DE"
