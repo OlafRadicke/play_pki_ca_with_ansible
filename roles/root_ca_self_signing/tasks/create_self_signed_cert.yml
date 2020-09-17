@@ -5,7 +5,7 @@
                    openssl req \
                    -new \
                    -x509 \
-                   -days {{ pki_intermediate_ca.not_after_days }} \
+                   -days {{ pki_root_ca.not_after_days }} \
                    -nodes \
                    -config {{ pki_opensslconfig }} \
                    -extensions v3_ca \
@@ -54,8 +54,8 @@
 
 - name:            Copy root cert.pem to public httpd dir
   shell: |
-                   cat {{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem \
-                   > {{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem
+                   cat {{ pki_ca_dir }}/{{ pki_root_ca.common_name }}.crt.pem \
+                   > {{ pki_publication_dir }}/{{ pki_root_ca.common_name }}.crt.pem
   when:            root_ca
 
 

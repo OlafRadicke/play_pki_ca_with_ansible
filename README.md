@@ -183,8 +183,9 @@ TODOs
 
 ### Tasks
 
+- certificate revocation list (CRL) 
 - Try playbook with OpenSUSE
-- "Write out database with 1 new entries \ Segmentation fault (core dumped)"
+- OpenSSL Issue: "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Adding a root CA offline mode to jump over the CAs thats a offline.
 
 ### Other interisting things

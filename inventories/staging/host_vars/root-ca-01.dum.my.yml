@@ -6,7 +6,7 @@ referrenc_ca_url:           "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}
 referrenc_ca_name:          "root-ca-01.dum.my"
 
 root_ca:                    true
-pki_intermediate_ca: # TODO
+pki_root_ca:
   common_name:              "root-ca-01.dum.my"
   email_address:            "ca-admin@dum.my"
   country_name:             "DE"
@@ -17,7 +17,6 @@ pki_intermediate_ca: # TODO
   not_after_days:           "9125"
   key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
   key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
-
 
 pki_owner_csr:
   "staff-policy-ca-01.dum.my":
