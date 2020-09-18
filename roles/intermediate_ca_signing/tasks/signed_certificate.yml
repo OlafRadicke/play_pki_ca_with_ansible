@@ -7,6 +7,7 @@
                   -days {{ item.value.not_after_days }} \
                   -notext \
                   -batch \
+                  -rand_serial \
                   -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem \
                   -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
   args:
