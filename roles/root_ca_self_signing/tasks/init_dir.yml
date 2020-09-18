@@ -17,18 +17,6 @@
     - "{{ pki_index_file }}"
     - "{{ pki_index_attr_file}}"
 
-###############################################################################
-
-- name:      Create serial file if it not exist
-  shell:     "echo 1 > {{ pki_serial_file }}"
-  args:
-    creates: "{{ pki_serial_file }}"
-
-- name:      Count up serial
-  shell: |
-             SERIAL=$( cat {{ pki_serial_file }} )
-             let NEWSERIAL=$SERIAL+1
-             echo $NEWSERIAL > {{ pki_serial_file }}
 
 ###############################################################################
 
