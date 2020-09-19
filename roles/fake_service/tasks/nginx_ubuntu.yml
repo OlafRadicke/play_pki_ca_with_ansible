@@ -9,11 +9,12 @@
     -             "{{ pki_service_http_root_dir }}"
     -             "{{ pki_service_http_root_dir }}/mutual"
     -             "{{ pki_service_http_root_dir }}/company-mutual"
+    -             "{{ pki_service_http_root_dir }}/oneway"
 
-- name:           Copy index files
+- name:           Copy index files for oneway TLS
   copy:
     src:          index.html
-    dest:         "{{ pki_service_http_root_dir }}/index.html"
+    dest:         "{{ pki_service_http_root_dir }}/oneway/index.html"
     mode:         'u=xwr,g=xr,o=xr'
 
 - name:           Copy index files for the mutual section

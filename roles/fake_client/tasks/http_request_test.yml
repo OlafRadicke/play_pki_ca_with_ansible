@@ -6,29 +6,13 @@
     line:          "{{ foo_dum_my_ip }}  {{ fake_service_url }}"
     create: yes
 
-
-###############################################################################
-- name:            Check service with get_url
-  get_url:
-    url:           https://{{ fake_service_url }}:{{ service_port }}/index.html
-    dest:          /tmp/index.html
-  ignore_errors:   "{{ debug_output }}"
-  register:        get_url_result
-  when:            debug_output
-
-- name:            Output return value
-  debug:
-    msg:           "{{ get_url_result }}"
-  when:            debug_output
-
-
 ###############################################################################
 
 - name:            Check service with curl
   shell:           |
                    curl \
                    -v \
-                   https://{{ fake_service_url }}:{{ service_port }}/
+                   https://{{ fake_service_url }}:{{ service_port }}/oneway/
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output
@@ -45,7 +29,7 @@
                    curl \
                    -v \
                    --cacert /usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt \
-                   https://{{ fake_service_url }}:{{ service_port }}/index.html
+                   https://{{ fake_service_url }}:{{ service_port }}/oneway/index.html
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output
