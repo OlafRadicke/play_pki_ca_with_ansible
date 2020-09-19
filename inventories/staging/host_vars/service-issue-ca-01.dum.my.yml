@@ -16,7 +16,7 @@ pki_intermediate_ca:
     not_after_days:           "180"
     key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
     key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
-    pathlen:                  "1"
+    pathlen:                  "0"
 
 
 pki_owner_csr:
