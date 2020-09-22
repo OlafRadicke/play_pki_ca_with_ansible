@@ -1,6 +1,5 @@
 ---
 
-
 - name:          Update ca trust for RedHat and Co
   shell:         "update-ca-trust"
   register:      shell_result
@@ -10,7 +9,6 @@
   debug:
     msg:         "{{ shell_result }}"
   when:          debug_output
-
 
 ###############################################################################
 
