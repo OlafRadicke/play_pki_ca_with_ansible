@@ -183,7 +183,8 @@ TODOs
 
 ### Tasks
 
-- certificate revocation list (CRL) 
+- [Create a p12-File](https://www.google.com/search?q=conver+to+.p12&oq=conver+to+.p12&aqs=chrome..69i57.6039j0j15&sourceid=chrome&ie=UTF-8) for Chrome and Firefox
+- certificate revocation list (CRL)
 - Try playbook with OpenSUSE
 - OpenSSL Issue: "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Adding a root CA offline mode to jump over the CAs thats a offline.
