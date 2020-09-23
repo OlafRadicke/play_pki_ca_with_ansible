@@ -45,7 +45,7 @@
   shell:           |
                    curl \
                    -v \
-                   --cacert /usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt \
+                   --cacert {{ pki_publication_dir }}/{{ pki_root_ca_cert }} \
                    --key {{ pki_priv_key }} \
                    --cert {{ pki_bundle_file }} \
                    https://{{ fake_service_url }}:{{ service_port }}/mutual/index.html
@@ -64,7 +64,7 @@
   shell:           |
                    curl \
                    -v \
-                   --cacert /usr/local/share/ca-certificates/{{ pki_root_ca_cert }}.crt \
+                   --cacert {{ pki_publication_dir }}/{{ pki_root_ca_cert }} \
                    --key {{ pki_priv_key }} \
                    --cert {{ pki_bundle_file }} \
                    https://{{ fake_service_url }}:{{ service_port }}/company-mutual/index.html

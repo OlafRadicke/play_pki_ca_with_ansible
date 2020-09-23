@@ -1,0 +1,75 @@
+---
+
+- name:            Crwate a p12 file for browswers
+  shell:           |
+                   openssl pkcs12 \
+                   -export \
+                   -out {{ pki_p12_file }} \
+                   -in {{ pki_bundle_file }} \
+                   -inkey {{ pki_priv_key }} \
+                   -passout pass:
+  args:
+    creates:       "{{ pki_p12_file }}"
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:            Check p12 file with curl on simple mutual tls service
+  shell:           |
+                   curl -v \
+                   --cacert {{ pki_publication_dir }}/{{ pki_root_ca_cert }} \
+                   --cert-type P12 \
+                   --cert {{ pki_p12_file }} \
+                   https://{{ fake_service_url }}:{{ service_port }}/mutual/index.html
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:             "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:            Check p12 file with curl on mutual tls service
+  shell:           |
+                   curl -v \
+                   --cacert {{ pki_publication_dir }}/{{ pki_root_ca_cert }} \
+                   --cert-type P12 \
+                   --cert {{ pki_p12_file }} \
+                   https://{{ fake_service_url }}:{{ service_port }}/company-mutual/index.html
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:             "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:            Storing p12-certifcat on ansible host for test tasks
+  fetch:
+    src:           "{{ pki_p12_file }}"
+    dest:          ./{{ inventory_hostname }}.p12
+  when:            debug_output
+
+- name:            Storing root-certifcat on ansible host for test tasks (RedHat)
+  fetch:
+    src:           "{{ pki_publication_dir }}/{{ pki_root_ca_cert }}"
+    dest:          ./{{ inventory_hostname }}-root.cert.pem
+  when:            debug_output
+
+- name:            Storing bundle on ansible host for test tasks (RedHat)
+  fetch:
+    src:           "{{ pki_bundle_file }}"
+    dest:          ./{{ inventory_hostname }}-bundle.cert
+  when:            debug_output

@@ -161,6 +161,7 @@ Known issue
 - The playbook is switched off selinux. But for an effect,  ths need a restart
 of the virtual machine.
 - Some times under Ubuntu: The step "TASK [pre_config : Upgrade all apt packages]" hangs up. Solution: Restart the playbook.
+- Terraform print: ```resource with the ID "XXX" already exists - to be managed via Terraform this resource needs to be imported into the State.``` ***Solution:*** remove the .tmp directory.
 
 
 Helpful tools
@@ -183,7 +184,6 @@ TODOs
 
 ### Tasks
 
-- [Create a p12-File](https://www.google.com/search?q=conver+to+.p12&oq=conver+to+.p12&aqs=chrome..69i57.6039j0j15&sourceid=chrome&ie=UTF-8) for Chrome and Firefox
 - certificate revocation list (CRL)
 - Try playbook with OpenSUSE
 - OpenSSL Issue: "Write out database with 1 new entries \ Segmentation fault (core dumped)"
