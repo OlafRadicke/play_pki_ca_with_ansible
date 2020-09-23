@@ -53,7 +53,7 @@ resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-http" {
 
 
 resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-https-8443" {
-  name                             = "{{ azure_prefix }}-sec-rule-https-in"
+  name                             = "{{ azure_prefix }}-sec-rule-https-8443"
   priority                         = 1002
   direction                        = "Inbound"
   access                           = "Allow"
@@ -67,7 +67,7 @@ resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-https-8443
   network_security_group_name      = azurerm_network_security_group.{{ azure_prefix }}-sec-group.name
 }
 
-resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-https" {
+resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-https-out" {
   name                             = "{{ azure_prefix }}-sec-rule-https-out"
   priority                         = 1003
   direction                        = "Outbound"
@@ -82,7 +82,7 @@ resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-https" {
   network_security_group_name      = azurerm_network_security_group.{{ azure_prefix }}-sec-group.name
 }
 
-resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-outbound" {
+resource "azurerm_network_security_rule" "{{ azure_prefix }}-sec-rule-outbound-all" {
   name                             = "{{ azure_prefix }}-sec-rule-outbound-all"
   priority                         = 1004
   direction                        = "Outbound"

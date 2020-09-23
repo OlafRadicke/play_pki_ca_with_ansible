@@ -11,3 +11,6 @@
 
 - name:     Include http test request
   include:  "http_request_test.yml"
+
+- name:     Include creating p12 file
+  include:  "create_p12_file.yml"
