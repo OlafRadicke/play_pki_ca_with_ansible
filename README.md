@@ -161,6 +161,7 @@ Known issue
 - The playbook is switched off selinux. But for an effect,  ths need a restart
 of the virtual machine.
 - Some times under Ubuntu: The step "TASK [pre_config : Upgrade all apt packages]" hangs up. Solution: Restart the playbook.
+- Terraform print: ```resource with the ID "XXX" already exists - to be managed via Terraform this resource needs to be imported into the State.``` ***Solution:*** remove the .tmp directory.
 
 
 Helpful tools
@@ -183,7 +184,7 @@ TODOs
 
 ### Tasks
 
-- certificate revocation list (CRL) 
+- certificate revocation list (CRL)
 - Try playbook with OpenSUSE
 - OpenSSL Issue: "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Adding a root CA offline mode to jump over the CAs thats a offline.

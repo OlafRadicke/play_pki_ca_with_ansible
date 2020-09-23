@@ -1,40 +1,51 @@
 ---
 
+- name:            Update ca trust for RedHat and Co
+  block:
 
-- name:          Update ca trust for RedHat and Co
-  shell:         "update-ca-trust"
-  register:      shell_result
-  when:          ansible_distribution != "Ubuntu"
+  - name:          Update ca trust
+    shell:         "update-ca-trust"
+    register:      shell_result
 
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+  - name:          Output return value
+    debug:
+      msg:         "{{ shell_result }}"
+    when:          debug_output
 
-
-###############################################################################
-
-- name:          Update ca trust for Ubuntu
-  shell:         |
-                 update-ca-certificates \
-                 --verbose \
-                 --fresh
-  register:      shell_result
-  when:          ansible_distribution == "Ubuntu"
-
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+  when:            ansible_distribution != "Ubuntu"
 
 ###############################################################################
 
-- name:          Get trust list
-  shell:         "trust list"
-  register:      shell_result
-  when:          ansible_distribution != "Ubuntu"
+- name:            Update ca trust for Ubuntu
+  block:
 
-- name:          Output return value
-  debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+  - name:          Update ca trust
+    shell:         |
+                   update-ca-certificates \
+                   --verbose \
+                   --fresh
+    register:      shell_result
+
+  - name:          Output return value
+    debug:
+      msg:         "{{ shell_result }}"
+    when:          debug_output
+
+  when:            ansible_distribution == "Ubuntu"
+
+###############################################################################
+
+- name:            Get trust list for Ubuntu
+  block:
+
+  - name:          Get trust list
+    shell:         "trust list"
+    register:      shell_result
+    when:          ansible_distribution != "Ubuntu"
+
+  - name:          Output return value
+    debug:
+      msg:         "{{ shell_result }}"
+    when:          debug_output
+
+  when:            ansible_distribution == "Ubuntu"
