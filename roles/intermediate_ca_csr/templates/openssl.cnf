@@ -1,5 +1,4 @@
-HOME		    	              = .
-oid_section		              = new_oids
+HOME                        = .
 
 {% if ansible_distribution != "Ubuntu" %}
 openssl_conf                = default_modules
@@ -15,13 +14,8 @@ system_default              = crypto_policy
 
 {% endif %}
 
-[ new_oids ]
-tsa_policy1                 = 1.2.3.4.1
-tsa_policy2                 = 1.2.3.4.5.6
-tsa_policy3                 = 1.2.3.4.5.7
-
 [ ca ]
-default_ca	                = CA_default
+default_ca                  = CA_default
 
 [ CA_default ]
 dir                         = {{ pki_private_dir }}
@@ -31,63 +25,63 @@ database                    = {{ pki_index_file }}
 new_certs_dir               = {{ pki_publication_dir}}
 certificate	                = {{ pki_cert_file }}
 serial                      = {{ pki_serial_file }}
-crlnumber	                  = $dir/crlnumber
-crl		                      = $dir/crl.pem
+crlnumber                   = $dir/crlnumber
+crl                         = $dir/crl.pem
 private_key                 = {{ pki_priv_key }}
-x509_extensions	            = usr_cert
-name_opt 	                  = ca_default
-cert_opt 	                  = ca_default
-default_days	              = 365
+x509_extensions             = usr_cert
+name_opt                    = ca_default
+cert_opt                    = ca_default
+default_days                = 365
 default_crl_days            = 30
-default_md	                = sha256
-preserve	                  = no
-policy		                  = policy_anything
+default_md                  = sha256
+preserve                    = no
+policy                      = policy_anything
 email_in_dn                 = no
 rand_serial                 = no
 
 [ policy_match ]
-countryName		              = match
-stateOrProvinceName	        = match
-organizationName	          = match
-organizationalUnitName    	= optional
-commonName		              = supplied
-emailAddress		            = optional
+countryName                 = match
+stateOrProvinceName         = match
+organizationName            = match
+organizationalUnitName      = optional
+commonName                  = supplied
+emailAddress                = optional
 
 [ policy_anything ]
-countryName		              = optional
-stateOrProvinceName       	= optional
-localityName	            	= optional
-organizationName	          = optional
-organizationalUnitName    	= optional
-commonName	              	= supplied
-emailAddress	            	= optional
+countryName                 = optional
+stateOrProvinceName         = optional
+localityName                = optional
+organizationName            = optional
+organizationalUnitName      = optional
+commonName                  = supplied
+emailAddress                = optional
 
 [ req ]
 prompt                      = no
-default_bits		            = 4096
-default_md		              = sha256
-default_keyfile 	          = privkey.pem
-distinguished_name	        = req_distinguished_name
-attributes		              = req_attributes
-x509_extensions	            = v3_ca
+default_bits                = 4096
+default_md                  = sha256
+default_keyfile             = privkey.pem
+distinguished_name          = req_distinguished_name
+attributes                  = req_attributes
+x509_extensions             = v3_ca
 string_mask                 = utf8only
 req_extensions              = v3_req
 
 [ req_distinguished_name ]
-countryName			            = {{ pki_intermediate_ca.country_name }}
-stateOrProvinceName		      = {{ pki_intermediate_ca.state_or_province_name }}
-localityName			          = {{ pki_intermediate_ca.city_name }}
-organizationName      	  	= {{ pki_intermediate_ca.organization_name }}
-organizationalUnitName	  	= {{ pki_intermediate_ca.organizational_unit_name }}
-commonName			            = {{ pki_intermediate_ca.common_name }}
-emailAddress		           	= {{ pki_intermediate_ca.email_address }}
+countryName                 = {{ pki_intermediate_ca.country_name }}
+stateOrProvinceName         = {{ pki_intermediate_ca.state_or_province_name }}
+localityName                = {{ pki_intermediate_ca.city_name }}
+organizationName            = {{ pki_intermediate_ca.organization_name }}
+organizationalUnitName      = {{ pki_intermediate_ca.organizational_unit_name }}
+commonName                  = {{ pki_intermediate_ca.common_name }}
+emailAddress                = {{ pki_intermediate_ca.email_address }}
 
 [ req_attributes ]
-unstructuredName		        = An optional company name
+unstructuredName            = An optional company name
 
 [ usr_cert ]
 basicConstraints            = critical,CA:true,pathlen:{{ pki_intermediate_ca.pathlen }}
-nsComment			              = "OpenSSL Generated Certificate"
+nsComment                   = "OpenSSL Generated Certificate"
 subjectKeyIdentifier        = hash
 authorityKeyIdentifier      = keyid,issuer
 
@@ -104,30 +98,3 @@ keyUsage                    = {{ pki_intermediate_ca.key_usage_ca }}
 [ crl_ext ]
 authorityKeyIdentifier      = keyid:always
 
-[ proxy_cert_ext ]
-basicConstraints            = critical,CA:true,pathlen:{{ pki_intermediate_ca.pathlen }}
-nsComment			              = "OpenSSL Generated Certificate"
-subjectKeyIdentifier        = hash
-authorityKeyIdentifier      = keyid,issuer
-proxyCertInfo               = critical,language:id-ppl-anyLanguage,pathlen:3,policy:foo
-
-[ tsa ]
-default_tsa                 = tsa_config1
-
-[ tsa_config1 ]
-dir		                      = /etc/pki/CA
-serial		                  = $dir/tsaserial
-crypto_device             	= builtin
-signer_cert	                = $dir/tsacert.pem
-certs	                    	= $dir/cacert.pem
-signer_key	                = $dir/private/tsakey.pem
-signer_digest               = sha256
-default_policy	            = tsa_policy1
-other_policies	            = tsa_policy2, tsa_policy3
-digests                     = sha1, sha256, sha384, sha512
-accuracy	                  = secs:1, millisecs:500, microsecs:100
-clock_precision_digits      = 0
-ordering	                	= yes
-tsa_name	                	= yes
-ess_cert_id_chain	          = no
-ess_cert_id_alg	          	= sha1

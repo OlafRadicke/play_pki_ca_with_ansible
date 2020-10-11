@@ -14,11 +14,7 @@
     debug:
       msg:         "{{ shell_result }}"
     when:          debug_output
-<<<<<<< HEAD
-  when:          ansible_distribution != "Ubuntu"
-=======
   when:            ansible_distribution != "Ubuntu"
->>>>>>> fc04c11ac5aed98e3cde4529200910d089d8d6b5
 
 - name:            Download root ca certificate files from the referrenc ca (Ubuntu)
   block:
@@ -37,23 +33,20 @@
   when:            ansible_distribution == "Ubuntu"
 
 
-- name:          Download root ca certificate files for ansible self
+- name:            Download root ca certificate files for ansible self
   get_url:
-    url:         "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
-    dest:        "{{ pki_publication_dir }}/{{ pki_root_ca_cert }}"
-  ignore_errors: "{{ debug_output }}"
-  register:      shell_result
+    url:           "{{ referrenc_ca_url }}/{{ pki_root_ca_cert }}"
+    dest:          "{{ pki_publication_dir }}/{{ pki_root_ca_cert }}"
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
 
-- name:          Output return value
+- name:            Output return value
   debug:
-    msg:         "{{ shell_result }}"
-  when:          debug_output
+    msg:           "{{ shell_result }}"
+  when:            debug_output
 
 ###############################################################################
 
-<<<<<<< HEAD
-- name:          Download signing certificate files of the end entity / services
-=======
 - name:            Download certificate bundle files from the referrenc ca
   get_url:
     url:           "{{ referrenc_ca_url }}/{{ referrenc_ca_name }}.bundle.pem"
@@ -69,7 +62,6 @@
 ###############################################################################
 
 - name:            Download signing certificate file of the end entity
->>>>>>> fc04c11ac5aed98e3cde4529200910d089d8d6b5
   get_url:
-    url:         "{{ referrenc_ca_url }}/{{ end_entity.common_name }}.crt.pem"
-    dest:        "{{ pki_cert_file }}"
+    url:           "{{ referrenc_ca_url }}/{{ end_entity.common_name }}.crt.pem"
+    dest:          "{{ pki_cert_file }}"

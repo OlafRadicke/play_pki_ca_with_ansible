@@ -1,29 +1,19 @@
 ---
 
-<<<<<<< HEAD
-- name:          Update ca trust for RedHat and Co
-  shell:         "update-ca-trust"
-  register:      shell_result
-  when:          ansible_distribution != "Ubuntu"
-=======
 - name:            Update ca trust for RedHat and Co
   block:
 
   - name:          Update ca trust
     shell:         "update-ca-trust"
     register:      shell_result
->>>>>>> fc04c11ac5aed98e3cde4529200910d089d8d6b5
 
   - name:          Output return value
     debug:
       msg:         "{{ shell_result }}"
     when:          debug_output
 
-<<<<<<< HEAD
-=======
   when:            ansible_distribution != "Ubuntu"
 
->>>>>>> fc04c11ac5aed98e3cde4529200910d089d8d6b5
 ###############################################################################
 
 - name:            Update ca trust for Ubuntu
