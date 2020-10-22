@@ -7,51 +7,51 @@
 
   # If one hoste hase multiple roles than the package database
   # can be blocking, is this not "serial: 1"
-- name:  Update and install needed software
-  hosts: pki
-  serial: 1
-  roles:
-    -    pre_update_and_install
+# - name:  Update and install needed software
+#   hosts: pki
+#   serial: 1
+#   roles:
+#     -    pre_update_and_install
 
-- name:  Preparation of all nodes for their job
-  hosts: pki
-  roles:
-      -  pre_config
+# - name:  Preparation of all nodes for their job
+#   hosts: pki
+#   roles:
+#       -  pre_config
 
-- name:  Creating CSRs for the end entities
-  hosts: pki_end_entity
-  roles:
-    -    end_entity_csr
+# - name:  Creating CSRs for the end entities
+#   hosts: pki_end_entity
+#   roles:
+#     -    end_entity_csr
 
-- name:  Creating CSRs for the issue ca
-  hosts: pki_issue_ca
-  roles:
-    -    intermediate_ca_csr
+# - name:  Creating CSRs for the issue ca
+#   hosts: pki_issue_ca
+#   roles:
+#     -    intermediate_ca_csr
 
-- name:  Creating CSRs for the policy ca
-  hosts: pki_policy_ca
-  roles:
-    -    intermediate_ca_csr
+# - name:  Creating CSRs for the policy ca
+#   hosts: pki_policy_ca
+#   roles:
+#     -    intermediate_ca_csr
 
-- name:  Creating CSR and self signed root certificate
-  hosts: pki_root_ca
-  roles:
-    -    root_ca_self_signing
+# - name:  Creating CSR and self signed root certificate
+#   hosts: pki_root_ca
+#   roles:
+#     -    root_ca_self_signing
 
-- name:  Signed policy ca cert by the root ca
-  hosts: pki_root_ca
-  roles:
-    -    intermediate_ca_signing
+# - name:  Signed policy ca cert by the root ca
+#   hosts: pki_root_ca
+#   roles:
+#     -    intermediate_ca_signing
 
-- name:  Signed issue ca cert by the policy ca
-  hosts: pki_policy_ca
-  roles:
-    -    intermediate_ca_signing
+# - name:  Signed issue ca cert by the policy ca
+#   hosts: pki_policy_ca
+#   roles:
+#     -    intermediate_ca_signing
 
-- name:  Signed end entities cert
-  hosts: pki_issue_ca
-  roles:
-    -    intermediate_ca_signing
+# - name:  Signed end entities cert
+#   hosts: pki_issue_ca
+#   roles:
+#     -    intermediate_ca_signing
 
 - name:  Create fake services for tests
   hosts: pki_fake_service

@@ -55,10 +55,10 @@
 
 - name:            Output return value
   debug:
-    msg:             "{{ shell_result }}"
+    msg:           "{{ shell_result }}"
   when:            debug_output
 
-# ###############################################################################
+################################################################################
 
 - name:            Check service with curl with enhanced mutual tls
   shell:           |
@@ -67,12 +67,32 @@
                    --cacert {{ pki_publication_dir }}/{{ pki_root_ca_cert }} \
                    --key {{ pki_priv_key }} \
                    --cert {{ pki_bundle_file }} \
-                   https://{{ fake_service_url }}:{{ service_port }}/company-mutual/index.html
+                   https://{{ fake_service_url }}:{{ service_port }}/company/index.html
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output
 
 - name:            Output return value
   debug:
-    msg:             "{{ shell_result }}"
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+
+###############################################################################
+
+- name:            Check service with curl with mutual tls revocatid rule
+  shell:           |
+                   curl \
+                   -v \
+                   --cacert {{ pki_publication_dir }}/{{ pki_root_ca_cert }} \
+                   --key {{ pki_priv_key }} \
+                   --cert {{ pki_bundle_file }} \
+                   https://{{ fake_service_url }}:{{ service_port }}/revocation/index.html
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
   when:            debug_output

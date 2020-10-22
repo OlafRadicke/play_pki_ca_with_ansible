@@ -8,27 +8,24 @@
   loop:
     -             "{{ pki_service_http_root_dir }}"
     -             "{{ pki_service_http_root_dir }}/mutual"
-    -             "{{ pki_service_http_root_dir }}/company-mutual"
+    -             "{{ pki_service_http_root_dir }}/company"
     -             "{{ pki_service_http_root_dir }}/oneway"
+    -             "{{ pki_service_http_root_dir }}/revocation"
 
-- name:           Copy index files for oneway TLS
+###############################################################################
+ 
+- name:           Copy index files
   copy:
-    src:          index.html
-    dest:         "{{ pki_service_http_root_dir }}/oneway/index.html"
+    src:          "{{ item }}-index.html"
+    dest:         "{{ pki_service_http_root_dir }}/{{ item }}/index.html"
     mode:         'u=xwr,g=xr,o=xr'
-
-- name:           Copy index files for the mutual section
-  copy:
-    src:          mutual-index.html
-    dest:         "{{ pki_service_http_root_dir }}/mutual/index.html"
-    mode:         'u=xwr,g=xr,o=xr'
-
-- name:           Copy index files for the company mutual section
-  copy:
-    src:          company-mutual.html
-    dest:         "{{ pki_service_http_root_dir }}/company-mutual/index.html"
-    mode:         'u=xwr,g=xr,o=xr'
-
+  loop:
+    -             "mutual"
+    -             "company"
+    -             "oneway"
+    -             "revocation"
+ 
+###############################################################################
 
 - name:           Create nginx config for service
   template:
@@ -47,7 +44,10 @@
     msg:          "{{ shell_result }}"
   when:           debug_output
 
+###############################################################################
+
 - name:           Start service nginx, if not started
   service:
     name:         nginx
     state:        restarted
+  ignore_errors:  "{{ debug_output }}"

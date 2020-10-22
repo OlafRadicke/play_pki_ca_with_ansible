@@ -10,7 +10,7 @@
   loop:
     -             "{{ pki_service_http_root_dir }}/"
     -             "{{ pki_service_http_root_dir }}/mutual"
-    -             "{{ pki_service_http_root_dir }}/company-mutual"
+    -             "{{ pki_service_http_root_dir }}/company"
 
 - name:           Copy index files
   copy:
@@ -30,8 +30,8 @@
 
 - name:           Copy index files for the company mutual section
   copy:
-    src:          company-mutual.html
-    dest:         "{{ pki_service_http_root_dir }}/company-mutual/index.html"
+    src:          company.html
+    dest:         "{{ pki_service_http_root_dir }}/company/index.html"
     owner:        nginx
     group:        nginx
     mode:         'u=xwr,g=xr,o=xr'
