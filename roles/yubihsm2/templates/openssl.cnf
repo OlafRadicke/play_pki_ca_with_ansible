@@ -1,0 +1,14 @@
+openssl_conf = openssl_init
+
+[openssl_init]
+engines = engine_section
+
+[engine_section]
+pkcs11 = pkcs11_section
+
+[pkcs11_section]
+engine_id = pkcs11
+dynamic_path = /path/to/engine_pkcs11.so
+MODULE_PATH = /path/to/yubihsm_pkcs11.so
+INIT_ARGS = connector=http://127.0.0.1:12345 debug
+init = 0

@@ -1,0 +1,48 @@
+---
+
+- name:           Install yubihsm-connector
+  shell:          sudo yubihsm-connector install
+  register:       shell_result
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Start yubihsm-connector
+  shell:          sudo yubihsm-connector start
+  register:       shell_result
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Get fact about yubihsm-connector
+  shell:          |
+                  [[                                                          \
+                    $(                                                        \
+                      sudo ps aux                                             \
+                      | grep yubihsm-connector                                \
+                      | wc -l                                                 \
+                    ) -gt "1"                                                 \
+                  ]]                                                          \
+                  && echo true                                                \
+                  || echo false
+  register:       is_yubihsm_connector_runnig
+  when:           debug_output
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ is_yubihsm_connector_runnig }}"
+  when:           debug_output
+
+###############################################################################
+

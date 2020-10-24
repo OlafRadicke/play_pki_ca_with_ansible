@@ -1,0 +1,7 @@
+---
+
+
+- name:           Install needed packages
+  package:
+    name:
+      -           yubihsm-shell
