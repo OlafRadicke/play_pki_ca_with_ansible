@@ -154,6 +154,17 @@ ansible-playbook \
 ./pki_bootstrap.yml
 ```
 
+Run HSM setup
+-------------
+
+```bash
+ansible-playbook  \
+  --vault-password-file ~/.ssh/vault-password \
+  --ask-become-pass \
+  -i ./inventories/staging/hosts.yml \
+  ./hsm_bootstrap.yml
+```
+
 
 Known issue
 -----------

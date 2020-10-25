@@ -1,9 +1,5 @@
 ---
 
-ansible_connection:   "local"
-connection:           "local"
-ansible_become:       false
-
 pki_gpg_whitelist:
   - "29DE3428DC4409432182401C215159DDDCDB0166"
   - "29DE3428DC44096DF082401C215159DD89DB0174"

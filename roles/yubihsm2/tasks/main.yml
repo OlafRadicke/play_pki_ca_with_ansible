@@ -1,5 +1,7 @@
 ---
 
-- name:    Include fedora support
-  include: "fedora_package_install.yml"
+- include: "fedora_package_install.yml"
   when:    ansible_distribution == "Fedora"
+
+- include: "init_hardware.yml"
+- include: "change_yubi_factory_passwd.yml"

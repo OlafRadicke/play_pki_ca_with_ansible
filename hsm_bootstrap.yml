@@ -1,0 +1,6 @@
+---
+
+- name:  Setup HSM
+  hosts: yubihsm2.host
+  roles:
+    -    yubihsm2
