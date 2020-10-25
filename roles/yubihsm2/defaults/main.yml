@@ -1,3 +1,6 @@
 ---
 
-yubi_factory_passwd: "password"_
+
+yubi_factory_key:
+  password:           "password"
+  id:                 "0x0002"

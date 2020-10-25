@@ -4,4 +4,4 @@
   when:    ansible_distribution == "Fedora"
 
 - include: "init_hardware.yml"
-- include: "change_yubi_factory_passwd.yml"
+- include: "change_factory_password.yml"

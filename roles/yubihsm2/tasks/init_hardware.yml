@@ -2,6 +2,8 @@
 
 - name:           Install yubihsm-connector
   shell:          sudo yubihsm-connector install
+  args:
+    creates:      /etc/systemd/system/yhconsrv.service
   register:       shell_result
   ignore_errors: "{{ debug_output }}"
 
@@ -24,9 +26,9 @@
 
 ###############################################################################
 
-- name: Enaable yubihsm-connector service
+- name:           Enaable yubihsm-connector service
   service:
-    name: yhconsrv
+    name:         yhconsrv
     enabled: yes
 
 - name:           Output info
@@ -59,21 +61,21 @@
 ###############################################################################
 
 
-- name:           Get hsm objects
-  shell:          |
-                  yubihsm-shell                                               \
-                  -a list-objects                                             \
-                  -d 0                                                        \
-                  -t any                                                      \
-                  -A any                                                      \
-                  -p password                                                 \
-  register:       shell_result
-  when:           debug_output
-  ignore_errors: "{{ debug_output }}"
+# - name:           Get hsm objects
+#   shell:          |
+#                   yubihsm-shell                                               \
+#                     --action=list-objects                                     \
+#                     --domains={{ main_domain }}                               \
+#                     --object-type=any                                         \
+#                     --algorithm=any                                           \
+#                     --password={{ yubi_factory_passwd }}                      \
+#   register:       shell_result
+#   when:           debug_output
+#   ignore_errors: "{{ debug_output }}"
 
-- name:           Output return value
-  debug:
-    msg:          "{{ shell_result }}"
-  when:           debug_output
+# - name:           Output return value
+#   debug:
+#     msg:          "{{ shell_result }}"
+#   when:           debug_output
 
-###############################################################################
+# ###############################################################################
