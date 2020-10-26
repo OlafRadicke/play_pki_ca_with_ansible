@@ -23,6 +23,6 @@ pki_owner_csr:
 ### EXAMPLE
 # "staff-issue-ca-02.dum.my":
 #     owner_url:        "http://{{ end_entity_staff_ip }}:{{ pki_csr_exchange_port }}"
-#     referrenc_ca_url: "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+#     referenc_ca_url: "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
 #     ca:               "staff-policy-ca-01.dum.my"
 #     not_after_days:   "180"

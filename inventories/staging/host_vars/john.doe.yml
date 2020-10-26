@@ -1,8 +1,8 @@
 ---
 
 ansible_host:                 "{{ john_doe_ip }}"
-referrenc_ca_url:             "http://{{ issue_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
-referrenc_ca_name:            "staff-issue-ca-01.dum.my"
+referenc_ca_url:             "http://{{ issue_ca_staff_ip }}:{{ pki_csr_exchange_port }}"
+referenc_ca_name:            "staff-issue-ca-01.dum.my"
 fake_service_url:             "foo.dum.my"
 
 end_entity:

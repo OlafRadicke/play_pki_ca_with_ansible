@@ -14,7 +14,7 @@
     shell:         |
                    cat \
                    {{ pki_cert_file }} \
-                   {{ pki_referrenc_ca_bundle_file}} \
+                   {{ pki_referenc_ca_bundle_file}} \
                    >> {{ pki_bundle_file }}
     args:
       creates:     "{{ pki_bundle_file }}"

@@ -34,7 +34,7 @@
         pki_index_attr_file:          "{{ pki_private_dir }}/index.attr"
         pki_bundle_file:              "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.bundle.pem"
         pki_csr_file:                 "{{ pki_publication_dir }}/{{ pki_intermediate_ca.common_name }}.csr.pem"
-        pki_referrenc_ca_bundle_file: "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
+        pki_referenc_ca_bundle_file: "{{ pki_publication_dir }}/{{ referenc_ca_name }}.bundle.pem"
   when:
     -                                 pki_intermediate_ca is defined
     -                                 root_ca             is not defined
@@ -58,6 +58,6 @@
       pki_p12_file:                   "{{ pki_private_dir }}/{{ end_entity.common_name }}.p12"
       pki_bundle_file:                "{{ pki_publication_dir }}/{{ end_entity.common_name }}.bundle.pem"
       pki_csr_file:                   "{{ pki_publication_dir }}/{{ end_entity.common_name }}.csr.pem"
-      pki_referrenc_ca_bundle_file:   "{{ pki_publication_dir }}/{{ referrenc_ca_name }}.bundle.pem"
+      pki_referenc_ca_bundle_file:   "{{ pki_publication_dir }}/{{ referenc_ca_name }}.bundle.pem"
       pki_service_http_root_dir:      "/srv/http/{{ end_entity.common_name }}"
   when:                               end_entity is defined
