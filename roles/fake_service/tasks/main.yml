@@ -4,7 +4,7 @@
   include:  "download_trust.yml"
 
 - name:     Include setup of nginx for the services
-  include:  "nginx_radhat.yml"
+  include:  "nginx_redhat.yml"
   when:     ansible_distribution != "Ubuntu"
 
 - name:     Include setup of nginx for the services
