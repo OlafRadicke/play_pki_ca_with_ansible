@@ -80,14 +80,14 @@
 
 ###############################################################################
 
-- name:            Check service with curl with mutual tls revocatid rule
+- name:            Check service with curl with mutual tls issuer rule
   shell:           |
                    curl \
                    -v \
                    --cacert {{ pki_publication_dir }}/{{ pki_root_ca_cert }} \
                    --key {{ pki_priv_key }} \
                    --cert {{ pki_bundle_file }} \
-                   https://{{ fake_service_url }}:{{ service_port }}/revocation/index.html
+                   https://{{ fake_service_url }}:{{ service_port }}/issuer/index.html
   ignore_errors:   "{{ debug_output }}"
   register:        shell_result
   when:            debug_output

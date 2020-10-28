@@ -10,7 +10,7 @@
     -             "{{ pki_service_http_root_dir }}/mutual"
     -             "{{ pki_service_http_root_dir }}/company"
     -             "{{ pki_service_http_root_dir }}/oneway"
-    -             "{{ pki_service_http_root_dir }}/revocation"
+    -             "{{ pki_service_http_root_dir }}/issuer"
 
 ###############################################################################
  
@@ -23,7 +23,7 @@
     -             "mutual"
     -             "company"
     -             "oneway"
-    -             "revocation"
+    -             "issuer"
  
 ###############################################################################
 
