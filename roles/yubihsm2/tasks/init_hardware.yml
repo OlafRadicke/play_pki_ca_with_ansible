@@ -60,22 +60,3 @@
 
 ###############################################################################
 
-
-# - name:           Get hsm objects
-#   shell:          |
-#                   yubihsm-shell                                               \
-#                     --action=list-objects                                     \
-#                     --domains={{ main_domain }}                               \
-#                     --object-type=any                                         \
-#                     --algorithm=any                                           \
-#                     --password={{ yubi_factory_passwd }}                      \
-#   register:       shell_result
-#   when:           debug_output
-#   ignore_errors: "{{ debug_output }}"
-
-# - name:           Output return value
-#   debug:
-#     msg:          "{{ shell_result }}"
-#   when:           debug_output
-
-# ###############################################################################

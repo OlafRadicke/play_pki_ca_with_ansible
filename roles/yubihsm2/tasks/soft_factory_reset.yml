@@ -1,0 +1,19 @@
+---
+
+- name:           Soft factory reset
+  shell:          |
+                  yubihsm-shell                                               \
+                  --action=reset                                              \
+                  --domains={{ soft_factory_reset.domain }}                   \
+                  --authkey={{ soft_factory_reset.key }}                      \
+                  --password="{{ soft_factory_reset.password }}"
+  register:       shell_result
+  when:           debug_output
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################

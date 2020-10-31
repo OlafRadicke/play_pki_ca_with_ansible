@@ -4,4 +4,11 @@
   when:    ansible_distribution == "Fedora"
 
 - include: "init_hardware.yml"
+
+- include: "soft_factory_reset.yml"
+  when:    soft_factory_reset is defined
+
 - include: "change_factory_password.yml"
+  when:    soft_factory_reset is defined
+
+  

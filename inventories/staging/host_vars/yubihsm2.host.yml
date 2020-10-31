@@ -16,8 +16,12 @@ audit_auth_key:
   id:                 "0x0002"
   password:           "{{ yubihsm2_password }}"
 
-
 test_key:
   label:              "Test audit auth key"
   id:                 "0x0003"
   password:           "{{ yubihsm2_password }}-3"
+
+soft_factory_reset:
+  domain:             "0"
+  key:                "0x0002"
+  password:           "{{ yubihsm2_password }}"
