@@ -1,0 +1,71 @@
+---
+
+- name:           Is root key exist
+  shell:          |
+                  [[                                                          \
+                    $(                                                        \
+                      yubihsm-shell                                           \
+                      --action=list-objects                                   \
+                      --domains={{ main_domain }}                             \
+                      --object-type=any                                       \
+                      --algorithm=any                                         \
+                      --password={{ hsm_key.audit_auth.password }}            \
+                      2>&1                                                    \
+                      | grep "Object not found"                               \
+                      | wc -l                                                 \
+                    ) == 0                                                    \
+                    ]]                                                        \
+                    && echo true                                              \
+                    || echo false
+  register:       is_factory_key_exist
+  when:           debug_output
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ is_factory_key_exist }}"
+  when:           debug_output
+
+###############################################################################
+
+
+- name:           Create new root sign key
+  shell:          |
+                  yubihsm-shell                                               \
+                    --action=put-asymmetric-key                               \
+                    --object-id={{ hsm_key.root_sign.id }}                    \
+                    --label="{{ hsm_key.root_sign.label }}"                   \
+                    --capabilities="all"                                      \
+                    --object-type="all"                                       \
+                    --delegated="all"                                         \
+                    --new-password="{{ hsm_key.root_sign.password }}"         \
+                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --password="{{ hsm_key.audit_auth.password }}"
+  register:       shell_result
+  when:           is_factory_key_exist.stdout == 'false'
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Get hsm objects
+  shell:          |
+                  yubihsm-shell                                               \
+                    --action=list-objects                                     \
+                    --domains={{ main_domain }}                               \
+                    --object-type=any                                         \
+                    --algorithm=any                                           \
+                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --password={{ hsm_key.audit_auth.password }}              \
+  register:       shell_result
+  when:           debug_output
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output

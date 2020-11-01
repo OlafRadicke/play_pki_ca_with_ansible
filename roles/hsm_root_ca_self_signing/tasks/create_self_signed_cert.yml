@@ -1,0 +1,70 @@
+---
+
+- name:            Generate a Self Signed OpenSSL root certificate
+  shell: |
+                   openssl req \
+                   -new \
+                   -x509 \
+                   -days {{ pki_root_ca.not_after_days }} \
+                   -nodes \
+                   -config {{ pki_opensslconfig }} \
+                   -extensions v3_ca \
+                   -key {{ pki_priv_key }} \
+                   -out {{ pki_cert_file }}
+  args:
+    chdir:         "{{ pki_private_dir }}"
+    creates:       "{{ pki_cert_file }}"
+  register:        shell_result
+  ignore_errors:   "{{ debug_output }}"
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:            Check file type of pki_cert_file
+  shell: |
+                   file {{ pki_cert_file }}
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:            Verify root Certificate
+  shell: |
+                   openssl x509 -noout -text -in "{{ pki_cert_file }}"
+  ignore_errors:   "{{ debug_output }}"
+  register:        shell_result
+  when:            debug_output
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+
+###############################################################################
+
+- name:            Copy root cert.pem to public httpd dir
+  shell: |
+                   cat {{ pki_ca_dir }}/{{ pki_root_ca.common_name }}.crt.pem \
+                   > {{ pki_publication_dir }}/{{ pki_root_ca.common_name }}.crt.pem
+  when:            root_ca
+
+
+###############################################################################
+
+- name:            Set owner of crt file
+  file:
+    path:          "{{ pki_publication_dir }}/{{ pki_root_ca.common_name }}.crt.pem"
+    owner:         nginx
+    group:         nginx
+    mode:          'u=rw,g=r,o=r'
+  when:            ansible_distribution != "Ubuntu"

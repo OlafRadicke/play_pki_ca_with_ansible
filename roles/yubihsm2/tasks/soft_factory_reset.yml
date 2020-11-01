@@ -4,9 +4,9 @@
   shell:          |
                   yubihsm-shell                                               \
                   --action=reset                                              \
-                  --domains={{ soft_factory_reset.domain }}                   \
-                  --authkey={{ soft_factory_reset.key }}                      \
-                  --password="{{ soft_factory_reset.password }}"
+                  --domains={{ main_domain }}                                 \
+                  --authkey={{ hsm_key.audit_auth.id }}                       \
+                  --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
   when:           debug_output
   ignore_errors: "{{ debug_output }}"

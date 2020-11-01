@@ -1,0 +1,15 @@
+---
+
+- name:    Include task for init directory
+  include: "init_dir.yml"
+
+- name:    Include creating private key
+  include: "create_private_key.yml"
+  when:    yubi_hsm_enable == false
+
+- name:    Include creating hsm private key
+  include: "create_hsm_private_key.yml"
+  when:    yubi_hsm_enable == true
+
+- name:    Include fedora support
+  include: "create_self_signed_cert.yml"

@@ -9,6 +9,6 @@
   when:    soft_factory_reset is defined
 
 - include: "change_factory_password.yml"
-  when:    soft_factory_reset is defined
+  when:    hsm_key.audit_auth is defined
 
   

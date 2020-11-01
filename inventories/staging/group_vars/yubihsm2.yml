@@ -11,17 +11,19 @@ yubihsm2_password:    !vault |
 
 main_domain:          0
 
-audit_auth_key:
-  label:              "Audit auth key"
-  id:                 "0x0002"
-  password:           "{{ yubihsm2_password }}"
 
-test_key:
-  label:              "Test audit auth key"
-  id:                 "0x0003"
-  password:           "{{ yubihsm2_password }}-3"
+hsm_key:
+  audit_auth:
+    label:              "Audit auth key"
+    id:                 "0x0002"
+    password:           "{{ yubihsm2_password }}"
 
-soft_factory_reset:
-  domain:             "0"
-  key:                "0x0002"
-  password:           "{{ yubihsm2_password }}"
+  test:
+    label:              "Test audit auth key"
+    id:                 "0x0003"
+    password:           "{{ yubihsm2_password }}-3"
+
+  root_sign:
+    label:              "root sign key"
+    id:                 "0x0004"
+    password:           "{{ yubihsm2_password }}-4"

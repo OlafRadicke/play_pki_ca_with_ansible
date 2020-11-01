@@ -1,6 +1,14 @@
 ---
 
 - name:  Setup HSM
-  hosts: yubihsm2.host
+  hosts: yubihsm2
   roles:
     -    yubihsm2
+
+- name:  Setup HSM root ca
+  hosts: yubihsm2
+  roles:
+    -    set_special_host_facts
+    -    pre_update_and_install
+    -    pre_config
+    -    hsm_root_ca_self_signing
