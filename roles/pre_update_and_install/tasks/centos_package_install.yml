@@ -8,6 +8,6 @@
 - name:           Install needed packages
   package:
     name:
-      -           pyOpenSSL
+      -           python3-pyOpenSSL
       -           nginx
       -           openssl
