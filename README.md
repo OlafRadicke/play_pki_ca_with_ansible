@@ -163,7 +163,6 @@ Here you can find a Detailed documentation in german and down load as...
 * [MS Doc](docs/PKI-PoC-Concept_de.docx)
 * [OpenDocument](docs/PKI-PoC-Concept_de.docx.odt)
 * [PDF](docs/PKI-PoC-Concept_de.docx.pdf)
-* [RTF](docs/PKI-PoC-Concept_de.docx.rtf)
 
 
 Known issue
