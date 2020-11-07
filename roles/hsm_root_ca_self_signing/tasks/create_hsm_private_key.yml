@@ -1,5 +1,18 @@
 ---
 
+- name:           Start yubihsm-connector
+  shell:          sudo yubihsm-connector start
+  register:       shell_result
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+
 - name:           Is root key exist
   shell:          |
                   [[                                                          \
