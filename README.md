@@ -190,6 +190,11 @@ Helpful docs
 * [openssl cookbook](https://www.feistyduck.com/library/openssl-cookbook/online/)
 * [openssl man page](https://www.openssl.org/docs/manpages.html)
 
+### Yubihsm2 ###
+
+- [https://developers.yubico.com/YubiHSM2/Component_Reference/PKCS_11/](https://developers.yubico.com/YubiHSM2/Component_Reference/PKCS_11/)
+- [https://www.innoq.com/de/blog/ganz-sichere-verbindungen-2/](https://www.innoq.com/de/blog/ganz-sichere-verbindungen-2/)
+
 TODOs
 -----
 

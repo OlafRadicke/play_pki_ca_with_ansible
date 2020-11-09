@@ -3,7 +3,10 @@
 - name:  Setup HSM
   hosts: yubihsm2
   roles:
-    -    yubihsm2
+    -    hsm_software_install
+    -    hsm_start_service
+    -    hsm_soft_factory_reset
+    -    hsm_change_factory_password
 
 - name:  Setup HSM root ca
   hosts: yubihsm2

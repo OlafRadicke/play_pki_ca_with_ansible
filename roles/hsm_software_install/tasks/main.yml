@@ -1,0 +1,4 @@
+---
+
+- include: "fedora_package_install.yml"
+  when:    ansible_distribution == "Fedora"

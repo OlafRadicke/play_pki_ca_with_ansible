@@ -60,3 +60,16 @@
 
 ###############################################################################
 
+
+- name:             Check connaction to hsm over http
+  uri:
+    url:            http://localhost:12345/connector/status
+    return_content: yes
+  register:         return_value
+  when:             debug_output
+
+
+- name:             Output return value
+  debug:
+    msg:            "{{ return_value }}"
+  when:             debug_output
