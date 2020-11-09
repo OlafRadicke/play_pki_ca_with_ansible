@@ -1,7 +1,7 @@
 ---
 
 - name:           Install yubihsm-connector
-  shell:          sudo yubihsm-connector install
+  shell:          yubihsm-connector install
   args:
     creates:      /etc/systemd/system/yhconsrv.service
   register:       shell_result

@@ -1,16 +1,16 @@
 ---
 
-- name:            Generate a Self Signed OpenSSL root certificate
-  shell: |
-                   openssl req \
-                   -new \
-                   -x509 \
-                   -days {{ pki_root_ca.not_after_days }} \
-                   -nodes \
-                   -config {{ pki_opensslconfig }} \
-                   -extensions v3_ca \
-                   -key {{ pki_priv_key }} \
-                   -out {{ pki_cert_file }}
+- name:             Generate a Self Signed OpenSSL root certificate
+  shell:            |
+                    openssl req \
+                    -new \
+                    -x509 \
+                    -days {{ pki_root_ca.not_after_days }} \
+                    -nodes \
+                    -config {{ pki_opensslconfig }} \
+                    -extensions v3_ca \
+                    -key {{ pki_priv_key }} \
+                    -out {{ pki_cert_file }}
   args:
     chdir:         "{{ pki_private_dir }}"
     creates:       "{{ pki_cert_file }}"

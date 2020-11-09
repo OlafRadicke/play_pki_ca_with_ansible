@@ -1,13 +1,34 @@
 ---
 
 - name:           Start yubihsm-connector
-  shell:          sudo yubihsm-connector start
+  shell:          yubihsm-connector start
   register:       shell_result
   ignore_errors: "{{ debug_output }}"
 
 - name:           Output return value
   debug:
     msg:          "{{ shell_result }}"
+  when:           debug_output
+  
+###############################################################################
+
+
+- name:           List objects
+  shell:          |
+                  yubihsm-shell                                               \
+                    --action=list-objects                                     \
+                    --domains={{ main_domain }}                               \
+                    --object-type=any                                         \
+                    --algorithm=any                                           \
+                    --password={{ hsm_key.audit_auth.password }}              \
+                    2>&1   
+  register:       is_factory_key_exist
+  when:           debug_output
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ is_factory_key_exist }}"
   when:           debug_output
 
 ###############################################################################
