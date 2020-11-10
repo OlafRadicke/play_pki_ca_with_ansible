@@ -3,6 +3,29 @@
 
 - name:           Is factory key exist
   shell:          |
+                  yubihsm-shell                                           \
+                      --action=list-objects                                   \
+                      --domains={{ main_domain }}                             \
+                      --object-type=any                                       \
+                      --algorithm=any                                         \
+                      --authkey="{{ hsm_key.yubi_factory.hex_id }}"           \
+                      --password={{ hsm_key.yubi_factory.password }}          \
+                      2>&1                                                    \
+                      | grep "Found 1 object"                                 \
+                      | wc -l    
+  register:       shell_result
+  when:           debug_output
+  ignore_errors: "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Is factory key exist
+  shell:          |
                   [[                                                          \
                     $(                                                        \
                       yubihsm-shell                                           \
@@ -10,6 +33,7 @@
                       --domains={{ main_domain }}                             \
                       --object-type=any                                       \
                       --algorithm=any                                         \
+                      --authkey="{{ hsm_key.yubi_factory.hex_id }}"           \
                       --password={{ hsm_key.yubi_factory.password }}          \
                       2>&1                                                    \
                       | grep "Found 1 object"                                 \
@@ -34,13 +58,13 @@
   shell:          |
                   yubihsm-shell                                               \
                     --action=put-authentication-key                           \
-                    --object-id={{ hsm_key.audit_auth.id }}                   \
+                    --object-id={{ hsm_key.audit_auth.str_id }}               \
                     --label="{{ hsm_key.audit_auth.label }}"                  \
                     --capabilities="all"                                      \
                     --object-type="all"                                       \
                     --delegated="all"                                         \
                     --new-password="{{ hsm_key.audit_auth.password }}"        \
-                    --authkey="{{ hsm_key.yubi_factory.id }}"                 \
+                    --authkey="{{ hsm_key.yubi_factory.hex_id }}"             \
                     --password="{{ hsm_key.yubi_factory.password }}"
   register:       shell_result
   when:           is_factory_key_exist.stdout == 'true'
@@ -60,7 +84,7 @@
                     --domains={{ main_domain }}                               \
                     --object-type=any                                         \
                     --algorithm=any                                           \
-                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
                     --password={{ hsm_key.audit_auth.password }}              \
   register:       shell_result
   when:           debug_output
@@ -77,9 +101,9 @@
   shell:          |
                   yubihsm-shell                                               \
                     --action=delete-object                                    \
-                    --object-id="{{ hsm_key.yubi_factory.id }}"               \
+                    --object-id="{{ hsm_key.yubi_factory.str_id }}"           \
                     --object-type="authentication-key"                        \
-                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
                     --password="{{ hsm_key.audit_auth.password }}" 
   register:       shell_result
   when:           is_factory_key_exist.stdout == 'true'
@@ -96,13 +120,13 @@
   shell:          |
                   yubihsm-shell                                               \
                     --action=put-authentication-key                           \
-                    --object-id={{ hsm_key.test.id }}                         \
+                    --object-id={{ hsm_key.test.str_id }}                     \
                     --capabilities='all'                                      \
                     --object-type="all"                                       \
                     --delegated="all"                                         \
                     --label="{{ hsm_key.test.label }}"                        \
                     --new-password="{{ hsm_key.test.password }}"              \
-                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
                     --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
   when:           debug_output
@@ -120,10 +144,10 @@
   shell:          |
                   yubihsm-shell                                               \
                     --action=get-object-info                                  \
-                    --object-id={{ hsm_key.test.id }}                         \
+                    --object-id={{ hsm_key.test.str_id }}                     \
                     --object-type=authentication-key                          \
                     --algorithm=any                                           \
-                    --authkey={{ hsm_key.audit_auth.id }}                     \
+                    --authkey={{ hsm_key.audit_auth.hex_id }}                 \
                     --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
   when:           debug_output
@@ -141,9 +165,9 @@
   shell:          |
                   yubihsm-shell                                               \
                     --action=delete-object                                    \
-                    --object-id="{{ hsm_key.test.id }}"                       \
+                    --object-id="{{ hsm_key.test.str_id }}"                   \
                     --object-type="authentication-key"                        \
-                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
                     --password="{{ hsm_key.audit_auth.password }}" 
   register:       shell_result
   when:           debug_output

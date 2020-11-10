@@ -5,7 +5,7 @@
                   yubihsm-shell                                               \
                   --action=reset                                              \
                   --domains={{ main_domain }}                                 \
-                  --authkey={{ hsm_key.audit_auth.id }}                       \
+                  --authkey={{ hsm_key.audit_auth.hex_id }}                       \
                   --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
   when:           debug_output

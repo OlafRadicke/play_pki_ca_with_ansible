@@ -14,29 +14,35 @@ main_domain:            0
 hsm_key:
   yubi_factory:
     password:           "password"
-    id:                 "0x0001"
+    hex_id:             "0x0001"
+    str_id:             "1"
 
   audit_auth:
     label:              "Audit auth key"
-    id:                 "0x0002"
+    hex_id:             "0x0002"
+    str_id:             "2"
     password:           "{{ yubihsm2_password }}"
 
   test:
     label:              "Test audit auth key"
-    id:                 "0x0003"
+    hex_id:             "0x0003"
+    str_id:             "3"
     password:           "{{ yubihsm2_password }}-3"
 
   root_sign:
-    label:              "Root ca sign key"
-    id:                 "0x0004"
+    label:              "root_ca_sign_key"
+    hex_id:             "0x0004"
+    str_id:             "4"
     algorithm:          "rsa2048"
 
   service_policy_ca:
-    label:              "Service policy ca sign key"
-    id:                 "0x0005"
+    label:              "service_policy_ca_sign_key"
+    hex_id:             "0x0005"
+    str_id:             "5"
     algorithm:          "rsa2048"
 
   staff_policy_ca:
-    label:              "Staff policy ca sign key"
-    id:                 "0x0006"
+    label:              "staff_policy_ca_sign_key"
+    hex_id:             "0x0006"
+    str_id:             "6"
     algorithm:          "rsa2048"

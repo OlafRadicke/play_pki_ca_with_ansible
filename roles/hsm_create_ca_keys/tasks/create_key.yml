@@ -1,23 +1,42 @@
 ---
+- name:           Output of search
+  shell:          |
+                  yubihsm-shell                                               \
+                        --action=get-object-info                              \
+                        --object-id={{ item.str_id }}                         \
+                        --object-type=asymmetric-key                          \
+                        --algorithm=any                                       \
+                        --authkey={{ hsm_key.audit_auth.hex_id }}             \
+                        --password="{{ hsm_key.audit_auth.password }}"        \
+                      2>&1
+  register:       bash_output
+  when:           debug_output
+  ignore_errors: "{{ debug_output }}"
 
+- name:           Output return value
+  debug:
+    msg:          "bash_output: >{{ bash_output }}<"
+  when:           debug_output
 
-- name:           Is factory key exist
+###############################################################################
+
+- name:           Is ca key exist
   shell:          |
                   [[                                                          \
                     $(                                                        \
                       yubihsm-shell                                           \
                         --action=get-object-info                              \
-                        --object-id={{ item.id }}                             \
-                        --object-type=any                                     \
+                        --object-id={{ item.str_id }}                         \
+                        --object-type=asymmetric-key                          \
                         --algorithm=any                                       \
-                        --authkey={{ hsm_key.audit_auth.id }}                 \
+                        --authkey={{ hsm_key.audit_auth.hex_id }}             \
                         --password="{{ hsm_key.audit_auth.password }}"        \
                       2>&1                                                    \
                       | grep "Object not found"                               \
                       | wc -l                                                 \
-                    ) == 0                                                    \
+                    ) != 0                                                    \
                     ]]                                                        \
-                    && echo false                                              \
+                    && echo false                                             \
                     || echo true
   register:       is_key_exist
   when:           debug_output
@@ -25,7 +44,7 @@
 
 - name:           Output return value
   debug:
-    msg:          "is_key_exist.stdout: >{{ is_key_exist.stdout }}<"
+    msg:          "is_key_exist.stdout of ID {{ item.str_id }}: >{{ is_key_exist.stdout }}<"
   when:           debug_output
 
 ###############################################################################
@@ -35,10 +54,10 @@
   shell:          |
                   yubihsm-shell                                               \
                     --action=generate-asymmetric-key                          \
-                    --object-id={{ item.id }}                                 \
+                    --object-id={{ item.str_id }}                             \
                     --label="{{ item.label }}"                                \
                     --algorithm="{{ item.algorithm }}"                        \
-                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
                     --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
   when:           is_key_exist.stdout == "false"
@@ -52,14 +71,14 @@
 
 ###############################################################################
 
-- name:           Get hsm objects
+- name:           Get all hsm objects of main domain 
   shell:          |
                   yubihsm-shell                                               \
                     --action=list-objects                                     \
                     --domains={{ main_domain }}                               \
                     --object-type=any                                         \
                     --algorithm=any                                           \
-                    --authkey="{{ hsm_key.audit_auth.id }}"                   \
+                    --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
                     --password={{ hsm_key.audit_auth.password }}              \
   register:       shell_result
   when:           debug_output

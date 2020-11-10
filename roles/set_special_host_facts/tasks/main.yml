@@ -7,6 +7,7 @@
 
     - set_fact:
         pki_opensslconfig:            "{{ pki_private_dir }}/openssl.cnf"
+        pki_yubihsm_config:           "{{ pki_private_dir }}/yubihsm_pkcs11.conf"
         pki_priv_key:                 "{{ pki_private_dir }}/private/{{ pki_root_ca.common_name }}.key.pem"
         pki_serial_file:              "{{ pki_private_dir }}/serial"
         pki_index_file:               "{{ pki_private_dir }}/index"
