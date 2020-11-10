@@ -192,6 +192,10 @@ Helpful docs
 
 ### Yubihsm2 ###
 
+```
+ -engine pkcs11 -signkey <hier die eigene Key-ID eintragen, z.B. 0:c168> -keyform engine 
+ ```
+
 - [https://developers.yubico.com/YubiHSM2/Component_Reference/PKCS_11/](https://developers.yubico.com/YubiHSM2/Component_Reference/PKCS_11/)
 - [https://www.innoq.com/de/blog/ganz-sichere-verbindungen-2/](https://www.innoq.com/de/blog/ganz-sichere-verbindungen-2/)
 

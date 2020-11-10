@@ -1,0 +1,7 @@
+---
+
+- include_tasks: create_key.yml
+  loop:
+    -  "{{ hsm_key.root_sign }}"
+    -  "{{ hsm_key.service_policy_ca }}"
+    -  "{{ hsm_key.staff_policy_ca }}"

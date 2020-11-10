@@ -7,11 +7,12 @@
     -    hsm_start_service
     -    hsm_soft_factory_reset
     -    hsm_change_factory_password
+    -    hsm_create_ca_keys
 
 - name:  Setup HSM root ca
   hosts: yubihsm2
   roles:
-    -    set_special_host_facts
+    # -    set_special_host_facts
     # -    pre_update_and_install
-    -    pre_config
-    -    hsm_root_ca_self_signing
+    # -    pre_config
+    # -    hsm_root_ca_self_signing
