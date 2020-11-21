@@ -7,7 +7,7 @@
 #   include: "create_private_key.yml"
 #   when:    yubi_hsm_enable == false
 
-- name:    Include fedora support
+- name:    Include create self signed cert
   include: "hsm_create_self_signed_cert.yml"
 
 # - name:    Include fedora support

@@ -26,6 +26,7 @@ ansible_become:             yes
 
 
 pki_workspace:              "/srv/pki/var"
+pki_publication_dir:        "{{ pki_workspace }}/html"
 pki_ca_dir:                 "{{ pki_workspace }}/ca"
 pki_csr_local_dir:          "{{ pki_workspace }}/csr"
 pki_end_entities_dir:       "{{ pki_workspace }}/end_entities"
