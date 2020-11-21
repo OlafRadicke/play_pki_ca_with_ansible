@@ -8,7 +8,7 @@
                         --algorithm=any                                       \
                         --authkey={{ hsm_key.audit_auth.hex_id }}             \
                         --password="{{ hsm_key.audit_auth.password }}"        \
-                      2>&1
+                      2>&1 | grep "Object not found" | wc -l
   register:       bash_output
   when:           debug_output
   ignore_errors: "{{ debug_output }}"
@@ -27,19 +27,18 @@
                       yubihsm-shell                                           \
                         --action=get-object-info                              \
                         --object-id={{ item.str_id }}                         \
-                        --object-type=asymmetric-key                          \
+                        --object-type={{ item.type }}                         \
                         --algorithm=any                                       \
                         --authkey={{ hsm_key.audit_auth.hex_id }}             \
                         --password="{{ hsm_key.audit_auth.password }}"        \
                       2>&1                                                    \
                       | grep "Object not found"                               \
                       | wc -l                                                 \
-                    ) != 0                                                    \
+                    ) == 0                                                    \
                     ]]                                                        \
-                    && echo false                                             \
-                    || echo true
+                    && echo true                                             \
+                    || echo false
   register:       is_key_exist
-  when:           debug_output
   ignore_errors: "{{ debug_output }}"
 
 - name:           Output return value
@@ -57,10 +56,11 @@
                     --object-id={{ item.str_id }}                             \
                     --label="{{ item.label }}"                                \
                     --algorithm="{{ item.algorithm }}"                        \
+                    --capabilities={{ item.capabilities }}                    \
                     --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
                     --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
-  when:           is_key_exist.stdout == "false"
+  when:           true #is_key_exist.stdout == "false"
   ignore_errors: "{{ debug_output }}"
 
 - name:           Output return value

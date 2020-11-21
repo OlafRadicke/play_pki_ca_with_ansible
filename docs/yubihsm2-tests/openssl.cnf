@@ -1,9 +1,5 @@
 HOME                        = .
 
-################ HSM enabled ##################################################
-
-{% if yubi_hsm_enable != "true" %}
-
 openssl_conf                = default_modules
 
 [default_modules]
@@ -16,10 +12,8 @@ pkcs11                      = pkcs11_section
 engine_id                   = pkcs11
 MODULE_PATH                 = /usr/lib64/pkcs11/yubihsm_pkcs11.so
 INIT_ARGS                   = connector=http://127.0.0.1:12345 debug
-PIN                         = "{{ hsm_key.audit_auth.str_id }}{{ hsm_key.audit_auth.password }}"
+PIN                         = "0001password"
 init                        = 0
-
-{% endif %}
 
 ###############################################################################
 
@@ -29,16 +23,16 @@ init                        = 0
 default_ca                  = CA_default
 
 [ CA_default ]
-dir                         = {{ pki_private_dir }}
+dir                         = /srv/pki/hsm-root-ca-01.dum.my
 certs                       = $dir/certs
-crl_dir                     = {{ pki_publication_dir}}
-database                    = {{ pki_index_file }}
-new_certs_dir               = {{ pki_publication_dir}}
-certificate                 = {{ pki_cert_file }}
-serial                      = {{ pki_serial_file }}
+crl_dir                     = /srv/pki/html
+database                    = /srv/pki/hsm-root-ca-01.dum.my/index
+new_certs_dir               = /srv/pki/html
+certificate                 = /srv/pki/ca/hsm-root-ca-01.dum.my.crt.pem
+serial                      = /srv/pki/hsm-root-ca-01.dum.my/serial
 crlnumber                   = $dir/crlnumber
 crl                         = $dir/crl.pem
-private_key                 = {{ pki_priv_key }}
+private_key                 = /srv/pki/hsm-root-ca-01.dum.my/private/hsm-root-ca-01.dum.my.key.pem
 x509_extensions             = usr_cert
 name_opt                    = ca_default
 cert_opt                    = ca_default
@@ -79,13 +73,13 @@ string_mask                 = utf8only
 req_extensions              = v3_req
 
 [ req_distinguished_name ]
-countryName                 = {{ pki_root_ca.country_name }}
-stateOrProvinceName         = {{ pki_root_ca.state_or_province_name }}
-localityName                = {{ pki_root_ca.city_name }}
-organizationName            = {{ pki_root_ca.organization_name }}
-organizationalUnitName      = {{ pki_root_ca.organizational_unit_name }}
-commonName                  = {{ pki_root_ca.common_name }}
-emailAddress                = {{ pki_root_ca.email_address }}
+countryName                 = DE
+stateOrProvinceName         = Dummyfild
+localityName                = Dummy Town
+organizationName            = Dummy GmbH
+organizationalUnitName      = Security department
+commonName                  = hsm-root-ca-01.dum.my
+emailAddress                = ca-admin@dum.my
 
 [ req_attributes ]
 unstructuredName            = An optional company name

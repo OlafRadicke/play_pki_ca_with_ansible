@@ -3,13 +3,13 @@
 - name:    Include task for init directory
   include: "init_dir.yml"
 
-- name:    Include creating private key
-  include: "create_private_key.yml"
-  when:    yubi_hsm_enable == false
+# - name:    Include creating private key
+#   include: "create_private_key.yml"
+#   when:    yubi_hsm_enable == false
 
 - name:    Include fedora support
   include: "hsm_create_self_signed_cert.yml"
 
-- name:    Include fedora support
-  include: "create_self_signed_cert.yml"
-  when:    yubi_hsm_enable == false
+# - name:    Include fedora support
+#   include: "create_self_signed_cert.yml"
+#   when:    yubi_hsm_enable == false

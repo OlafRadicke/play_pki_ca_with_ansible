@@ -12,7 +12,7 @@
                       --password={{ hsm_key.yubi_factory.password }}          \
                       2>&1                                                    \
                       | grep "Found 1 object"                                 \
-                      | wc -l    
+                      | wc -l
   register:       shell_result
   when:           debug_output
   ignore_errors: "{{ debug_output }}"
@@ -67,7 +67,7 @@
                     --authkey="{{ hsm_key.yubi_factory.hex_id }}"             \
                     --password="{{ hsm_key.yubi_factory.password }}"
   register:       shell_result
-  when:           is_factory_key_exist.stdout == 'true'
+  when:           true #is_factory_key_exist.stdout == 'true'
   ignore_errors: "{{ debug_output }}"
 
 - name:           Output return value
@@ -104,9 +104,9 @@
                     --object-id="{{ hsm_key.yubi_factory.str_id }}"           \
                     --object-type="authentication-key"                        \
                     --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
-                    --password="{{ hsm_key.audit_auth.password }}" 
+                    --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
-  when:           is_factory_key_exist.stdout == 'true'
+  when:           true # is_factory_key_exist.stdout == 'true'
   ignore_errors: "{{ debug_output }}"
 
 - name:           Output return value
@@ -168,7 +168,7 @@
                     --object-id="{{ hsm_key.test.str_id }}"                   \
                     --object-type="authentication-key"                        \
                     --authkey="{{ hsm_key.audit_auth.hex_id }}"               \
-                    --password="{{ hsm_key.audit_auth.password }}" 
+                    --password="{{ hsm_key.audit_auth.password }}"
   register:       shell_result
   when:           debug_output
   ignore_errors: "{{ debug_output }}"

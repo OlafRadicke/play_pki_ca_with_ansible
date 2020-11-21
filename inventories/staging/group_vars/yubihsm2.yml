@@ -1,5 +1,5 @@
 ---
-interpreter_python:     "/usr/bin/python3"  
+interpreter_python:     "/usr/bin/python3"
 ansible_become:         true
 yubihsm2_password:      !vault |
                         $ANSIBLE_VAULT;1.1;AES256
@@ -15,34 +15,40 @@ hsm_key:
   yubi_factory:
     password:           "password"
     hex_id:             "0x0001"
-    str_id:             "1"
+    str_id:             "0001"
 
   audit_auth:
     label:              "Audit auth key"
     hex_id:             "0x0002"
-    str_id:             "2"
+    str_id:             "0002"
     password:           "{{ yubihsm2_password }}"
 
   test:
     label:              "Test audit auth key"
     hex_id:             "0x0003"
-    str_id:             "3"
+    str_id:             "0003"
     password:           "{{ yubihsm2_password }}-3"
 
   root_sign:
     label:              "root_ca_sign_key"
     hex_id:             "0x0004"
-    str_id:             "4"
+    str_id:             "0004"
+    type:               "asymmetric-key,sign-pkcs"
     algorithm:          "rsa2048"
+    capabilities:       "sign-pkcs,sign-pss,sign-ecdsa,sign-eddsa,sign-ssh-certificate"
 
   service_policy_ca:
     label:              "service_policy_ca_sign_key"
     hex_id:             "0x0005"
-    str_id:             "5"
+    str_id:             "0005"
+    type:               "asymmetric-key,sign-pkcs"
     algorithm:          "rsa2048"
+    capabilities:       "sign-pkcs,sign-pss,sign-ecdsa,sign-eddsa,sign-ssh-certificate"
 
   staff_policy_ca:
     label:              "staff_policy_ca_sign_key"
     hex_id:             "0x0006"
-    str_id:             "6"
+    str_id:             "0006"
+    type:               "asymmetric-key,sign-pkcs"
     algorithm:          "rsa2048"
+    capabilities:       "sign-pkcs,sign-pss,sign-ecdsa,sign-eddsa,sign-ssh-certificate"
