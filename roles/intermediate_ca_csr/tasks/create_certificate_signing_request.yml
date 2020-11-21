@@ -14,7 +14,6 @@
     creates:      "{{ pki_csr_file }}"
   register:       shell_result
   ignore_errors:  "{{ debug_output }}"
-  when:           debug_output
 
 - name:           Output return value
   debug:

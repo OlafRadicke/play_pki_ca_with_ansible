@@ -165,6 +165,16 @@ ansible-playbook  \
   ./hsm_bootstrap.yml
 ```
 
+Detailed documentation
+----------------------
+
+Here you can find a Detailed documentation in german and down load as...
+
+* [eBook](docs/PKI-PoC-Concept_de.docx.epub)
+* [MS Doc](docs/PKI-PoC-Concept_de.docx)
+* [OpenDocument](docs/PKI-PoC-Concept_de.docx.odt)
+* [PDF](docs/PKI-PoC-Concept_de.docx.pdf)
+
 
 Known issue
 -----------
@@ -181,6 +191,7 @@ Helpful tools
 * [kleopatra](https://docs.kde.org/stable5/en/pim/kleopatra//)
 * [Xca](https://hohnstaedt.de/xca/)
 * [draw.io](https://www.draw.io/)
+* [cfssl]()
 
 Helpful docs
 ------------
@@ -193,7 +204,7 @@ Helpful docs
 ### Yubihsm2 ###
 
 ```
- -engine pkcs11 -signkey <hier die eigene Key-ID eintragen, z.B. 0:c168> -keyform engine 
+ -engine pkcs11 -signkey <hier die eigene Key-ID eintragen, z.B. 0:c168> -keyform engine
  ```
 
 - [Usage_Guides/OpenSSL_with_pkcs11_engine.html](https://developers.yubico.com/YubiHSM2/Usage_Guides/OpenSSL_with_pkcs11_engine.html)
@@ -206,7 +217,6 @@ TODOs
 
 ### Tasks
 
-- certificate revocation list (CRL)
 - Try playbook with OpenSUSE
 - OpenSSL Issue: "Write out database with 1 new entries \ Segmentation fault (core dumped)"
 - Adding a root CA offline mode to jump over the CAs thats a offline.
