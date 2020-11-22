@@ -1,0 +1,40 @@
+---
+
+- name:          Download signing certificate files from the referenc ca
+  get_url:
+    url:         "{{ referenc_ca_url }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+    dest:        "{{ pki_ca_dir }}/{{ pki_intermediate_ca.common_name }}.crt.pem"
+  when:          root_ca is not defined
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+- name:          Download root ca certificate files from the referenc ca
+  get_url:
+    url:         "{{ referenc_ca_url }}/{{ pki_root_ca_cert }}"
+    dest:        "{{ pki_publication_dir }}/{{ pki_root_ca_cert }}"
+  when:          root_ca is not defined
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output
+
+- name:          Download certificate bundle files from the referenc ca
+  get_url:
+    url:         "{{ referenc_ca_url }}/{{ referenc_ca_name }}.bundle.pem"
+    dest:        "{{ pki_referenc_ca_bundle_file }}"
+  when:          root_ca is not defined
+  ignore_errors: "{{ debug_output }}"
+  register:      shell_result
+
+- name:          Output return value
+  debug:
+    msg:         "{{ shell_result }}"
+  when:          debug_output

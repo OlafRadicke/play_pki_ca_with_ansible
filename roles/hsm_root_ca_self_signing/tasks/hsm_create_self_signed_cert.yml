@@ -12,7 +12,7 @@
                     -config {{ pki_opensslconfig }}                           \
                     -extensions v3_ca                                         \
                     -engine pkcs11                                            \
-                    -key "{{ main_domain }}:{{ hsm_key.root_sign.str_id }}"   \
+                    -key "{{ main_domain }}:{{ key_to_use.str_id }}"          \
                     -keyform engine                                           \
                     -out {{ pki_cert_file }}
   args:

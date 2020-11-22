@@ -1,0 +1,16 @@
+---
+
+- name:     Include download of own sign cert and issuer bundle
+  include:  "download_trust.yml"
+
+- name:     Include creating ca bundle
+  include:  "create_bundle.yml"
+
+- name:     Include download of csr from the owners
+  include:  "download_csr.yml"
+
+- name:     Include singging of CSRs
+  include:  "signed_certificate.yml"
+
+- name:     Include fie checks
+  include:  "check_files.yml"

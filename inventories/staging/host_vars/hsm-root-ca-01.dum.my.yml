@@ -4,12 +4,13 @@ ansible_host:               "{{ root_ca_ip }}"
 ansible_connection:         "local"
 ansible_become:             true
 
-referenc_ca_url:           "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
-referenc_ca_name:          "root-ca-01.dum.my"
+referenc_ca_url:            "http://{{ root_ca_ip }}:{{ pki_csr_exchange_port }}"
+referenc_ca_name:           "root-ca-01.dum.my"
 
 soft_factory_reset:         true
 root_ca:                    true
 yubi_hsm_enable:            true
+key_to_use:                 "{{ hsm_key.root_sign }}"
 
 pki_root_ca:
   common_name:              "hsm-root-ca-01.dum.my"

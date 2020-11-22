@@ -1,0 +1,92 @@
+---
+
+- name:           Check file type of cert
+  shell:          |
+                  file {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  with_dict:      "{{ pki_owner_csr }}"
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result.results }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:            Check file type of bundle file
+  shell:           |
+                   file {{ pki_bundle_file }}
+  register:        shell_result
+  when:            debug_output
+  ignore_errors:   "{{ debug_output }}"
+
+- name:            Output return value
+  debug:
+    msg:           "{{ shell_result }}"
+  when:            debug_output
+
+###############################################################################
+
+- name:           Verify with the owner certificate with the bundle file
+  shell:          |
+                  openssl verify \
+                  -verbose \
+                  -CAfile  {{ pki_bundle_file }} \
+                  {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  with_dict:      "{{ pki_owner_csr }}"
+  ignore_errors:  "{{ debug_output }}"
+  register:       shell_result
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Check index file
+  shell:          |
+                  cat  {{ pki_index_file }}
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Check bundle file with cat
+  shell:          |
+                  cat  {{ pki_bundle_file }}
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output
+
+###############################################################################
+
+- name:           Check bundle file with openssl
+  shell:          |
+                  openssl \
+                  crl2pkcs7 \
+                  -nocrl \
+                  -certfile \
+                  {{ pki_bundle_file }}\
+                  | openssl \
+                  pkcs7 \
+                  -print_certs \
+                  -text \
+                  -noout
+  register:       shell_result
+  when:           debug_output
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output

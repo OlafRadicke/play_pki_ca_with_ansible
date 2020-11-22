@@ -1,0 +1,35 @@
+---
+
+- name:           Generate and sign immediate CA certificate
+  shell: |
+                  openssl ca                                                  \
+                  -config {{ pki_opensslconfig }}                             \
+                  -days {{ item.value.not_after_days }}                       \
+                  -notext                                                     \
+                  -batch                                                      \
+                  -rand_serial                                                \
+                  -in {{ pki_csr_local_dir }}/{{ item.key }}.csr.pem          \
+                  -engine pkcs11                                              \
+                  -key {{ main_domain }}:{{ key_to_use.str_id }}              \
+                  -keyform engine                                             \
+                  -out {{ pki_publication_dir }}/{{ item.key }}.crt.pem
+  args:
+    chdir:        "{{ pki_private_dir }}"
+    creates:      "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
+  with_dict:      "{{ pki_owner_csr }}"
+  ignore_errors: "{{ debug_output }}"
+  register:       shell_result
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result.results }}"
+  when:           debug_output
+
+- name:           Set owner of crt file
+  file:
+    path:         "{{ pki_publication_dir }}/{{ item.key }}.crt.pem"
+    owner:        nginx
+    group:        nginx
+    mode:         'u=rw,g=r,o=r'
+  with_dict:      "{{ pki_owner_csr }}"
+  when:           ansible_distribution != "Ubuntu"
