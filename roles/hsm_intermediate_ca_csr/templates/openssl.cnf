@@ -1,0 +1,101 @@
+HOME                        = .
+
+openssl_conf                = default_modules
+
+[default_modules]
+engines                     = engine_section
+
+[engine_section]
+pkcs11                      = pkcs11_section
+
+[pkcs11_section]
+engine_id                   = pkcs11
+MODULE_PATH                 = /usr/lib64/pkcs11/yubihsm_pkcs11.so
+INIT_ARGS                   = connector=http://127.0.0.1:12345 debug
+PIN                         = "{{ hsm_key.audit_auth.str_id }}{{ hsm_key.audit_auth.password }}"
+init                        = 0
+
+[ ca ]
+default_ca                  = CA_default
+
+[ CA_default ]
+dir                         = {{ pki_private_dir }}
+certs                       = $dir/certs
+crl_dir                     = {{ pki_publication_dir}}
+database                    = {{ pki_index_file }}
+new_certs_dir               = {{ pki_publication_dir}}
+certificate	                = {{ pki_cert_file }}
+serial                      = {{ pki_serial_file }}
+crlnumber                   = $dir/crlnumber
+crl                         = $dir/crl.pem
+private_key                 = {{ pki_priv_key }}
+x509_extensions             = usr_cert
+name_opt                    = ca_default
+cert_opt                    = ca_default
+default_days                = 365
+default_crl_days            = 30
+default_md                  = sha256
+preserve                    = no
+policy                      = policy_anything
+email_in_dn                 = no
+rand_serial                 = no
+
+[ policy_match ]
+countryName                 = match
+stateOrProvinceName         = match
+organizationName            = match
+organizationalUnitName      = optional
+commonName                  = supplied
+emailAddress                = optional
+
+[ policy_anything ]
+countryName                 = optional
+stateOrProvinceName         = optional
+localityName                = optional
+organizationName            = optional
+organizationalUnitName      = optional
+commonName                  = supplied
+emailAddress                = optional
+
+[ req ]
+prompt                      = no
+default_bits                = 4096
+default_md                  = sha256
+default_keyfile             = privkey.pem
+distinguished_name          = req_distinguished_name
+attributes                  = req_attributes
+x509_extensions             = v3_ca
+string_mask                 = utf8only
+req_extensions              = v3_req
+
+[ req_distinguished_name ]
+countryName                 = {{ pki_intermediate_ca.country_name }}
+stateOrProvinceName         = {{ pki_intermediate_ca.state_or_province_name }}
+localityName                = {{ pki_intermediate_ca.city_name }}
+organizationName            = {{ pki_intermediate_ca.organization_name }}
+organizationalUnitName      = {{ pki_intermediate_ca.organizational_unit_name }}
+commonName                  = {{ pki_intermediate_ca.common_name }}
+emailAddress                = {{ pki_intermediate_ca.email_address }}
+
+[ req_attributes ]
+unstructuredName            = An optional company name
+
+[ usr_cert ]
+basicConstraints            = critical,CA:true,pathlen:{{ pki_intermediate_ca.pathlen }}
+nsComment                   = "OpenSSL Generated Certificate"
+subjectKeyIdentifier        = hash
+authorityKeyIdentifier      = keyid,issuer
+
+[ v3_req ]
+basicConstraints            = critical,CA:true,pathlen:{{ pki_intermediate_ca.pathlen }}
+keyUsage                    = {{ pki_intermediate_ca.key_usage_req }}
+
+[ v3_ca ]
+subjectKeyIdentifier        = hash
+authorityKeyIdentifier      = keyid:always,issuer
+basicConstraints            = critical, CA:true, pathlen:{{ pki_intermediate_ca.pathlen }}
+keyUsage                    = {{ pki_intermediate_ca.key_usage_ca }}
+
+[ crl_ext ]
+authorityKeyIdentifier      = keyid:always
+

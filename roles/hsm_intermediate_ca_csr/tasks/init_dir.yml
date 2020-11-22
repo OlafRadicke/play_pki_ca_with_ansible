@@ -1,0 +1,46 @@
+---
+
+- name:      Create private directory for ca
+  file:
+    path:    "{{ item }}"
+    state:   directory
+    mode:    'u=rwx,g=rx,o-rwx'
+  loop:
+    -        "{{ pki_private_dir }}"
+    -        "{{ pki_private_dir }}/private"
+
+- name:      Touch a files
+  file:
+    path:    "{{ item }}"
+    state:   touch
+  loop:
+    -        "{{ pki_index_file }}"
+    -        "{{ pki_index_attr_file }}"
+
+###############################################################################
+
+- name:      Create  crlnumber file if it not exist
+  shell:     "echo 1 > {{ pki_crlnumber_file }}"
+  args:
+    creates: "{{ pki_crlnumber_file }}"
+
+- name:      Count up crlnumber
+  shell: |
+             SERIAL=$( cat {{ pki_crlnumber_file }} )
+             let NEWSERIAL=$SERIAL+1
+             echo $NEWSERIAL > {{ pki_crlnumber_file }}
+
+###############################################################################
+
+- name:      Create openssl.cnf
+  template:
+    src:     openssl.cnf
+    dest:    "{{ pki_opensslconfig }}"
+
+
+###############################################################################
+
+- name:      Create yubihsm_pkcs11.conf
+  template:
+    src:     yubihsm_pkcs11.conf
+    dest:    "{{ pki_yubihsm_config }}"

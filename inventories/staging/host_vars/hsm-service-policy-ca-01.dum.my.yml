@@ -1,0 +1,25 @@
+---
+
+ansible_host:                 "{{ policy_ca_service_ip }}"
+yubi_hsm_enable:              true
+
+pki_intermediate_ca:
+    common_name:              "service-policy-ca-01.dum.my"
+    email_address:            "service-ca@dum.my"
+    country_name:             "{{ pki_country_name }}"
+    state_or_province_name:   "{{ pki_state_or_province_name }}"
+    city_name:                "{{ pki_city_name }}"
+    organization_name:        "{{ pki_organization_name }}"
+    organizational_unit_name: "Security department"
+    not_after_days:           "365"
+    key_usage_req:            "nonRepudiation, digitalSignature, keyEncipherment"
+    key_usage_ca:             "critical, digitalSignature, cRLSign, keyCertSign"
+    pathlen:                  "0"
+
+
+
+pki_owner_csr:
+    "service-issue-ca-01.dum.my":
+        owner_url:            "http://{{ issue_ca_service_ip }}:{{ pki_csr_exchange_port }}"
+        not_after_days:       "180"
+

@@ -1,0 +1,23 @@
+---
+
+- name:           Create csr file
+  shell:          |
+                  openssl req                                                 \
+                  -new                                                        \
+                  -sha256                                                     \
+                  -nodes                                                      \
+                  -config {{ pki_opensslconfig }}                             \
+                  -engine pkcs11                                              \
+                  -key {{ main_domain }}:{{ hsm_key.root_sign.hex_id }}       \
+                  -keyform engine
+                  -out {{ pki_csr_file }}
+  args:
+    chdir:        "{{ pki_private_dir }}"
+    creates:      "{{ pki_csr_file }}"
+  register:       shell_result
+  ignore_errors:  "{{ debug_output }}"
+
+- name:           Output return value
+  debug:
+    msg:          "{{ shell_result }}"
+  when:           debug_output

@@ -1,0 +1,10 @@
+---
+
+- name:    Include task for init directory
+  include: "init_dir.yml"
+
+- name:    Include creating csr
+  include: "create_certificate_signing_request.yml"
+
+- name:    Include file check
+  include: "check_files.yml"

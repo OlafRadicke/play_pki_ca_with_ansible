@@ -15,4 +15,17 @@
     -    set_special_host_facts
     -    pre_update_and_install
     -    pre_config
-    -    hsm_root_ca_self_signing
+
+
+- name:  Setup HSM root ca
+  hosts: hsm_policy_ca
+  roles:
+    -   { role: hsm_intermediate_ca_csr, when: "yubi_hsm_enable == true" }
+    -   { role: intermediate_ca_csr, when: "yubi_hsm_enable == false" }
+
+
+- name:  Setup HSM root ca
+  hosts: hsm_root_ca
+  roles:
+    -   { role: hsm_root_ca_self_signing, when: "yubi_hsm_enable == true" }
+    -   { role: root_ca_self_signing, when: "yubi_hsm_enable == false" }
