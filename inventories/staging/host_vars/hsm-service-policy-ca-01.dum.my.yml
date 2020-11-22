@@ -2,6 +2,7 @@
 
 ansible_host:                 "{{ policy_ca_service_ip }}"
 yubi_hsm_enable:              true
+key_to_use:                   "{{ hsm_key.service_policy_ca }}"
 
 pki_intermediate_ca:
     common_name:              "service-policy-ca-01.dum.my"

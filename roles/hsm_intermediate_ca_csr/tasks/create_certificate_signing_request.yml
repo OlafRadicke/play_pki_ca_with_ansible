@@ -8,7 +8,7 @@
                   -nodes                                                      \
                   -config {{ pki_opensslconfig }}                             \
                   -engine pkcs11                                              \
-                  -key {{ main_domain }}:{{ hsm_key.root_sign.hex_id }}       \
+                  -key {{ main_domain }}:{{ key_to_use.str_id }}              \
                   -keyform engine
                   -out {{ pki_csr_file }}
   args:
