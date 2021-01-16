@@ -17,8 +17,6 @@ bar_dum_my_ip:              "{{ vm_04 }}"
 baz_dum_my_ip:              "{{ vm_04 }}"
 jane_doe_ip:                "{{ vm_02 }}"
 john_doe_ip:                "{{ vm_02 }}"
-# ansible_git_checkout_ip:    "local"
-# azure_control_server_ip:    "local"
 
 ansible_user:               dummy
 ansible_become:             yes
