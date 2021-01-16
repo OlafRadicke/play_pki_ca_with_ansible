@@ -2,10 +2,15 @@
 
 debug_output:               true
 
-vm_01:                      "20.52.144.237"
-vm_02:                      "20.52.144.148"
-vm_03:                      "20.52.144.178"
-vm_04:                      "20.52.144.213"
+vm_01:                      "20.52.34.154"
+vm_02:                      "20.52.34.139"
+vm_03:                      "20.52.34.186"
+vm_04:                      "51.116.182.250"
+
+# "test-pki-ca-01-01.germanywestcentral.cloudapp.azure.com  20.52.34.154
+# "test-pki-ca-01-02.germanywestcentral.cloudapp.azure.com  20.52.34.139
+# "test-pki-ca-01-03.germanywestcentral.cloudapp.azure.com  20.52.34.186
+# "test-pki-ca-01-04.germanywestcentral.cloudapp.azure.com  51.116.182.250
 
 root_ca_ip:                 "{{ vm_01 }}"
 policy_ca_staff_ip:         "{{ vm_01 }}"
@@ -18,11 +23,13 @@ baz_dum_my_ip:              "{{ vm_04 }}"
 jane_doe_ip:                "{{ vm_02 }}"
 john_doe_ip:                "{{ vm_02 }}"
 
-ansible_user:               dummy
+ansible_user:               "pkiadmin"
 ansible_become:             yes
 
 
+
 pki_workspace:              "/srv/pki"
+pki_publication_dir:        "{{ pki_workspace }}/html"
 pki_ca_dir:                 "{{ pki_workspace }}/ca"
 pki_csr_local_dir:          "{{ pki_workspace }}/csr"
 pki_end_entities_dir:       "{{ pki_workspace }}/end_entities"
